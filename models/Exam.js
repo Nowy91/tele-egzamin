@@ -4,8 +4,9 @@ module.exports = function(sequelize, DataTypes) {
 	
 	return sequelize.define('exam', {
 		id : {
-			type : Sequelize.BIGINT,
-			primaryKey : true
+			type : Sequelize.INTEGER,
+			primaryKey : true,
+			autoIncrement : true
 		},		
 		title : {
 			type : Sequelize.STRING(50)

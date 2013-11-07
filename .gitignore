@@ -14,3 +14,6 @@ local.properties
 .classpath
 .settings/
 .loadpath
+
+models/index.js
+.anvil
