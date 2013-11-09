@@ -3,8 +3,27 @@
 <head>
     <meta charset="utf-8">
     <title>Teleegzamin</title>
+
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/datepicker.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/style.css" rel="stylesheet" media="screen">
+
 </head>
+
 <body>
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Teleegzamin</a>
+        </div>
+    </div>
+</nav>
+
+<div id="content" class="container"></div>
+
+</body>
+
 <!-- libs -->
 <script src="/javascripts/libs/jquery.min.js"></script>
 <script src="/javascripts/libs/underscore.min.js"></script>
@@ -16,22 +35,13 @@
 <!-- models -->
 <script src="/javascripts/models/exam.js"></script>
 
-<!-- collections -->
-<script src="/javascripts/collections/exams.js"></script>
-
 <!-- views -->
 <script src="/javascripts/views/index.js"></script>
 <script src="/javascripts/views/exam.js"></script>
 
-<!-- routes -->
-<script src="/javascripts/router/index.js"></script>
-
-<div class="content"></div>
-
 <script>
-    new App.Router.Exam;
+    new App.Router;
     Backbone.history.start();
 </script>
 
-</body>
 </html>
