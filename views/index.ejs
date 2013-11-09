@@ -1,11 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<head>
+    <meta charset="utf-8">
+    <title>Teleegzamin</title>
+</head>
+<body>
+<!-- libs -->
+<script src="/javascripts/libs/jquery.min.js"></script>
+<script src="/javascripts/libs/underscore.min.js"></script>
+<script src="/javascripts/libs/backbone.min.js"></script>
+
+<!-- general -->
+<script src="/javascripts/main.js"></script>
+
+<!-- models -->
+<script src="/javascripts/models/exam.js"></script>
+
+<!-- collections -->
+<script src="/javascripts/collections/exams.js"></script>
+
+<!-- views -->
+<script src="/javascripts/views/index.js"></script>
+<script src="/javascripts/views/exam.js"></script>
+
+<!-- routes -->
+<script src="/javascripts/router/index.js"></script>
+
+<div class="content"></div>
+
+<script>
+    new App.Router.Exam;
+    Backbone.history.start();
+</script>
+
+</body>
 </html>
