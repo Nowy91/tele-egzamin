@@ -29,11 +29,16 @@
 
 App.Router = Backbone.Router.extend({
     routes: {
-        '': 'index'
+        '': 'index',
+        'exams': 'exams'
     },
 
     index: function () {
         homeView = new App.Views.Index({el: $("#content")});
-        $('#content').append(homeView.render());
+    },
+
+    exams: function () {
+        dashboardView = new App.Views.Dashboard;
+        dashboardView.render();
     }
 });

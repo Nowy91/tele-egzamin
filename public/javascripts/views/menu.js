@@ -1,6 +1,6 @@
-App.Views.Index = Backbone.View.extend({
+App.Views.Menu = Backbone.View.extend({
 
-    templateName: 'index',
+    templateName: 'menu',
 
     initialize: function () {
         this.render();
@@ -9,7 +9,8 @@ App.Views.Index = Backbone.View.extend({
     render: function () {
         var that = this;
         App.Templates.get(this.templateName, function (template) {
-            that.$el.html(_.template(template));
+            that.$el.html(_.template(template, {menuId: '#aktualne'}));
+            return that;
         });
     }
 

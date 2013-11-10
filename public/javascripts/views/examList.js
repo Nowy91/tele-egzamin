@@ -1,6 +1,6 @@
-App.Views.Index = Backbone.View.extend({
+App.Views.ExamList = Backbone.View.extend({
 
-    templateName: 'index',
+    templateName: 'examList',
 
     initialize: function () {
         this.render();
@@ -10,7 +10,7 @@ App.Views.Index = Backbone.View.extend({
         var that = this;
         App.Templates.get(this.templateName, function (template) {
             that.$el.html(_.template(template));
+            return that;
         });
     }
-
 });

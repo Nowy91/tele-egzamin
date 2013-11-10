@@ -1,0 +1,32 @@
+<script id="menu_template" type="text/template">
+
+    <div class="page-header">
+        <h1>Menu</h1>
+    </div>
+    <ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
+        <li>
+            <h4>Egzaminy:</h4>
+            <hr/>
+        </li>
+        <li><a href="#aktualne">Aktualne egzaminy</a></li>
+        <li><a href="#stworz">Stwórz egzamin</a></li>
+        <li><a href="#sprawdz">Sprawdź egzamin</a></li>
+        <li><a href="#historia">Historia egzaminów</a></li>
+        <li>
+            <h4>Pytania:</h4>
+            <hr/>
+        </li>
+        <li><a href="#materialy">Aktualne materiały </a></li>
+        <li><a href="#smaterialy">Stwórz materiały</a></li>
+        <li><a href="#pytania">Aktualne pytania</a></li>
+        <li><a href="#spytania">Stwórz pytanie </a></li>
+    </ul>
+
+    <script>
+        $(document).ready(function () {
+            $("a[href='<%= menuId %>']").parent().addClass("active");
+        });
+    </script>
+
+</script>
+
