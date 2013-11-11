@@ -39,6 +39,5 @@ App.Router = Backbone.Router.extend({
 
     exams: function () {
         dashboardView = new App.Views.Dashboard;
-        dashboardView.render();
     }
 });

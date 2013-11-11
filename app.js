@@ -3,10 +3,12 @@
  */
 
 var express = require('express');
-var routes = require('./routes');
-var db = require('./routes/db');
 var http = require('http');
 var path = require('path');
+
+var routes = require('./routes');
+var db = require('./routes/db');
+var exam = require('./routes/exam');
 
 var app = express();
 
@@ -32,6 +34,7 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.get('/exams', exam.list);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
