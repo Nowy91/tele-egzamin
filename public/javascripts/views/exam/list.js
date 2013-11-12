@@ -3,7 +3,6 @@ App.Views.ExamList = Backbone.View.extend({
     templateName: 'exam_list',
 
     initialize: function () {
-        this.render();
     },
 
     render: function() {

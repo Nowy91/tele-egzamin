@@ -1,13 +1,12 @@
-App.Views.Index = Backbone.View.extend({
+App.Views.ExamAdd = Backbone.View.extend({
 
-    el: $("#content"),
-    templateName: 'index',
+    templateName: 'exam_add',
 
-    initialize: function () {
+    initialize: function() {
         this.render();
     },
 
-    render: function () {
+    render: function() {
         var that = this;
         App.Templates.get(this.templateName, function (template) {
             that.$el.html(_.template(template));

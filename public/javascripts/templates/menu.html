@@ -8,8 +8,8 @@
             <h4>Egzaminy:</h4>
             <hr/>
         </li>
-        <li><a href="#aktualne">Aktualne egzaminy</a></li>
-        <li><a href="#stworz">Stwórz egzamin</a></li>
+        <li><a class="exams">Aktualne egzaminy</a></li>
+        <li><a class="add_exam">Stwórz egzamin</a></li>
         <li><a href="#sprawdz">Sprawdź egzamin</a></li>
         <li><a href="#historia">Historia egzaminów</a></li>
         <li>
@@ -24,7 +24,7 @@
 
     <script>
         $(document).ready(function () {
-            $("a[href='<%= menuId %>']").parent().addClass("active");
+            $("a.<%= menuId %>").parent().addClass("active");
         });
     </script>
 

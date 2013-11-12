@@ -27,17 +27,34 @@
     };
 })();
 
-App.Router = Backbone.Router.extend({
+var Router = Backbone.Router.extend({
     routes: {
         '': 'index',
-        'exams': 'exams'
+        'exams': 'exams',
+        'exam/add': 'addExam'
     },
 
     index: function () {
-        homeView = new App.Views.Index({el: $("#content")});
+        homeView = new App.Views.Index;
     },
 
     exams: function () {
         dashboardView = new App.Views.Dashboard;
+
+        dashboardView.menu = new App.Views.Menu;
+        dashboardView.menu.selected = 'exams';
+        dashboardView.body = new App.Views.ExamList;
+
+        dashboardView.render();
+    },
+
+    addExam: function() {
+        dashboardView = new App.Views.Dashboard;
+
+        dashboardView.menu = new App.Views.Menu;
+        dashboardView.menu.selected = 'add_exam';
+        dashboardView.body = new App.Views.ExamAdd;
+
+        dashboardView.render();
     }
 });
