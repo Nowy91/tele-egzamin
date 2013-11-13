@@ -9,6 +9,7 @@ var path = require('path');
 var routes = require('./routes');
 var db = require('./routes/db');
 var exam = require('./routes/exam');
+var examiner = require('./routes/examiner');
 
 var app = express();
 
@@ -36,6 +37,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/exams', exam.list);
 app.post('/exam/add', exam.add);
+app.get('/examiners',examiner.list);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));

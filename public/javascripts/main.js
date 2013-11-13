@@ -30,7 +30,9 @@
 var Router = Backbone.Router.extend({
     routes: {
         '': 'index',
-        'exams': 'exams'
+        'exams': 'exams',
+        'exam/add': 'addExam',
+        'examiners':'examiners'
     },
 
     index: function () {
@@ -39,5 +41,11 @@ var Router = Backbone.Router.extend({
 
     exams: function () {
         new App.Views.Dashboard;
+    },
+
+    examiners: function () {
+        examinerView = new App.Views.ExaminerDashboard;
+        examinerView.render();
     }
+
 });
