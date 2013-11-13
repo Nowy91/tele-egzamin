@@ -4,32 +4,49 @@
         <div class="page-header">
             <h1>Stwórz egzamin</h1>
         </div>
-        <form class="form-horizontal" role="form">
+        <form class="form-horizontal" role="form" action="">
             <div class="form-group">
-                <label for="input1" class="col-sm-2 control-label">Nazwa</label>
+                <label for="input1" class="col-sm-3 control-label">Tytuł</label>
 
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="input1" placeholder="Nazwa">
+                    <input type="text" class="form-control" id="title">
                 </div>
             </div>
             <div class="form-group">
-                <label for="input2" class="col-sm-2 control-label">Przedmiot</label>
-
-                <div class="col-sm-5">
-                    <input type="text" class="form-control" id="input2" placeholder="Przedmiot">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="input3" class="col-sm-2 control-label">Data</label>
+                <label for="input3" class="col-sm-3 control-label">Data</label>
 
                 <div class="col-sm-3">
-                    <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
-                        <input class="form-control span2" size="16" type="text" placeholder="12-02-2012">
+                    <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="yyyy-mm-dd">
+                        <input id="date" class="form-control span2" size="16" type="text">
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <label for="input2" class="col-sm-3 control-label">Liczba studentów</label>
+
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="numberOfStudents">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input2" class="col-sm-3 control-label">Czas trwania</label>
+
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="duration">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input2" class="col-sm-3 control-label">Status</label>
+
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="status">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-10">
                     <button type="submit" class="btn btn-default">Dodaj egzamin</button>
                 </div>
             </div>

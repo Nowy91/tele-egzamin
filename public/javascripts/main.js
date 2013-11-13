@@ -30,31 +30,14 @@
 var Router = Backbone.Router.extend({
     routes: {
         '': 'index',
-        'exams': 'exams',
-        'exam/add': 'addExam'
+        'exams': 'exams'
     },
 
     index: function () {
-        homeView = new App.Views.Index;
+        new App.Views.Index;
     },
 
     exams: function () {
-        dashboardView = new App.Views.Dashboard;
-
-        dashboardView.menu = new App.Views.Menu;
-        dashboardView.menu.selected = 'exams';
-        dashboardView.body = new App.Views.ExamList;
-
-        dashboardView.render();
-    },
-
-    addExam: function() {
-        dashboardView = new App.Views.Dashboard;
-
-        dashboardView.menu = new App.Views.Menu;
-        dashboardView.menu.selected = 'add_exam';
-        dashboardView.body = new App.Views.ExamAdd;
-
-        dashboardView.render();
+        new App.Views.Dashboard;
     }
 });

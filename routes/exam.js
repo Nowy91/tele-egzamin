@@ -10,3 +10,8 @@ exports.list = function(req, res) {
             res.end(err);
         });
 };
+
+exports.add = function(req, res) {
+    Exam.create(req.body);
+    res.end();
+}

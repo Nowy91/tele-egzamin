@@ -6,11 +6,13 @@ App.Views.Dashboard = Backbone.View.extend({
     initialize: function () {
         this.listenTo(Backbone, 'click-add-exam', function () {
             this.addExam();
-        }, this );
+        }, this);
 
         this.listenTo(Backbone, 'click-exams-list', function () {
             this.examsList();
-        }, this );
+        }, this);
+
+        this.render();
     },
 
     render: function () {
@@ -18,26 +20,46 @@ App.Views.Dashboard = Backbone.View.extend({
         App.Templates.get(this.templateName, function (template) {
             that.$el.html(_.template(template));
 
-            that.menu.setElement(that.$('.menu_hook')).render();
-            that.body.setElement(that.$('.body_hook')).render();
+            that.menuView = new App.Views.Menu;
+            that.menuView.selected = 'exams';
+            that.menuView.setElement(that.$('.menu_hook')).render();
+
+            $.ajax({
+                type: 'GET',
+                url: '/exams',
+                dataType: 'json',
+                success: function(exams) {
+                    that.examCollection = new App.Collections.Exams(exams);
+                    that.examListView = new App.Views.ExamList({collection: that.examCollection});
+                    that.examListView.setElement(that.$('.body_hook')).render();
+                }
+            });
         });
         return this;
     },
 
-    examsList: function() {
-        this.menu.selected = 'exams';
-        this.menu.render();
+    examsList: function () {
+        this.menuView.selected = 'exams';
+        this.menuView.render();
 
-        this.body = new App.Views.ExamList;
-        this.body.setElement(this.$('.body_hook')).render();
+        if (this.examListView == null) {
+            this.examListView = new App.Views.ExamList;
+            this.examListView.setElement(this.$('.body_hook'));
+        }
+
+        this.examListView.render();
     },
 
-    addExam: function() {
-        this.menu.selected = 'add_exam';
-        this.menu.render();
+    addExam: function () {
+        this.menuView.selected = 'add_exam';
+        this.menuView.render();
 
-        this.body = new App.Views.ExamAdd;
-        this.body.setElement(this.$('.body_hook')).render();
+        if (this.examAddView == null) {
+            this.examAddView = new App.Views.ExamAdd({collection: this.examCollection});
+            this.examAddView.setElement(this.$('.body_hook'));
+        }
+
+        this.examAddView.render();
     }
 
 });

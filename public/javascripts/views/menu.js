@@ -20,12 +20,10 @@ App.Views.Menu = Backbone.View.extend({
 
     exams: function() {
         Backbone.trigger('click-exams-list');
-        App.Router.navigate('exams', false);
     },
 
     addExam: function() {
         Backbone.trigger('click-add-exam');
-        App.Router.navigate('exam/add', false);
     }
 
 });
