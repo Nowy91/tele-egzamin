@@ -12,25 +12,43 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-6">
-            <div class="jumbotron">
-                <h2>Strefa egzaminatora</h2>
+        <div class="col-md-6">
+            <div class="well">
+                <h1>Egzaminator</h1>
+                <hr/>
+                <form role="form">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Hasło</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1">
+                    </div>
 
-                <p>...</p>
-
-                <p><a href="#exams" class="btn btn-primary btn-lg examiner" role="button">Przejdź do strefy</a></p>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Zapamiętaj mnie
+                        </label>
+                    </div>
+                    <a href="#exams" class="btn btn-primary" >Zaloguj się</a>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="well">
+                <h1>Student</h1>
+                <hr/>   
+                <form role="form">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Kod dostępu</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1">
+                    </div>
+                    <a href="#exams" class="btn btn-primary" >Zaloguj się</a>
+                </form>
             </div>
         </div>
 
-        <div class="col-xs-6">
-            <div class="jumbotron">
-                <h2>Strefa studenta</h2>
-
-                <p>...</p>
-
-                <p><a class="btn btn-primary btn-lg student" role="button">Przejdź do strefy</a></p>
-            </div>
-        </div>
     </div>
 
 </script>

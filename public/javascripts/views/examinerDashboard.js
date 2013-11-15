@@ -4,7 +4,7 @@ App.Views.ExaminerDashboard = Backbone.View.extend({
     templateName: 'dashboard',
 
     initialize: function () {
-        this.menuView = new App.Views.Menu;
+        this.menuView = new App.Views.MenuAdmin;
         this.examinerListView = new App.Views.ExaminerList;
 
     },
