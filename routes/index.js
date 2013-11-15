@@ -10,6 +10,5 @@ exports.index = function (req, res) {
     /*Exam.findAll().success(function(exams) {
      res.json(exams);
      });*/
-
-    res.render('index');
+    res.render('index.html');
 }; 

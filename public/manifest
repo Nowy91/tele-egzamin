@@ -1,0 +1,16 @@
+CACHE MANIFEST
+
+# version 0.1
+
+CACHE:
+
+/javascripts/templates/dashboard.html
+/javascripts/templates/exam_add.html
+/javascripts/templates/exam_item.html
+/javascripts/templates/exam_list.html
+/javascripts/templates/examiner_item.html
+/javascripts/templates/index.html
+/javascripts/templates/menu.html
+
+NETWORK:
+*
