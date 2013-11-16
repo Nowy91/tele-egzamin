@@ -1,20 +1,16 @@
 App.Views.Menu = Backbone.View.extend({
 
-    templateName: 'menu',
-
-    initialize: function () {
-    },
-
     events: {
         'click a.exams': 'exams',
         'click a.add_exam': 'addExam'
     },
 
+    initialize: function () {
+        this.template = App.Templates.get('menu');
+    },
+
     render: function () {
-        var that = this;
-        App.Templates.get(this.templateName, function (template) {
-            that.$el.html(_.template(template, {menuId: that.selected}));
-        });
+        this.$el.html(_.template(this.template, {menuId: this.selected}));
         return this;
     },
 

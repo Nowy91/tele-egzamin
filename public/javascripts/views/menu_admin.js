@@ -1,8 +1,7 @@
 App.Views.MenuAdmin = Backbone.View.extend({
 
-    templateName: 'menu_admin',
-
     initialize: function () {
+        this.template = App.Templates.get('menu_admin');
     },
 
     events: {
@@ -11,10 +10,7 @@ App.Views.MenuAdmin = Backbone.View.extend({
     },
 
     render: function () {
-        var that = this;
-        App.Templates.get(this.templateName, function (template) {
-            that.$el.html(_.template(template, {menuId: that.selected}));
-        });
+        this.$el.html(_.template(this.template, {menuId: this.selected}));
         return this;
     },
 

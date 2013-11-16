@@ -1,21 +1,19 @@
 App.Views.ExamList = Backbone.View.extend({
 
-    templateName: 'exam_list',
-
     initialize: function () {
+        this.template = App.Templates.get('exam_list');
         this.listenTo(this.collection, 'add', this.addExam);
     },
 
     render: function() {
-        var that = this;
-        App.Templates.get(this.templateName, function (template) {
-            that.$el.html(_.template(template));
+        this.$el.html(_.template(this.template));
 
-            that.collection.each(function(exam){
-                var examView = new App.Views.ExamItem({model: exam.toJSON()});
-                $('tbody').append(examView.el);
-            });
+        this.collection.each(function(exam){
+            var examView = new App.Views.ExamItem({model: exam.toJSON()});
+            $('tbody').append(examView.el);
         });
+
+        return this;
     },
 
     addExam: function(data) {

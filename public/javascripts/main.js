@@ -6,25 +6,56 @@
         Views: {},
         Router: {},
         Templates: {
-            items: {},
+            names: [
+                "dashboard",
+                "exam_add",
+                "exam_item",
+                "exam_list",
+                "examiner_item",
+                "examinerList",
+                "index",
+                "menu",
+                "menu_admin"
+            ],
+            templates: {},
 
-            get: function (name, callback) {
-                var item = this.items[name];
+            loadTemplates: function(callback) {
 
-                if (item) {
-                    callback(item);
-                }
-                else {
-                    var that = this;
-                    $.get('/javascripts/templates/' + name + '.html', function (data) {
-                        var $template = $(data).html();
-                        that.items[name] = $template;
-                        callback($template);
+                var that = this;
+
+                var loadTemplate = function(index) {
+                    var name = that.names[index];
+
+                    $.ajax({
+                        url: '/javascripts/templates/' + name + '.html',
+                        success: function(data) {
+                            that.templates[name] = $(data).html();
+                            index++;
+                            if (index < that.names.length) {
+                                loadTemplate(index);
+                            } else {
+                                callback();
+                            }
+                        }
                     });
                 }
+
+                loadTemplate(0);
+            },
+
+            get: function(name) {
+                return this.templates[name];
             }
+        },
+
+        init: function() {
+            App.Templates.loadTemplates(function() {
+                App.Router = new Router;
+                Backbone.history.start();
+            });
         }
-    };
+    }
+
 })();
 
 var Router = Backbone.Router.extend({
@@ -32,7 +63,7 @@ var Router = Backbone.Router.extend({
         '': 'index',
         'exams': 'exams',
         'exam/add': 'addExam',
-        'examiners':'examiners'
+        'examiners': 'examiners'
     },
 
     index: function () {

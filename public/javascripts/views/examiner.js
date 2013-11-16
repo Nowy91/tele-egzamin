@@ -1,17 +1,15 @@
 App.Views.ExaminerItem = Backbone.View.extend({
 
     tagName: 'tr',
-    templateName: 'examiner_item',
 
     initialize: function() {
+        this.template = App.Templates.get('examiner_item');
         this.render();
     },
 
     render: function() {
-        var that = this;
-        App.Templates.get(this.templateName, function (template) {
-            that.$el.html(_.template(template, that.model));
-        });
+        this.$el.html(_.template(this.template, this.model));
+        return this;
     }
 
 });

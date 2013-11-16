@@ -1,20 +1,16 @@
 App.Views.ExamAdd = Backbone.View.extend({
 
-    templateName: 'exam_add',
-
     events: {
         'submit': 'submit'
     },
 
     initialize: function() {
+        this.template = App.Templates.get('exam_add');
         this.render();
     },
 
     render: function() {
-        var that = this;
-        App.Templates.get(this.templateName, function (template) {
-            that.$el.html(_.template(template));
-        });
+        this.$el.html(_.template(this.template));
         return this;
     },
 

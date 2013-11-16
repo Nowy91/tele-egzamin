@@ -1,12 +1,11 @@
 App.Views.ExaminerDashboard = Backbone.View.extend({
 
     el: $('#content'),
-    templateName: 'dashboard',
 
     initialize: function () {
+        this.template = App.Templates.get('dashboard');
         this.menuView = new App.Views.MenuAdmin;
         this.examinerListView = new App.Views.ExaminerList;
-
     },
 
     renderNested: function (view, selector) {
@@ -15,13 +14,11 @@ App.Views.ExaminerDashboard = Backbone.View.extend({
     },
 
     render: function () {
-        var that = this;
-        App.Templates.get(this.templateName, function (template) {
-            that.$el.html(_.template(template, {menuId: '#aktualne'}));
+        this.$el.html(_.template(this.template, {menuId: '#aktualne'}));
 
-            that.renderNested(that.menuView, $('.menu_hook'));
-            that.renderNested(that.examinerListView, $('.body_hook'));
-        });
+        this.renderNested(this.menuView, $('.menu_hook'));
+        this.renderNested(this.examinerListView, $('.body_hook'));
+        return this;
     }
 
 });

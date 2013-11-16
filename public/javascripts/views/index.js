@@ -1,17 +1,14 @@
 App.Views.Index = Backbone.View.extend({
 
     el: $("#content"),
-    templateName: 'index',
 
     initialize: function () {
+        this.template = App.Templates.get('index');
         this.render();
     },
 
     render: function () {
-        var that = this;
-        App.Templates.get(this.templateName, function (template) {
-            that.$el.html(_.template(template));
-        });
+        this.$el.html(_.template(this.template));
         return this;
     }
 

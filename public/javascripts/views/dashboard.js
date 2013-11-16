@@ -1,9 +1,9 @@
 App.Views.Dashboard = Backbone.View.extend({
 
     el: $('#content'),
-    templateName: 'dashboard',
 
     initialize: function () {
+        this.template = App.Templates.get('dashboard');
         this.listenTo(Backbone, 'click-add-exam', function () {
             this.addExam();
         }, this);
@@ -16,24 +16,23 @@ App.Views.Dashboard = Backbone.View.extend({
     },
 
     render: function () {
+        this.$el.html(_.template(this.template));
+
+        this.menuView = new App.Views.Menu;
+        this.menuView.selected = 'exams';
+        this.menuView.setElement(this.$('.menu_hook')).render();
+
         var that = this;
-        App.Templates.get(this.templateName, function (template) {
-            that.$el.html(_.template(template));
 
-            that.menuView = new App.Views.Menu;
-            that.menuView.selected = 'exams';
-            that.menuView.setElement(that.$('.menu_hook')).render();
-
-            $.ajax({
-                type: 'GET',
-                url: '/exams',
-                dataType: 'json',
-                success: function(exams) {
-                    that.examCollection = new App.Collections.Exams(exams);
-                    that.examListView = new App.Views.ExamList({collection: that.examCollection});
-                    that.examListView.setElement(that.$('.body_hook')).render();
-                }
-            });
+        $.ajax({
+            type: 'GET',
+            url: '/exams',
+            dataType: 'json',
+            success: function (exams) {
+                that.examCollection = new App.Collections.Exams(exams);
+                that.examListView = new App.Views.ExamList({collection: that.examCollection});
+                that.examListView.setElement(that.$('.body_hook')).render();
+            }
         });
         return this;
     },
