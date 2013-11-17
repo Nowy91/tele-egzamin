@@ -3,17 +3,20 @@
     window.App = {
         Models: {},
         Collections: {},
+        Controllers: {},
+        Layouts: {},
         Views: {},
         Router: {},
         Templates: {
             names: [
+                "login",
+                "header",
                 "dashboard",
                 "exam_add",
                 "exam_item",
                 "exam_list",
                 "examiner_item",
                 "examinerList",
-                "index",
                 "menu",
                 "menu_admin"
             ],
@@ -29,7 +32,7 @@
                     $.ajax({
                         url: '/javascripts/templates/' + name + '.html',
                         success: function(data) {
-                            that.templates[name] = $(data).html();
+                            that.templates[name] = _.template($(data).html());
                             index++;
                             if (index < that.names.length) {
                                 loadTemplate(index);
@@ -50,33 +53,9 @@
 
         init: function() {
             App.Templates.loadTemplates(function() {
-                App.Router = new Router;
-                Backbone.history.start();
+                Teleegzam.start();
             });
         }
     }
 
 })();
-
-var Router = Backbone.Router.extend({
-    routes: {
-        '': 'index',
-        'exams': 'exams',
-        'exam/add': 'addExam',
-        'examiners': 'examiners'
-    },
-
-    index: function () {
-        new App.Views.Index;
-    },
-
-    exams: function () {
-        new App.Views.Dashboard;
-    },
-
-    examiners: function () {
-        examinerView = new App.Views.ExaminerDashboard;
-        examinerView.render();
-    }
-
-});

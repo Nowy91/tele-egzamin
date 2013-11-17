@@ -8,54 +8,55 @@
     <link href="stylesheets/datepicker.css" rel="stylesheet" media="screen">
     <link href="stylesheets/style.css" rel="stylesheet" media="screen">
 
+    <!-- libs -->
+    <script src="/javascripts/libs/jquery.min.js"></script>
+    <script src="/javascripts/libs/json2.js"></script>
+    <script src="/javascripts/libs/underscore.min.js"></script>
+    <script src="/javascripts/libs/backbone.min.js"></script>
+    <script src="/javascripts/libs/backbone.marionette.min.js"></script>
+
+    <!-- general -->
+    <script src="/javascripts/main.js"></script>
+    <script src="/javascripts/app.js"></script>
+
+    <!-- layouts -->
+    <script src="/javascripts/layouts/dashboard.js"></script>
+
+    <!-- controllers -->
+    <script src="/javascripts/controllers/login.js"></script>
+    <script src="/javascripts/controllers/exam.js"></script>
+
+    <!-- router -->
+    <script src="/javascripts/router.js"></script>
+
+    <!-- models -->
+    <script src="/javascripts/models/exam.js"></script>
+    <script src="/javascripts/models/examiner.js"></script>
+
+    <!-- collections -->
+    <script src="/javascripts/collections/exams.js"></script>
+    <script src="/javascripts/collections/examiners.js"></script>
+
+    <!-- views -->
+    <script src="/javascripts/views/login.js"></script>
+    <script src="/javascripts/views/menu.js"></script>
+    <script src="/javascripts/views/menu_admin.js"></script>
+    <script src="/javascripts/views/exam/item.js"></script>
+    <script src="/javascripts/views/exam/list.js"></script>
+    <script src="/javascripts/views/exam/add.js"></script>
+    <script src="/javascripts/views/examinerDashboard.js"></script>
+    <script src="/javascripts/views/examinerList.js"></script>
+    <script src="/javascripts/views/examiner.js"></script>
+    <script src="/javascripts/views/header.js"></script>
+
+    <script>
+        App.init();
+    </script>
+
 </head>
 
 <body>
-
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Teleegzamin</a>
-        </div>
-    </div>
-</nav>
-
-<div id="content" class="container"></div>
-
+<div id="main-content"></div>
 </body>
-
-<!-- libs -->
-<script src="/javascripts/libs/jquery.min.js"></script>
-<script src="/javascripts/libs/json2.js"></script>
-<script src="/javascripts/libs/underscore.min.js"></script>
-<script src="/javascripts/libs/backbone.min.js"></script>
-<script src="/javascripts/libs/backbone.marionette.min.js"></script>
-
-<!-- general -->
-<script src="/javascripts/main.js"></script>
-
-<!-- models -->
-<script src="/javascripts/models/exam.js"></script>
-<script src="/javascripts/models/examiner.js"></script>
-
-<!-- collections -->
-<script src="/javascripts/collections/exams.js"></script>
-<script src="/javascripts/collections/examiners.js"></script>
-
-<!-- views -->
-<script src="/javascripts/views/index.js"></script>
-<script src="/javascripts/views/menu.js"></script>
-<script src="/javascripts/views/menu_admin.js"></script>
-<script src="/javascripts/views/dashboard.js"></script>
-<script src="/javascripts/views/exam/item.js"></script>
-<script src="/javascripts/views/exam/list.js"></script>
-<script src="/javascripts/views/exam/add.js"></script>
-<script src="/javascripts/views/examinerDashboard.js"></script>
-<script src="/javascripts/views/examinerList.js"></script>
-<script src="/javascripts/views/examiner.js"></script>
-
-<script>
-    App.init();
-</script>
 
 </html>

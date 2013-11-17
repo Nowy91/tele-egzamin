@@ -1,4 +1,4 @@
-App.Views.ExamAdd = Backbone.View.extend({
+App.Views.ExamAdd = Marionette.ItemView.extend({
 
     events: {
         'submit': 'submit'
@@ -6,12 +6,6 @@ App.Views.ExamAdd = Backbone.View.extend({
 
     initialize: function() {
         this.template = App.Templates.get('exam_add');
-        this.render();
-    },
-
-    render: function() {
-        this.$el.html(_.template(this.template));
-        return this;
     },
 
     submit: function(e) {
@@ -25,7 +19,7 @@ App.Views.ExamAdd = Backbone.View.extend({
             status: $(e.currentTarget).find('input#status').val()
         });
 
-        this.collection.add(newExam);
+        Teleegzam.ExamController.addExam(newExam);
     }
 
 });

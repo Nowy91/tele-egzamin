@@ -1,4 +1,4 @@
-App.Views.Menu = Backbone.View.extend({
+App.Views.Menu = Marionette.ItemView.extend({
 
     events: {
         'click a.exams': 'exams',
@@ -9,17 +9,12 @@ App.Views.Menu = Backbone.View.extend({
         this.template = App.Templates.get('menu');
     },
 
-    render: function () {
-        this.$el.html(_.template(this.template, {menuId: this.selected}));
-        return this;
-    },
-
     exams: function() {
-        Backbone.trigger('click-exams-list');
+        Teleegzam.ExamController.showAll();
     },
 
     addExam: function() {
-        Backbone.trigger('click-add-exam');
+        Teleegzam.ExamController.addForm();
     }
 
 });
