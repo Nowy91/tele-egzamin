@@ -24,21 +24,25 @@ CACHE:
 
 /javascripts/templates/login.html
 /javascripts/templates/dashboard.html
+/javascripts/templates/dashboard_menu.html
 /javascripts/templates/exam_add.html
 /javascripts/templates/exam_item.html
 /javascripts/templates/exam_list.html
 /javascripts/templates/examiner_item.html
 /javascripts/templates/examinerList.html
 /javascripts/templates/header.html
-/javascripts/templates/menu.html
 /javascripts/templates/menu_admin.html
+/javascripts/templates/exam_view.html
+/javascripts/templates/exam_menu.html
 
 /javascripts/views/login.js
-/javascripts/views/menu.js
+/javascripts/views/dashboard_menu.js
 /javascripts/views/menu_admin.js
 /javascripts/views/exam/item.js
 /javascripts/views/exam/list.js
 /javascripts/views/exam/add.js
+/javascripts/views/exam/menu.js
+/javascripts/views/exam/view.js
 /javascripts/views/examinerDashboard.js
 /javascripts/views/examinerList.js
 /javascripts/views/examiner.js

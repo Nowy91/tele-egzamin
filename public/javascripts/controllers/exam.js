@@ -4,7 +4,6 @@ Teleegzam.module('ExamController', function(Controller, Teleegzam, Backbone, Mar
     var collection;
 
     Controller.showAll = function() {
-
         layout = new App.Layouts.Dashboard;
 
         var fetchingExams = $.ajax({
@@ -25,6 +24,22 @@ Teleegzam.module('ExamController', function(Controller, Teleegzam, Backbone, Mar
             });
 
             Teleegzam.mainRegion.show(layout);
+        });
+    }
+
+    Controller.showExam = function(path) {
+        var examId = path.toString().split('/')[5];
+
+        var gettingExam = $.ajax({
+            type: 'GET',
+            url: '/exam/view/' + examId,
+            dataType: 'json'
+        });
+
+        $.when(gettingExam).done(function(exam) {
+            var examModel = new App.Models.Exam(exam);
+            layout.menu.show(new App.Views.ExamMenu);
+            layout.content.show(new App.Views.ExamView({model: examModel}));
         });
     }
 

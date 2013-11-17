@@ -15,3 +15,13 @@ exports.add = function(req, res) {
     Exam.create(req.body);
     res.end();
 }
+
+exports.view = function(req, res) {
+    Exam.find(req.params.id)
+        .success(function(exam){
+            res.json(exam);
+        })
+        .error(function(err) {
+            res.end(err);
+        });
+}
