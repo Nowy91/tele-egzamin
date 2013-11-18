@@ -53,11 +53,12 @@ Teleegzam.module('ExamController', function(Controller, Teleegzam, Backbone, Mar
         var addExam = $.ajax({
             type: 'POST',
             url: '/exam/add',
-            data: exam.toJSON()
+            data: exam.toJSON(),
+            dataType: 'json'
         });
 
-        $.when(addExam).done(function() {
-            collection.add(exam);
+        $.when(addExam).done(function(newExam) {
+            collection.add(newExam);
             var examsList = new App.Views.ExamList({collection: collection});
             layout.content.show(examsList);
         });

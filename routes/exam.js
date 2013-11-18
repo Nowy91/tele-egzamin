@@ -12,8 +12,13 @@ exports.list = function(req, res) {
 };
 
 exports.add = function(req, res) {
-    Exam.create(req.body);
-    res.end();
+    Exam.create(req.body)
+        .success(function(exam) {
+            res.json(exam);
+        })
+        .error(function(err) {
+            res.end(err);
+        });
 }
 
 exports.view = function(req, res) {
