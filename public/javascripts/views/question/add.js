@@ -17,7 +17,7 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
             examId: this.model.id
         });
         console.log(newQuestion.toString());
-        Teleegzam.ExamController.addQuestion(newQuestion);
+        Teleegzam.QuestionController.addQuestion(newQuestion);
     }
 
 });

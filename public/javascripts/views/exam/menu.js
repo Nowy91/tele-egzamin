@@ -12,7 +12,7 @@ App.Views.ExamMenu = Marionette.ItemView.extend({
 
     questionList: function(e) {
         this.switchSelectedItem('exam_questions');
-        Teleegzam.ExamController.showQuestions();
+        Teleegzam.QuestionController.showQuestions();
     },
 
     backToExamList: function () {

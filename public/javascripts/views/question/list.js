@@ -13,6 +13,6 @@ App.Views.QuestionList = Marionette.CompositeView.extend({
 
     addQuestionForm: function(e) {
         e.preventDefault();
-        Teleegzam.ExamController.addQuestionForm(e.target.href);
+        Teleegzam.QuestionController.addQuestionForm(e.target.href);
     }
 });

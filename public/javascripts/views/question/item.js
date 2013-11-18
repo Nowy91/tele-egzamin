@@ -11,6 +11,6 @@ App.Views.QuestionItem = Marionette.ItemView.extend({
 
     show: function(e) {
         e.preventDefault();
-        Teleegzam.ExamController.showQuestion(e.target.href);
+        Teleegzam.QuestionController.showQuestion(e.target.href);
     }
 });
