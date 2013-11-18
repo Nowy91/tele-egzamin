@@ -1,8 +1,16 @@
 App.Views.ExamView = Marionette.ItemView.extend({
 
+    events: {
+        'click a.btn-danger': 'deleteExam'
+    },
+
     initialize: function() {
-        //console.log('tu: ' + this.model);
         this.template = App.Templates.get('exam_view');
+    },
+
+    deleteExam: function(e) {
+        e.preventDefault();
+        Teleegzam.ExamController.deleteExam(e.target.href);
     }
 
 })

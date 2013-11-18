@@ -25,3 +25,16 @@ exports.view = function(req, res) {
             res.end(err);
         });
 }
+
+exports.delete = function(req, res) {
+    Exam.find(req.params.id)
+        .success(function(exam){
+            exam.destroy()
+                .success(function(){
+                    res.end();
+            });
+        })
+        .error(function(err) {
+            res.end(err);
+        });
+}

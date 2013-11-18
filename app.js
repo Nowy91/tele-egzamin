@@ -38,6 +38,7 @@ app.get('/', routes.index);
 app.get('/exams', exam.list);
 app.post('/exam/add', exam.add);
 app.get('/exam/view/:id', exam.view);
+app.delete('/exam/delete/:id', exam.delete);
 
 app.get('/examiners',examiner.list);
 
