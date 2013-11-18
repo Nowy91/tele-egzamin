@@ -9,6 +9,7 @@ var path = require('path');
 var routes = require('./routes');
 var db = require('./routes/db');
 var exam = require('./routes/exam');
+var question = require('./routes/question');
 var examiner = require('./routes/examiner');
 
 var app = express();
@@ -36,6 +37,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/exams', exam.list);
+app.get('/exam/view/:id/questions', question.list);
 app.post('/exam/add', exam.add);
 app.get('/exam/view/:id', exam.view);
 app.delete('/exam/delete/:id', exam.delete);

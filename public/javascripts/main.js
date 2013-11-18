@@ -20,7 +20,9 @@
                 "exam_menu",
                 "examiner_item",
                 "examinerList",
-                "menu_admin"
+                "menu_admin",
+                "question_item",
+                "question_list"
             ],
             templates: {},
 

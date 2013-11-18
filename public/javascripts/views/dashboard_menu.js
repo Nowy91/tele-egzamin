@@ -20,12 +20,7 @@ App.Views.Menu = Marionette.ItemView.extend({
     },
 
     switchSelectedItem: function(name) {
-        $('a').parent().each(function() {
-            if ($(this).hasClass('active')) {
-                $(this).removeClass('active');
-            }
-        });
-
+        $('li.active').removeClass('active');
         $('a.' + name).parent().addClass('active');
     }
 

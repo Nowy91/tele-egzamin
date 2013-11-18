@@ -12,6 +12,9 @@ module.exports = function (sequelize, DataTypes) {
         },
         maxPoints: {
             type: Sequelize.DECIMAL(6, 3)
+        },
+        examId: {
+            type: Sequelize.INTEGER
         }
     });
 }; 
