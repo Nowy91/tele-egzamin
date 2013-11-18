@@ -16,7 +16,7 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
             maxPoints: $(e.currentTarget).find('input#maxpoints').val(),
             examId: this.model.id
         });
-        console.log(newQuestion.toString());
+
         Teleegzam.QuestionController.addQuestion(newQuestion);
     }
 

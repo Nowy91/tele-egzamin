@@ -8,9 +8,8 @@ App.Views.ExamView = Marionette.ItemView.extend({
         this.template = App.Templates.get('exam_view');
     },
 
-    deleteExam: function(e) {
-        e.preventDefault();
-        Teleegzam.ExamController.deleteExam(e.target.href);
+    deleteExam: function() {
+        Teleegzam.ExamController.deleteExam(this.model.id);
     }
 
 })

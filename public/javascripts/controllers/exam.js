@@ -30,20 +30,10 @@ Teleegzam.module('ExamController', function(Controller, Teleegzam, Backbone, Mar
         });
     }
 
-    Controller.showExam = function(path) {
-        examId = path.toString().split('/')[5];
-
-        var getExam = $.ajax({
-            type: 'GET',
-            url: '/exam/view/' + examId,
-            dataType: 'json'
-        });
-
-        $.when(getExam).done(function (exam) {
-            examModel = new App.Models.Exam(exam);
-            layout.menu.show(new App.Views.ExamMenu);
-            layout.content.show(new App.Views.ExamView({model: examModel}));
-        });
+    Controller.showExam = function(examId) {
+        examModel = collection.get(examId);
+        layout.menu.show(new App.Views.ExamMenu);
+        layout.content.show(new App.Views.ExamView({model: examModel}));
     }
 
     Controller.addForm = function() {
@@ -67,9 +57,7 @@ Teleegzam.module('ExamController', function(Controller, Teleegzam, Backbone, Mar
         });
     }
 
-    Controller.deleteExam = function (path) {
-        var examId = path.toString().split('/')[5];
-
+    Controller.deleteExam = function (examId) {
         var deleteExam = $.ajax({
             type: 'DELETE',
             url: '/exam/delete/' + examId
