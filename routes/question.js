@@ -10,3 +10,36 @@ exports.list = function(req, res) {
             res.end(err);
         });
 };
+
+exports.add = function(req, res) {
+    Question.create(req.body)
+        .success(function(question) {
+            res.json(question);
+        })
+        .error(function(err) {
+            res.end(err);
+        });
+}
+
+exports.view = function(req, res) {
+    Question.find(req.params.id)
+        .success(function(exam){
+            res.json(exam);
+        })
+        .error(function(err) {
+            res.end(err);
+        });
+}
+
+exports.delete = function(req, res) {
+    Question.find(req.params.id)
+        .success(function(question){
+            question.destroy()
+                .success(function(){
+                    res.end();
+                });
+        })
+        .error(function(err) {
+            res.end(err);
+        });
+}

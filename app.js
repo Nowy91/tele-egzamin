@@ -37,7 +37,12 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/exams', exam.list);
+
 app.get('/exam/view/:id/questions', question.list);
+app.get('/questions/view/:id', question.view);
+app.post('/questions/add', question.add);
+app.delete('/questions/delete/:id', question.delete);
+
 app.post('/exam/add', exam.add);
 app.get('/exam/view/:id', exam.view);
 app.delete('/exam/delete/:id', exam.delete);

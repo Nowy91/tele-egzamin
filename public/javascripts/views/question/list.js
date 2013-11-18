@@ -4,7 +4,7 @@ App.Views.QuestionList = Marionette.CompositeView.extend({
     itemViewContainer: 'tbody',
 
     events: {
-        'click a.btn-success': 'addQuestion'
+        'click a.question_add': 'addQuestionForm'
     },
 
     initialize: function () {

@@ -22,7 +22,9 @@
                 "examinerList",
                 "menu_admin",
                 "question_item",
-                "question_list"
+                "question_list",
+                "question_add",
+                "question_view"
             ],
             templates: {},
 
