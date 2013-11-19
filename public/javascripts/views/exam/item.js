@@ -11,7 +11,7 @@ App.Views.ExamItem = Marionette.ItemView.extend({
     },
 
     show: function() {
-        Teleegzam.ExamController.showExam(this.model.id);
+        Teleegzam.Controllers.Exam.showExam(this.model.id);
     }
 
 });

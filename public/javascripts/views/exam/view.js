@@ -1,6 +1,7 @@
 App.Views.ExamView = Marionette.ItemView.extend({
 
     events: {
+        'click a.btn-warning': 'editExam',
         'click a.btn-danger': 'deleteExam'
     },
 
@@ -9,7 +10,11 @@ App.Views.ExamView = Marionette.ItemView.extend({
     },
 
     deleteExam: function() {
-        Teleegzam.ExamController.deleteExam(this.model.id);
+        Teleegzam.Controllers.Exam.deleteExam(this.model.id);
+    },
+
+    editExam: function() {
+        Teleegzam.Controllers.Exam.editForm(this.model.id);
     }
 
 })

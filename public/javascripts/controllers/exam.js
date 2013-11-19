@@ -1,82 +1,106 @@
-Teleegzam.module('ExamController', function(Controller, Teleegzam, Backbone, Marionette, $, _) {
+Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Marionette, $, _) {
 
     var layout;
     var collection;
     var examModel;
-    var examId;
-    var questionId;
 
-    Controller.showAll = function() {
-        layout = new App.Layouts.Dashboard;
+    Controller.Exam = {
+        showAll: function () {
+            layout = new App.Layouts.Dashboard;
 
-        var fetchingExams = $.ajax({
-            type: 'GET',
-            url: '/exams',
-            dataType: 'json'
-        });
+            var fetchingExams = $.ajax({
+                type: 'GET',
+                url: '/exams',
+                dataType: 'json'
+            });
 
-        $.when(fetchingExams).done(function (exams) {
+            $.when(fetchingExams).done(function (exams) {
 
-            collection = new App.Collections.Exams(exams);
-            var examsList = new App.Views.ExamList({collection: collection});
+                collection = new App.Collections.Exams(exams);
+                var examsList = new App.Views.ExamList({collection: collection});
 
-            layout.on("show", function () {
-                layout.header.show(new App.Views.Header);
+                layout.on("show", function () {
+                    layout.header.show(new App.Views.Header);
+                    layout.menu.show(new App.Views.Menu);
+                    layout.content.show(examsList);
+                });
+
+                Teleegzam.mainRegion.show(layout);
+            });
+        },
+
+        showExam: function (examId) {
+            examModel = collection.get(examId);
+            layout.menu.show(new App.Views.ExamMenu);
+            layout.content.show(new App.Views.ExamView({model: examModel}));
+        },
+
+        addForm: function () {
+            var addExamView = new App.Views.ExamAdd({collection: collection});
+            layout.content.show(addExamView);
+        },
+
+        editForm: function(examId) {
+            examModel = collection.get(examId);
+            layout.content.show(new App.Views.ExamEdit({model: examModel}));
+        },
+
+        addExam: function (exam) {
+            var addExam = $.ajax({
+                type: 'POST',
+                url: '/exam/add',
+                data: exam.toJSON(),
+                dataType: 'json'
+            });
+
+            $.when(addExam).done(function (newExam) {
+                collection.add(newExam);
+                var examsList = new App.Views.ExamList({collection: collection});
+                layout.content.show(examsList);
+            });
+        },
+
+        editExam: function (exam) {
+            var editExam = $.ajax({
+                type: 'POST',
+                url: '/exam/edit/' + exam.id,
+                data: exam.toJSON(),
+                dataType: 'json'
+            });
+
+            $.when(editExam).done(function (editedExam) {
+                var oldExam = collection.get(exam.id);
+                collection.remove(oldExam);
+
+                collection.add(editedExam);
+                var examsList = new App.Views.ExamList({collection: collection});
                 layout.menu.show(new App.Views.Menu);
                 layout.content.show(examsList);
             });
+        },
 
-            Teleegzam.mainRegion.show(layout);
-        });
-    }
+        deleteExam: function (examId) {
+            var deleteExam = $.ajax({
+                type: 'DELETE',
+                url: '/exam/delete/' + examId
+            });
 
-    Controller.showExam = function(examId) {
-        examModel = collection.get(examId);
-        layout.menu.show(new App.Views.ExamMenu);
-        layout.content.show(new App.Views.ExamView({model: examModel}));
-    }
+            $.when(deleteExam).done(function () {
+                var deletedModel = collection.get(examId);
+                collection.remove(deletedModel);
 
-    Controller.addForm = function() {
-        var addExamView = new App.Views.ExamAdd({collection: collection});
-        layout.content.show(addExamView);
-    }
+                var examsList = new App.Views.ExamList({collection: collection});
 
-    Controller.addExam = function(exam) {
+                layout.menu.show(new App.Views.Menu);
+                layout.content.show(examsList);
+            });
+        },
 
-        var addExam = $.ajax({
-            type: 'POST',
-            url: '/exam/add',
-            data: exam.toJSON(),
-            dataType: 'json'
-        });
-
-        $.when(addExam).done(function(newExam) {
-            collection.add(newExam);
-            var examsList = new App.Views.ExamList({collection: collection});
-            layout.content.show(examsList);
-        });
-    }
-
-    Controller.deleteExam = function (examId) {
-        var deleteExam = $.ajax({
-            type: 'DELETE',
-            url: '/exam/delete/' + examId
-        });
-
-        $.when(deleteExam).done(function () {
-            var deletedModel = collection.get(examId);
-            collection.remove(deletedModel);
-
-            var examsList = new App.Views.ExamList({collection: collection});
-
-            layout.menu.show(new App.Views.Menu);
-            layout.content.show(examsList);
-        });
-    }
-
-    Controller.getModel = function (type) {
-        if(type == "examModel")return examModel;
-        else if(type == "layout")return layout;
-        else if(type == "examId")return examId;
+        getModel: function (type) {
+            if (type == "examModel")
+                return examModel;
+            else
+                return layout;
+        }
     }
 });

@@ -1,8 +1,12 @@
-Teleegzam.module('LoginController', function(Controller, Teleegzam, Backbone, Marionette, $, _) {
+Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Marionette, $, _) {
 
-    Controller.index = function() {
-        var loginView = new App.Views.Login;
-        Teleegzam.mainRegion.show(loginView);
-    };
+    Controller.Login = {
+
+        index: function () {
+            this.loginView = new App.Views.Login;
+            Teleegzam.mainRegion.show(this.loginView);
+        }
+
+    }
 
 });

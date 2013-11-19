@@ -3,20 +3,19 @@ App.Views.ExamMenu = Marionette.ItemView.extend({
     events: {
         'click .back-button': 'backToExamList',
         'click .exam_questions': 'questionList'
-
     },
 
     initialize: function () {
         this.template = App.Templates.get('exam_menu');
     },
 
-    questionList: function(e) {
+    questionList: function() {
         this.switchSelectedItem('exam_questions');
-        Teleegzam.QuestionController.showQuestions();
+        Teleegzam.Controllers.Question.showQuestions();
     },
 
     backToExamList: function () {
-        Teleegzam.ExamController.showAll();
+        Teleegzam.Controllers.Exam.showAll();
     },
 
     switchSelectedItem: function(name) {

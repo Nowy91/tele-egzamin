@@ -1,17 +1,17 @@
-App.Views.ExamAdd = Marionette.ItemView.extend({
+App.Views.ExamEdit = Marionette.ItemView.extend({
 
     events: {
         'submit': 'submit'
     },
 
     initialize: function() {
-        this.template = App.Templates.get('exam_add');
+        this.template = App.Templates.get('exam_edit');
     },
 
     submit: function(e) {
         e.preventDefault();
 
-        var newExam = new App.Models.Exam({
+        this.model.set({
             title: $(e.currentTarget).find('input#title').val(),
             date: $(e.currentTarget).find('input#date').val(),
             numberOfStudents: $(e.currentTarget).find('input#numberOfStudents').val(),
@@ -19,7 +19,7 @@ App.Views.ExamAdd = Marionette.ItemView.extend({
             status: $(e.currentTarget).find('input#status').val()
         });
 
-        Teleegzam.Controllers.Exam.addExam(newExam);
+        Teleegzam.Controllers.Exam.editExam(this.model);
     }
 
 });

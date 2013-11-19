@@ -31,6 +31,22 @@ exports.view = function(req, res) {
         });
 }
 
+exports.edit = function(req, res) {
+    Exam.find(req.params.id)
+        .success(function(exam) {
+            exam.updateAttributes({
+                title: req.body.title,
+                date: req.body.date,
+                numberOfStudents: req.body.numberOfStudents,
+                duration: req.body.duration,
+                status: req.body.status
+            })
+            .success(function() {
+                res.json(exam);
+            });
+        })
+}
+
 exports.delete = function(req, res) {
     Exam.find(req.params.id)
         .success(function(exam){
