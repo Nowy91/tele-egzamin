@@ -3,37 +3,34 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
     var layout;
     var collection;
     var examModel;
-    var examId;
-    var questionId;
+    var questionModel;
+
 
     Controller.Question = {
 
-        showQuestions: function() {
+        showAll: function () {
             examModel = Teleegzam.Controllers.Exam.getModel("examModel");
             layout = Teleegzam.Controllers.Exam.getModel("layout");
-            examId = examModel.id;
 
             var getQuestions = $.ajax({
                 type: 'GET',
-                url: '/exam/view/'+examId+'/questions',
+                url: '/exam/view/' + examModel.id + '/questions',
                 dataType: 'json'
             });
-            $.when(getQuestions).done(function (questions) {
 
+            $.when(getQuestions).done(function (questions) {
                 collection = new App.Collections.Questions(questions);
                 var questionsList = new App.Views.QuestionList({collection: collection, model: examModel});
-
                 layout.content.show(questionsList);
-
             });
         },
 
-        addQuestionForm: function(){
+        addForm: function () {
             var addQuestionView = new App.Views.QuestionAdd({model: examModel});
             layout.content.show(addQuestionView);
         },
 
-        addQuestion: function(question) {
+        add: function (question) {
 
             var addExam = $.ajax({
                 type: 'POST',
@@ -42,46 +39,52 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 dataType: 'json'
             });
 
-            $.when(addExam).done(function(newQuestion) {
+            $.when(addExam).done(function (newQuestion) {
                 collection.add(newQuestion);
                 var questionList = new App.Views.QuestionList({collection: collection, model: examModel});
                 layout.content.show(questionList);
             });
         },
 
-        showQuestion: function(path) {
+        showSingle: function (qId) {
 
-            var getExam = $.ajax({
-                type: 'GET',
-                url: path,
-                dataType: 'json'
-            });
+            questionModel = collection.get(qId);
+            questionModel.set({title: examModel.get("title")});
+            layout.content.show(new App.Views.QuestionView({model: questionModel}));
 
-            $.when(getExam).done(function (question) {
-                var questionModel = new App.Models.Question(question);
-                questionModel.set ({title: examModel.get("title")});
-                layout.content.show(new App.Views.QuestionView({model: questionModel}));
-                questionId = questionModel.id;
-            });
         },
 
-        deleteQuestion: function () {
+        delete: function () {
 
             var deleteQuestion = $.ajax({
                 type: 'DELETE',
-                url: '/questions/delete/' + questionId
+                url: '/questions/delete/' + questionModel.id
             });
 
             $.when(deleteQuestion).done(function () {
-                var deletedModel = collection.get(questionId);
-                collection.remove(questionId);
-
+                collection.remove(questionModel);
                 var questionsList = new App.Views.QuestionList({collection: collection, model: examModel});
-
                 layout.content.show(questionsList);
             });
+        },
+        editForm: function () {
+            var editForm = new App.Views.QuestionEdit({ model: questionModel});
+            layout.content.show(editForm);
+        },
+        edit: function (question) {
+
+            var editQuestion = $.ajax({
+                type: 'POST',
+                url: '/questions/edit/' + questionModel.id,
+                data: question.toJSON(),
+                dataType: 'json'
+            });
+
+            $.when(editQuestion).done(function (newQuestion) {
+                collection.get(newQuestion).set({content: newQuestion.content, maxPoints: newQuestion.maxPoints});
+                var questionList = new App.Views.QuestionList({collection: collection, model: examModel});
+                layout.content.show(questionList);
+            });
         }
-
     }
-
 });

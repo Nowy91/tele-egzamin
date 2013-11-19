@@ -42,6 +42,7 @@ app.get('/exam/view/:id/questions', question.list);
 app.get('/questions/view/:id', question.view);
 app.post('/questions/add', question.add);
 app.delete('/questions/delete/:id', question.delete);
+app.post('/questions/edit/:id', question.edit);
 
 app.post('/exam/add', exam.add);
 app.get('/exam/view/:id', exam.view);

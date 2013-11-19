@@ -25,7 +25,8 @@
                 "question_item",
                 "question_list",
                 "question_add",
-                "question_view"
+                "question_view",
+                "question_edit"
             ],
             templates: {},
 

@@ -10,7 +10,11 @@ App.Views.QuestionView = Marionette.ItemView.extend({
 
     deleteQuestion: function(e) {
         e.preventDefault();
-        Teleegzam.Controllers.Question.deleteQuestion();
-    }
+        Teleegzam.Controllers.Question.delete();
+    },
 
-});
+    editQuestion: function(e) {
+        e.preventDefault();
+        Teleegzam.Controllers.Question.editForm();
+    }
+})
