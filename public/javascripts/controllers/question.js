@@ -20,6 +20,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
             $.when(getQuestions).done(function (questions) {
                 collection = new App.Collections.Questions(questions);
+                collection.sort();
                 var questionsList = new App.Views.QuestionList({collection: collection, model: examModel});
                 layout.content.show(questionsList);
             });
@@ -82,6 +83,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
             $.when(editQuestion).done(function (newQuestion) {
                 collection.get(newQuestion).set({content: newQuestion.content, maxPoints: newQuestion.maxPoints});
+                collection.sort();
                 var questionList = new App.Views.QuestionList({collection: collection, model: examModel});
                 layout.content.show(questionList);
             });
