@@ -9,7 +9,7 @@ App.Views.ExamView = Marionette.ItemView.extend({
     },
 
     deleteExam: function() {
-        Teleegzam.ExamController.deleteExam(this.model.id);
+        Teleegzam.Controllers.Exam.deleteExam(this.model.id);
     }
 
 })

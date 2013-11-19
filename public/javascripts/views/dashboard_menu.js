@@ -10,18 +10,12 @@ App.Views.Menu = Marionette.ItemView.extend({
     },
 
     exams: function() {
-        this.switchSelectedItem('exams');
-        Teleegzam.ExamController.showAll();
+        Teleegzam.Controllers.Exam.showAll();
     },
 
     addExam: function() {
-        this.switchSelectedItem('add_exam');
-        Teleegzam.ExamController.addForm();
-    },
-
-    switchSelectedItem: function(name) {
-        $('li.active').removeClass('active');
-        $('a.' + name).parent().addClass('active');
+        Teleegzam.Controllers.Exam.addForm();
     }
+
 
 });

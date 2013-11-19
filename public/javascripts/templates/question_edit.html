@@ -1,0 +1,37 @@
+<script id="question_add_template" type="text/template">
+
+    <div class="page-header">
+        <h1><%= title %>
+            <small></small>
+        </h1>
+    </div>
+    <form class="form-horizontal" role="form">
+
+        <div class="form-group">
+            <label for="content" class="col-sm-2 control-label">
+                Treść
+                pytania</label>
+
+            <div class="col-sm-5">
+                <textarea class="form-control" rows="3" id="content"><%= content %></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="maxpoints" class="col-sm-2 control-label">
+                Ilość
+                punktów</label>
+
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="maxpoints" value="<%= maxPoints %>">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">
+                    Zatwierdź
+                    zmiany
+                </button>
+            </div>
+        </div>
+    </form>
+</script>

@@ -19,7 +19,7 @@ App.Views.ExamAdd = Marionette.ItemView.extend({
             status: $(e.currentTarget).find('input#status').val()
         });
 
-        Teleegzam.ExamController.addExam(newExam);
+        Teleegzam.Controllers.Exam.addExam(newExam);
     }
 
 });

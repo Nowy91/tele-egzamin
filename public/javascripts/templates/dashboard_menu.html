@@ -7,5 +7,11 @@
         <li><a class="add_exam">Stwórz egzamin</a></li>
         <li><a class="exam_history">Historia egzaminów</a></li>
     </ul>
+    <script>
+        $('.nav li a').click(function () {
+            $('.nav li.active').removeClass('active');
+            $(this).parent().addClass('active');
+        });
+</script>
 </script>
 

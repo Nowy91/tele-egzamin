@@ -18,9 +18,11 @@ CACHE:
 
 /javascripts/models/exam.js
 /javascripts/models/examiner.js
+/javascripts/models/question.js
 
 /javascripts/collections/exams.js
 /javascripts/collections/examiners.js
+/javascripts/collections/questions.js
 
 /javascripts/templates/login.html
 /javascripts/templates/dashboard.html
@@ -34,6 +36,11 @@ CACHE:
 /javascripts/templates/menu_admin.html
 /javascripts/templates/exam_view.html
 /javascripts/templates/exam_menu.html
+/javascripts/templates/question_add.html
+/javascripts/templates/question_view.html
+/javascripts/templates/question_item.html
+/javascripts/templates/question_edit.html
+/javascripts/templates/question_list.html
 
 /javascripts/views/login.js
 /javascripts/views/dashboard_menu.js
@@ -47,6 +54,11 @@ CACHE:
 /javascripts/views/examinerList.js
 /javascripts/views/examiner.js
 /javascripts/views/header.js
+/javascripts/views/question/item.js
+/javascripts/views/question/edit.js
+/javascripts/views/question/list.js
+/javascripts/views/question/view.js
+/javascripts/views/question/add.js
 
 /stylesheets/bootstrap.min.css
 /stylesheets/datepicker.css

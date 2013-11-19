@@ -1,11 +1,11 @@
-App.Views.QuestionAdd = Marionette.ItemView.extend({
+App.Views.QuestionEdit = Marionette.ItemView.extend({
 
     events: {
         'submit': 'submit'
     },
 
     initialize: function() {
-        this.template = App.Templates.get('question_add');
+        this.template = App.Templates.get('question_edit');
     },
 
     submit: function(e) {
@@ -17,7 +17,7 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
             examId: this.model.id
         });
 
-        Teleegzam.Controllers.Question.add(newQuestion);
+        Teleegzam.Controllers.Question.edit(newQuestion);
     }
 
 });

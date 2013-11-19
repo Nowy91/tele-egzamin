@@ -1,7 +1,8 @@
 App.Views.QuestionView = Marionette.ItemView.extend({
 
     events: {
-        'click a.btn-danger': 'deleteQuestion'
+        'click a.btn-danger': 'deleteQuestion',
+        'click a.btn-warning': 'editQuestion'
     },
 
     initialize: function() {
@@ -10,7 +11,11 @@ App.Views.QuestionView = Marionette.ItemView.extend({
 
     deleteQuestion: function(e) {
         e.preventDefault();
-        Teleegzam.QuestionController.deleteQuestion();
-    }
+        Teleegzam.Controllers.Question.delete();
+    },
 
+    editQuestion: function(e) {
+        e.preventDefault();
+        Teleegzam.Controllers.Question.editForm();
+    }
 })

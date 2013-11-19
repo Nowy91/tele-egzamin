@@ -1,6 +1,7 @@
 App.Views.QuestionItem = Marionette.ItemView.extend({
 
     tagName: 'tr',
+
     events: {
         'click a': 'show'
     },
@@ -11,6 +12,6 @@ App.Views.QuestionItem = Marionette.ItemView.extend({
 
     show: function(e) {
         e.preventDefault();
-        Teleegzam.QuestionController.showQuestion(e.target.href);
+        Teleegzam.Controllers.Question.showSingle(this.model.id);
     }
 });
