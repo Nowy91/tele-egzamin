@@ -18,13 +18,19 @@
                 "exam_list",
                 "exam_view",
                 "exam_menu",
+                "exam_edit",
                 "examiner_item",
                 "examiner_list",
                 "examiner_add",
                 "examiner_view",
                 "examiner_menu",
                 "examiner_edit",
-                "menu_admin"
+                "menu_admin",
+                "question_item",
+                "question_list",
+                "question_add",
+                "question_view",
+                "question_edit"
             ],
             templates: {},
 

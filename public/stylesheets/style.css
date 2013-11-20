@@ -1,8 +1,12 @@
-body {
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-    color: #00b7ff;
-    cursor: pointer;
-}
+body {font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;}
+td, th{text-align:center;}
+th.small {width:20px;}
+.nav hr {margin: 0  0 5px 0;}
+.nav h4 {margin: 20px 0 5px 0;}
+a {color: #00b7ff; cursor: pointer}
+form{margin-top:30px;}
+.input-group { margin-bottom: 5px;}
+.exam_data_left {padding-left:0; margin-left:0}
+.exam_data_right {padding-right:0; margin-right:0}
+.back-button {text-align: left; margin-top:30px;}
+.mLeft10 {margin-left:10px;}

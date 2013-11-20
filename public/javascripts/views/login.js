@@ -9,7 +9,7 @@ App.Views.Login = Marionette.ItemView.extend({
     },
 
     exams: function () {
-        Teleegzam.ExamController.showAll();
+        Teleegzam.Controllers.Exam.showAll();
     }
 
 });

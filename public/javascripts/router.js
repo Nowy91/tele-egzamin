@@ -11,11 +11,11 @@ App.Router = Marionette.AppRouter.extend({
 var API = {
 
     index: function() {
-        Teleegzam.LoginController.index();
+        Teleegzam.Controllers.Login.index();
     },
 
     exams: function() {
-        Teleegzam.ExamController.showAll();
+        Teleegzam.Controllers.Exam.showAll();
     },
 
     examiners: function() {

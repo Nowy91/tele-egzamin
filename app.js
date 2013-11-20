@@ -9,6 +9,7 @@ var path = require('path');
 var routes = require('./routes');
 var db = require('./routes/db');
 var exam = require('./routes/exam');
+var question = require('./routes/question');
 var examiner = require('./routes/examiner');
 
 var app = express();
@@ -36,9 +37,18 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/exams', exam.list);
+
+app.get('/exam/view/:id/questions', question.list);
+app.get('/questions/view/:id', question.view);
+app.post('/questions/add', question.add);
+app.delete('/questions/delete/:id', question.delete);
+app.post('/questions/edit/:id', question.edit);
+
 app.post('/exam/add', exam.add);
 app.get('/exam/view/:id', exam.view);
 app.delete('/exam/delete/:id', exam.delete);
+app.post('/exam/edit/:id', exam.edit);
+
 app.get('/examiners',examiner.list);
 app.post('/examiner/add', examiner.add);
 app.get('/examiner/view/:id', examiner.view);

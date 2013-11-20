@@ -10,9 +10,8 @@ App.Views.ExamItem = Marionette.ItemView.extend({
         this.template = App.Templates.get('exam_item');
     },
 
-    show: function(e) {
-        e.preventDefault();
-        Teleegzam.ExamController.showExam(e.target.href);
+    show: function() {
+        Teleegzam.Controllers.Exam.showExam(this.model.id);
     }
 
 });
