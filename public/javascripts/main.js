@@ -19,7 +19,11 @@
                 "exam_view",
                 "exam_menu",
                 "examiner_item",
-                "examinerList",
+                "examiner_list",
+                "examiner_add",
+                "examiner_view",
+                "examiner_menu",
+                "examiner_edit",
                 "menu_admin"
             ],
             templates: {},

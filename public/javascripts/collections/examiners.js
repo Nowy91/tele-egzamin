@@ -1,3 +1,3 @@
-  App.Collections.ExaminersCollection = Backbone.Collection.extend({
+  App.Collections.Examiners = Backbone.Collection.extend({
         model:App.Models.Examiner
     });

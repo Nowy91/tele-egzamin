@@ -18,6 +18,7 @@ CACHE:
 
 /javascripts/models/exam.js
 /javascripts/models/examiner.js
+/javascripts/models/user.js
 
 /javascripts/collections/exams.js
 /javascripts/collections/examiners.js
@@ -28,8 +29,15 @@ CACHE:
 /javascripts/templates/exam_add.html
 /javascripts/templates/exam_item.html
 /javascripts/templates/exam_list.html
+
+/javascripts/templates/examiner_add.html
+/javascripts/templates/examiner_edit.html
 /javascripts/templates/examiner_item.html
-/javascripts/templates/examinerList.html
+/javascripts/templates/examiner_menu.html
+/javascripts/templates/examiner_view.html
+/javascripts/templates/examiner_list.html
+
+
 /javascripts/templates/header.html
 /javascripts/templates/menu_admin.html
 /javascripts/templates/exam_view.html
@@ -43,10 +51,16 @@ CACHE:
 /javascripts/views/exam/add.js
 /javascripts/views/exam/menu.js
 /javascripts/views/exam/view.js
-/javascripts/views/examinerDashboard.js
-/javascripts/views/examinerList.js
-/javascripts/views/examiner.js
 /javascripts/views/header.js
+
+/javascripts/views/examiner/item.js
+/javascripts/views/examiner/list.js
+/javascripts/views/examiner/add.js
+/javascripts/views/examiner/menu.js
+/javascripts/views/examiner/view.js
+/javascripts/views/examiner/edit.js
+/javascripts/views/examiner/date.js
+
 
 /stylesheets/bootstrap.min.css
 /stylesheets/datepicker.css

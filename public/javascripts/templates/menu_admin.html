@@ -1,17 +1,9 @@
 <script id="menu_template" type="text/template">
-
     <div class="page-header">
         <h1>Menu</h1>
     </div>
     <ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
-        <li><a class="examiners">Lista egzaminatorów</a></li>
+        <li class="active"><a class="examiners">Lista egzaminatorów</a></li>
         <li><a class="add_examiner">Stwórz egzaminatora</a></li>
     </ul>
-
-    <script>
-        $(document).ready(function () {
-            $("a.<%= menuId %>").parent().addClass("active");
-        });
-</script>
-
 </script>

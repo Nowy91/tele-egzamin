@@ -10,7 +10,6 @@ App.Views.ExamAdd = Marionette.ItemView.extend({
 
     submit: function(e) {
         e.preventDefault();
-
         var newExam = new App.Models.Exam({
             title: $(e.currentTarget).find('input#title').val(),
             date: $(e.currentTarget).find('input#date').val(),
@@ -18,7 +17,6 @@ App.Views.ExamAdd = Marionette.ItemView.extend({
             duration: $(e.currentTarget).find('input#duration').val(),
             status: $(e.currentTarget).find('input#status').val()
         });
-
         Teleegzam.ExamController.addExam(newExam);
     }
 

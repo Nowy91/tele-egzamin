@@ -39,8 +39,11 @@ app.get('/exams', exam.list);
 app.post('/exam/add', exam.add);
 app.get('/exam/view/:id', exam.view);
 app.delete('/exam/delete/:id', exam.delete);
-
 app.get('/examiners',examiner.list);
+app.post('/examiner/add', examiner.add);
+app.get('/examiner/view/:id', examiner.view);
+app.delete('/examiner/delete/:id', examiner.delete);
+app.post('/examiner/edit/:id', examiner.edit);
 
 
 http.createServer(app).listen(app.get('port'), function () {

@@ -19,7 +19,7 @@ var API = {
     },
 
     examiners: function() {
-        //TODO
+        Teleegzam.ExaminerController.showAll();
     }
 
 }
