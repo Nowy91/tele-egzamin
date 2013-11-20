@@ -1,0 +1,42 @@
+<script id="add_exam_template" type="text/template">
+
+    <div class="tab-pane" id="add_exam">
+        <div class="page-header">
+            <h1>Dane egzaminatora</h1>
+        </div>
+        <form class="form-horizontal" role="form" action="" id="add_examiner">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Imię</label>
+                <label class="col-sm-3 control-label"><%= user.firstname %></label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Nazwisko</label>
+                <label class="col-sm-3 control-label"><%= user.lastname %></label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Nazwa użytkownika</label>
+                <label class="col-sm-3 control-label"><%= user.username %></label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Hasło</label>
+                <label class="col-sm-3 control-label"><%= user.password %></label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Email</label>
+                <label class="col-sm-3 control-label"><%= user.email %></label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Data utworzenia</label>
+                <label class="col-sm-3 control-label"><%= user.createdAt %></label>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Data modyfikacji</label>
+                <label class="col-sm-3 control-label"><%= user.updatedAt %></label>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-offset-2">
+         <a id="edit" class="btn btn-warning">Edytuj dane</a>
+         <a class="btn btn-danger col-sm-offset-1">Usuń egzaminatora</a>
+    </div>
+</script>
