@@ -18,6 +18,7 @@
                 "exam_list",
                 "exam_view",
                 "exam_menu",
+                "exam_edit",
                 "examiner_item",
                 "examinerList",
                 "menu_admin",

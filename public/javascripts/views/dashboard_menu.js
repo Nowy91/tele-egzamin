@@ -17,5 +17,4 @@ App.Views.Menu = Marionette.ItemView.extend({
         Teleegzam.Controllers.Exam.addForm();
     }
 
-
 });

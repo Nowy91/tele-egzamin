@@ -11,13 +11,11 @@ App.Views.ExamMenu = Marionette.ItemView.extend({
     },
 
     questionList: function(e) {
-
         Teleegzam.Controllers.Question.showAll();
     },
 
     backToExamList: function () {
         Teleegzam.Controllers.Exam.showAll();
     }
-
 
 })

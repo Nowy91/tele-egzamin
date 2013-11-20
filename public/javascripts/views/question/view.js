@@ -1,8 +1,8 @@
 App.Views.QuestionView = Marionette.ItemView.extend({
 
     events: {
-        'click a.btn-danger': 'deleteQuestion',
-        'click a.btn-warning': 'editQuestion'
+        'click a.btn-warning': 'editQuestion',
+        'click a.btn-danger': 'deleteQuestion'
     },
 
     initialize: function() {

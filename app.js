@@ -47,6 +47,7 @@ app.post('/questions/edit/:id', question.edit);
 app.post('/exam/add', exam.add);
 app.get('/exam/view/:id', exam.view);
 app.delete('/exam/delete/:id', exam.delete);
+app.post('/exam/edit/:id', exam.edit);
 
 app.get('/examiners',examiner.list);
 

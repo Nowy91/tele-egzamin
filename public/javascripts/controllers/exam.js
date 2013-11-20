@@ -5,7 +5,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
     var examModel;
 
     Controller.Exam = {
-
         showAll: function () {
             layout = new App.Layouts.Dashboard;
 
@@ -29,18 +28,24 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 Teleegzam.mainRegion.show(layout);
             });
         },
+
         showExam: function (examId) {
             examModel = collection.get(examId);
             layout.menu.show(new App.Views.ExamMenu);
             layout.content.show(new App.Views.ExamView({model: examModel}));
         },
+
         addForm: function () {
             var addExamView = new App.Views.ExamAdd({collection: collection});
             layout.content.show(addExamView);
         },
 
-        addExam: function (exam) {
+        editForm: function(examId) {
+            examModel = collection.get(examId);
+            layout.content.show(new App.Views.ExamEdit({model: examModel}));
+        },
 
+        addExam: function (exam) {
             var addExam = $.ajax({
                 type: 'POST',
                 url: '/exam/add',
@@ -51,6 +56,25 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             $.when(addExam).done(function (newExam) {
                 collection.add(newExam);
                 var examsList = new App.Views.ExamList({collection: collection});
+                layout.content.show(examsList);
+            });
+        },
+
+        editExam: function (exam) {
+            var editExam = $.ajax({
+                type: 'POST',
+                url: '/exam/edit/' + exam.id,
+                data: exam.toJSON(),
+                dataType: 'json'
+            });
+
+            $.when(editExam).done(function (editedExam) {
+                var oldExam = collection.get(exam.id);
+                collection.remove(oldExam);
+
+                collection.add(editedExam);
+                var examsList = new App.Views.ExamList({collection: collection});
+                layout.menu.show(new App.Views.Menu);
                 layout.content.show(examsList);
             });
         },
@@ -73,8 +97,10 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
         },
 
         getModel: function (type) {
-            if (type == "examModel")return examModel;
-            else if (type == "layout")return layout;
+            if (type == "examModel")
+                return examModel;
+            else
+                return layout;
         }
     }
 });
