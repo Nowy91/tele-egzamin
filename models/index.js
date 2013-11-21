@@ -9,7 +9,6 @@ var sequelize = new Sequelize('d5adfko5qnhupc', 'norkjiplytdgpw', '1N6gHWQOwXzIG
 });
 
 
-
 // load models
 var models = [
 	'User',
