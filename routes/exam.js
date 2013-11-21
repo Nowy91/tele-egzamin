@@ -1,39 +1,42 @@
 var models = require('./../models');
 var Exam = models.Exam;
 
-exports.list = function(req, res) {
+exports.list = function (req, res) {
     Exam.findAll()
-        .success(function(exams) {
+        .success(function (exams) {
             res.json(exams);
         })
-        .error(function(err) {
+        .error(function (err) {
             res.end(err);
         });
 };
 
-exports.add = function(req, res) {
+exports.add = function (req, res) {
     Exam.create(req.body)
-        .success(function(exam) {
+        .success(function (exam) {
+            var data = exam.dataValues;
+            data.isValid = true;
+            res.json(data);
+        })
+        .error(function (exam) {
+            exam.isValid = false;
+            res.json(exam);
+        });
+}
+
+exports.view = function (req, res) {
+    Exam.find(req.params.id)
+        .success(function (exam) {
             res.json(exam);
         })
-        .error(function(err) {
+        .error(function (err) {
             res.end(err);
         });
 }
 
-exports.view = function(req, res) {
+exports.edit = function (req, res) {
     Exam.find(req.params.id)
-        .success(function(exam){
-            res.json(exam);
-        })
-        .error(function(err) {
-            res.end(err);
-        });
-}
-
-exports.edit = function(req, res) {
-    Exam.find(req.params.id)
-        .success(function(exam) {
+        .success(function (exam) {
             exam.updateAttributes({
                 title: req.body.title,
                 date: req.body.date,
@@ -41,21 +44,27 @@ exports.edit = function(req, res) {
                 duration: req.body.duration,
                 status: req.body.status
             })
-            .success(function() {
-                res.json(exam);
-            });
+                .success(function (exam) {
+                    var data = exam.dataValues;
+                    data.isValid = true;
+                    res.json(data);
+                })
+                .error(function (exam) {
+                    exam.isValid = false;
+                    res.json(exam);
+                })
         })
 }
 
-exports.delete = function(req, res) {
+exports.delete = function (req, res) {
     Exam.find(req.params.id)
-        .success(function(exam){
+        .success(function (exam) {
             exam.destroy()
-                .success(function(){
+                .success(function () {
                     res.end();
-            });
+                });
         })
-        .error(function(err) {
+        .error(function (err) {
             res.end(err);
         });
 }
