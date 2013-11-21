@@ -9,16 +9,56 @@ module.exports = function (sequelize, DataTypes) {
             autoIncrement: true
         },
         title: {
-            type: Sequelize.STRING(50)
+            type: Sequelize.STRING(50),
+            validate: {
+                max: {
+                    args: 50,
+                    msg: "Tytuł nie może składać się z więcej niż 50 znaków."
+                },
+                notEmpty: {
+                    args: true,
+                    msg: "Pole nie może być puste."
+                }
+            }
         },
         date: {
-            type: Sequelize.DATE
+            type: Sequelize.DATE,
+            validate: {
+                isDate: {
+                    args: true,
+                    msg: "Zły format daty."
+                },
+                notEmpty: {
+                    args: true,
+                    msg: "Pole nie może być puste."
+                }
+            }
         },
         duration: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            validate: {
+                isNumeric: {
+                    args: true,
+                    msg: "Czas trwania musi być liczbą."
+                },
+                notEmpty: {
+                    args: true,
+                    msg: "Pole nie może być puste."
+                }
+            }
         },
         numberOfStudents: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            validate: {
+                isNumeric: {
+                    args: true,
+                    msg: "Liczba studentów musi być liczbą."
+                },
+                notEmpty: {
+                    args: true,
+                    msg: "Pole nie może być puste."
+                }
+            }
         },
         status: {
             type: Sequelize.STRING(20)

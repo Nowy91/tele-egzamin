@@ -15,7 +15,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
 
             $.when(fetchingExams).done(function (exams) {
-
                 collection = new App.Collections.Exams(exams);
                 var examsList = new App.Views.ExamList({collection: collection});
 
@@ -36,11 +35,10 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
         },
 
         addForm: function () {
-            var addExamView = new App.Views.ExamAdd({collection: collection});
-            layout.content.show(addExamView);
+            layout.content.show(new App.Views.ExamAdd);
         },
 
-        editForm: function(examId) {
+        editForm: function (examId) {
             examModel = collection.get(examId);
             layout.content.show(new App.Views.ExamEdit({model: examModel}));
         },
@@ -53,11 +51,16 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 dataType: 'json'
             });
 
-            $.when(addExam).done(function (newExam) {
-                collection.add(newExam);
-                var examsList = new App.Views.ExamList({collection: collection});
-                layout.content.show(examsList);
-            });
+            $.when(addExam)
+                .done(function (newExam) {
+                    if (newExam.isValid) {
+                        collection.add(newExam);
+                        layout.content.show(new App.Views.ExamList({collection: collection}));
+                    }
+                    else {
+                        Teleegzam.Validator.Form.messages(newExam);
+                    }
+                });
         },
 
         editExam: function (exam) {
@@ -69,13 +72,17 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
 
             $.when(editExam).done(function (editedExam) {
-                var oldExam = collection.get(exam.id);
-                collection.remove(oldExam);
+                if(editedExam.isValid) {
+                    var oldExam = collection.get(exam.id);
+                    collection.remove(oldExam);
+                    collection.add(editedExam);
 
-                collection.add(editedExam);
-                var examsList = new App.Views.ExamList({collection: collection});
-                layout.menu.show(new App.Views.Menu);
-                layout.content.show(examsList);
+                    layout.menu.show(new App.Views.Menu);
+                    layout.content.show(new App.Views.ExamList({collection: collection}));
+                }
+                else {
+                    Teleegzam.Validator.Form.messages(editedExam);
+                }
             });
         },
 
@@ -89,10 +96,8 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 var deletedModel = collection.get(examId);
                 collection.remove(deletedModel);
 
-                var examsList = new App.Views.ExamList({collection: collection});
-
                 layout.menu.show(new App.Views.Menu);
-                layout.content.show(examsList);
+                layout.content.show(new App.Views.ExamList({collection: collection}));
             });
         },
 

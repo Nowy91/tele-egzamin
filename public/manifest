@@ -16,6 +16,8 @@ CACHE:
 
 /javascripts/main.js
 
+/javascripts/utilities/validation.js
+
 /javascripts/models/exam.js
 /javascripts/models/examiner.js
 /javascripts/models/question.js
