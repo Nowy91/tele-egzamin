@@ -9,6 +9,7 @@ var models = [
   	'Token',
   	'Grade',
   	'Question',
+    'QuestionAnswer',
   	'Answer',
   	'OpenedAnswer',
   	'ClosedAnswer'

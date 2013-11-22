@@ -7,8 +7,8 @@ module.exports = function (sequelize, DataTypes) {
             type: Sequelize.BIGINT,
             primaryKey: true
         },
-        content: {
-            type: Sequelize.STRING
+        isChecked: {
+            type: Sequelize.BOOLEAN
         }
     });
-}; 
+};

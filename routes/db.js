@@ -2,7 +2,7 @@
  * Available only in NODE_ENV = 'development' 
  */
 
-var sequelize = require('./../models/index').sequelize;
+var sequelize = require('./../models/dbconnection').sequelize;
 var models = require('./../models');
 var Exam = models.Exam;
 

@@ -4,11 +4,11 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
         'submit': 'submit'
     },
 
-    initialize: function() {
+    initialize: function () {
         this.template = App.Templates.get('question_add');
     },
 
-    submit: function(e) {
+    submit: function (e) {
         e.preventDefault();
 
         var newQuestion = new App.Models.Question({
@@ -17,7 +17,21 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
             examId: this.model.id
         });
 
-        Teleegzam.Controllers.Question.add(newQuestion);
+        var answer;
+        var answers = new App.Collections.QuestionAnswers;
+        for (i = 0; i < 6; i++)
+            if ($(e.currentTarget).find('input#answerContent'+i).val() != "") {
+                answer= new App.Models.QuestionAnswer({
+                    content: $(e.currentTarget).find('#answerContent'+i).val(),
+                    isCorrect: $(e.currentTarget).find('#answerCorrect'+i).is(':checked')
+                });
+                console.log("Uzupełniłem dane answer "+i);
+                answers.add(answer);
+            }
+
+
+        Teleegzam.Controllers.Question.add(newQuestion, answers);
+
     }
 
 });

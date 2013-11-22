@@ -35,19 +35,26 @@ if ('development' == app.get('env')) {
     app.get('/initdb', db.init);
 }
 
+//main
 app.get('/', routes.index);
-app.get('/exams', exam.list);
 
+//exams
+app.get('/exams', exam.list);
+app.get('/exam/view/:id', exam.view);
 app.get('/exam/view/:id/questions', question.list);
+app.post('/exam/add', exam.add);
+app.post('/exam/edit/:id', exam.edit);
+app.delete('/exam/delete/:id', exam.delete);
+
+//questions
 app.get('/questions/view/:id', question.view);
+app.get('/questions/view/:id/answers', question.getAnswers);
 app.post('/questions/add', question.add);
+app.post('/questions/answers/add', question.addAnswers);
 app.delete('/questions/delete/:id', question.delete);
 app.post('/questions/edit/:id', question.edit);
 
-app.post('/exam/add', exam.add);
-app.get('/exam/view/:id', exam.view);
-app.delete('/exam/delete/:id', exam.delete);
-app.post('/exam/edit/:id', exam.edit);
+
 
 app.get('/examiners',examiner.list);
 app.post('/examiner/add', examiner.add);

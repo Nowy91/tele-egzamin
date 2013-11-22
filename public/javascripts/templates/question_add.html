@@ -5,6 +5,13 @@
             <small></small>
         </h1>
     </div>
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        Aby pytanie stało się <strong>zamknięte</strong> muszą pojawić się co najmniej dwie odpowiedzi. Liczba
+        wypełnionych pól to liczba wariontów. Każda zaznaczona odpowiedź po lewej stronie jest prawidłową. Jeżeli
+        pytanie ma być <strong>otwarte</strong> pozostaw pola odpowiedzi puste.
+    </div>
+
     <form class="form-horizontal" role="form">
 
         <div class="form-group">
@@ -25,13 +32,102 @@
                 <input type="text" class="form-control" id="maxpoints">
             </div>
         </div>
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            Jeżeli pytanie ma być typu zamkniętego - dodaj odpowiedzi. Kolejność odpowiedzi nie ma znaczenia, ponieważ podczas tworzenia instancji egzaminu system ją losuje.
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-2 control-label">
+                Odpowiedzi</label>
+
+            <div class="col-sm-5">
+                <div class="input-group" id="0" style="display: none">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" id="answerCorrect0">
+                                                </span>
+                    <input type="text" class="form-control" id="answerContent0">
+
+                </div>
+                <div class="input-group" id="1" style="display: none">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" id="answerCorrect1">
+                                                </span>
+                    <input type="text" class="form-control" id="answerContent1">
+
+                </div>
+                <div class="input-group" id="2" style="display: none">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" id="answerCorrect2">
+                                                </span>
+                    <input type="text" class="form-control" id="answerContent2">
+                </div>
+                <div class="input-group" id="3" style="display: none">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" id="answerCorrect3">
+                                                </span>
+                    <input type="text" class="form-control" id="answerContent3">
+                </div>
+                <div class="input-group" id="4" style="display: none">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" id="answerCorrect4">
+                                                </span>
+                    <input type="text" class="form-control" id="answerContent4">
+                </div>
+                <div class="input-group" id="5" style="display: none">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" id="answerCorrect5">
+                                                </span>
+                    <input type="text" class="form-control" id="answerContent5">
+                </div>
+
+                <a class="btn btn-success addClosedAnswer">Dodaj odpowiedź</a>
+                <a class="btn btn-danger removeClosedAnswer">Usuń odpowiedź</a>
+
+            </div>
+        </div>
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            Jeżeli chcesz użyć w zadaniu obrazu kliknij - dodaj obraz.
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-2 control-label">
+                Obraz</label>
+            <div class="col-sm-5">
+            <a class="btn btn-warning addClosedAnswer">Dodaj obraz</a>
+                </div>
+        </div>
+        <div class="alert alert-info alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            Sprawdź poprawność danych i kliknij zatwierdź pytanie
+        </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">
+                <button type="submit" class="btn btn-info">
                     Zatwierdź
                     pytanie
                 </button>
             </div>
         </div>
     </form>
+    <br/><br/>
+    </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var answerIndex = 0;
+            $(".addClosedAnswer").click(function () {
+                $("#" + answerIndex).fadeIn();
+                answerIndex++;
+                if(answerIndex>6)answerIndex = 6;
+            });
+            $(".removeClosedAnswer").click(function () {
+                answerIndex--;
+                $("#" + answerIndex).fadeOut(function(){
+                    $(this).children("input").val("");
+                });
+
+                if(answerIndex<0)answerIndex = 0;
+            });
+        });
+</script>
 </script>

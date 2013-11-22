@@ -1,0 +1,1 @@
+App.Models.QuestionAnswer = Backbone.Model.extend({});

@@ -30,7 +30,9 @@
                 "question_list",
                 "question_add",
                 "question_view",
-                "question_edit"
+                "question_edit",
+                "question_answer_item",
+                "question_answer_list"
             ],
             templates: {},
 

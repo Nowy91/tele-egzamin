@@ -1,9 +1,10 @@
 Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Marionette, $, _) {
 
     var layout;
-    var collection;
+    var questionCollection;
     var examModel;
     var questionModel;
+    var answerCollection;
 
 
     Controller.Question = {
@@ -19,9 +20,9 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
 
             $.when(getQuestions).done(function (questions) {
-                collection = new App.Collections.Questions(questions);
-                collection.sort();
-                var questionsList = new App.Views.QuestionList({collection: collection, model: examModel});
+                questionCollection = new App.Collections.Questions(questions);
+                questionCollection.sort();
+                var questionsList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                 layout.content.show(questionsList);
             });
         },
@@ -31,28 +32,54 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             layout.content.show(addQuestionView);
         },
 
-        add: function (question) {
+        add: function (question, answers) {
 
-            var addExam = $.ajax({
+            var addQuestion = $.ajax({
                 type: 'POST',
                 url: '/questions/add',
                 data: question.toJSON(),
                 dataType: 'json'
             });
 
-            $.when(addExam).done(function (newQuestion) {
-                collection.add(newQuestion);
-                var questionList = new App.Views.QuestionList({collection: collection, model: examModel});
+            $.when(addQuestion).done(function (newQuestion) {
+                questionCollection.add(newQuestion);
+
+                answers.forEach(function (model) {
+                    model.set({questionId: newQuestion.id});
+                    $.ajax({
+                        type: 'POST',
+                        url: '/questions/answers/add',
+                        data: model.toJSON(),
+                        dataType: 'json'
+                    });
+                });
+
+                var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                 layout.content.show(questionList);
             });
         },
 
         showSingle: function (qId) {
 
-            questionModel = collection.get(qId);
+            questionModel = questionCollection.get(qId);
             questionModel.set({title: examModel.get("title")});
             layout.content.show(new App.Views.QuestionView({model: questionModel}));
 
+            var getQuestionAnswers = $.ajax({
+                type: 'GET',
+                url: '/questions/view/' + questionModel.id + '/answers',
+                dataType: 'json'
+            });
+
+            $.when(getQuestionAnswers).done(function (answers) {
+
+                if (answers.length != 0) {
+                    answerCollection = new App.Collections.QuestionAnswers(answers);
+                    var answersList = new App.Views.QuestionAnswerList({collection: answerCollection});
+                    layout.addRegion('answers', "#answers")
+                    layout.answers.show(answersList);
+                }
+            });
         },
 
         delete: function () {
@@ -63,8 +90,8 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
 
             $.when(deleteQuestion).done(function () {
-                collection.remove(questionModel);
-                var questionsList = new App.Views.QuestionList({collection: collection, model: examModel});
+                questionCollection.remove(questionModel);
+                var questionsList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                 layout.content.show(questionsList);
             });
         },
@@ -82,9 +109,9 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
 
             $.when(editQuestion).done(function (newQuestion) {
-                collection.get(newQuestion).set({content: newQuestion.content, maxPoints: newQuestion.maxPoints});
-                collection.sort();
-                var questionList = new App.Views.QuestionList({collection: collection, model: examModel});
+                questionCollection.get(newQuestion).set({content: newQuestion.content, maxPoints: newQuestion.maxPoints});
+                questionCollection.sort();
+                var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                 layout.content.show(questionList);
             });
         }

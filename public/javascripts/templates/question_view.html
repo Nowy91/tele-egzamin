@@ -5,23 +5,29 @@
             <small></small>
         </h1>
     </div>
+    <div class="row">
+        <div class="col-xs-13 exam_data_left">
+            <ul class="list-group panel-info">
+                <li class="list-group-item active">
+                    Dane podstawowe:
+                </li>
+                <li class="list-group-item">
+                    <%= content %>
+                </li>
 
-    <div class="col-xs-13 exam_data_left">
-        <ul class="list-group">
-            <li class="list-group-item active">
-                Dane podstawowe:
-            </li>
-            <li class="list-group-item">
-                <%= content %>
-            </li>
+                <li class="list-group-item">
+                    <%= maxPoints %>
+                </li>
+            </ul>
+        </div>
 
-            <li class="list-group-item">
-                <%= maxPoints %>
-            </li>
-        </ul>
+        <a class="btn btn-danger pull-right mLeft10">Usuń pytanie</a>
+        <a class="btn btn-warning pull-right">Edytuj pytanie</a>
     </div>
+    <hr/>
 
-    <a class="btn btn-danger pull-right mLeft10">Usuń pytanie</a>
-    <a class="btn btn-warning pull-right">Edytuj pytanie</a>
+    <div class="row mBottom25" id="answers">
+
+    </div>
 
 </script>
