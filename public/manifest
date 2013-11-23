@@ -60,9 +60,6 @@ CACHE:
 /javascripts/views/exam/add.js
 /javascripts/views/exam/menu.js
 /javascripts/views/exam/view.js
-/javascripts/views/examinerDashboard.js
-/javascripts/views/examinerList.js
-/javascripts/views/examiner.js
 /javascripts/views/header.js
 
 /javascripts/views/examiner/item.js

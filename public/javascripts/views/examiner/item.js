@@ -8,6 +8,6 @@ App.Views.ExaminerItem = Marionette.ItemView.extend({
     },
     show: function(e) {
         e.preventDefault();
-        Teleegzam.ExaminerController.showExaminer(this.model.id);
+        Teleegzam.Controllers.Examiner.showExaminer(this.model.id);
     }
 });

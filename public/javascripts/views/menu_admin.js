@@ -7,11 +7,11 @@ App.Views.MenuAdmin = Marionette.ItemView.extend({
         this.template = App.Templates.get('menu_admin');
     },
     examiners: function() {
-        Teleegzam.ExaminerController.switchSelectedItem('examiners');
-        Teleegzam.ExaminerController.showAll();
+        Teleegzam.Controllers.Examiner.switchSelectedItem('examiners');
+        Teleegzam.Controllers.Examiner.showAll();
     },
     addExaminer: function() {
-        Teleegzam.ExaminerController.switchSelectedItem('add_examiner');
-        Teleegzam.ExaminerController.addForm();
+        Teleegzam.Controllers.Examiner.switchSelectedItem('add_examiner');
+        Teleegzam.Controllers.Examiner.addForm();
     }
 });

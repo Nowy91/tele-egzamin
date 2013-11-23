@@ -6,6 +6,6 @@ App.Views.ExaminerMenu = Marionette.ItemView.extend({
         this.template = App.Templates.get('examiner_menu');
     },
     backToExaminerList: function () {
-        Teleegzam.ExaminerController.showAll();
+        Teleegzam.Controllers.Examiner.showAll();
     }
 })

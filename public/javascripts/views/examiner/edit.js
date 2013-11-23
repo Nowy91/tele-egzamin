@@ -15,10 +15,10 @@ App.Views.ExaminerEdit = Marionette.ItemView.extend({
             password: $(e.currentTarget).find('input#password').val(),
             email: $(e.currentTarget).find('input#email').val()
         });
-        Teleegzam.ExaminerController.editExaminer(newUser, this.model.id);
+        Teleegzam.Controllers.Examiner.editExaminer(newUser, this.model.id);
     },
     cancel:function(e){
         e.preventDefault();
-        Teleegzam.ExaminerController.showExaminer(this.model.id);
+        Teleegzam.Controllers.Examiner.showExaminer(this.model.id);
     }
 });

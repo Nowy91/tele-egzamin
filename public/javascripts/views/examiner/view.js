@@ -9,10 +9,10 @@ App.Views.ExaminerView = Marionette.ItemView.extend({
     editExaminer: function(e)
     {
         e.preventDefault();
-        Teleegzam.ExaminerController.editForm(this.model);
+        Teleegzam.Controllers.Examiner.editForm(this.model.id);
     },
     deleteExaminer: function(e) {
         e.preventDefault();
-        Teleegzam.ExaminerController.deleteExaminer(this.model.id);
+        Teleegzam.Controllers.Examiner.deleteExaminer(this.model.id);
     }
 })
