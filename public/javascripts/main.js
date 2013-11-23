@@ -33,7 +33,9 @@
                 "question_view",
                 "question_edit",
                 "question_answer_item",
-                "question_answer_list"
+                "question_answer_list",
+                "token_list",
+                "token_item"
             ],
             templates: {},
 

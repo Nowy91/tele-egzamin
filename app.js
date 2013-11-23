@@ -11,6 +11,7 @@ var db = require('./routes/db');
 var exam = require('./routes/exam');
 var question = require('./routes/question');
 var examiner = require('./routes/examiner');
+var token = require('./routes/token');
 
 var app = express();
 
@@ -54,13 +55,16 @@ app.post('/questions/answers/add', question.addAnswers);
 app.delete('/questions/delete/:id', question.delete);
 app.post('/questions/edit/:id', question.edit);
 
-
-
-app.get('/examiners',examiner.list);
+//examiners
+app.get('/examiners', examiner.list);
 app.post('/examiner/add', examiner.add);
 app.get('/examiner/view/:id', examiner.view);
 app.delete('/examiner/delete/:id', examiner.delete);
 app.post('/examiner/edit/:id', examiner.edit);
+
+//tokens
+app.get('/tokens/:examId', token.list);
+app.post('/tokens/generate/', token.generate);
 
 
 http.createServer(app).listen(app.get('port'), function () {

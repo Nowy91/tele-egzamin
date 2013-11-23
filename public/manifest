@@ -41,7 +41,6 @@ CACHE:
 /javascripts/templates/examiner_view.html
 /javascripts/templates/examiner_list.html
 
-
 /javascripts/templates/header.html
 /javascripts/templates/menu_admin.html
 /javascripts/templates/exam_view.html
