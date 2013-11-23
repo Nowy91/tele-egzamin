@@ -1,4 +1,4 @@
-<script id="add_exam_template" type="text/template">
+<script id="examiner_view_template" type="text/template">
 
     <div class="tab-pane" id="add_exam">
         <div class="page-header">
@@ -18,10 +18,6 @@
                 <label class="col-sm-3 control-label"><%= user.username %></label>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">Hasło</label>
-                <label class="col-sm-3 control-label"><%= user.password %></label>
-            </div>
-            <div class="form-group">
                 <label class="col-sm-3 control-label">Email</label>
                 <label class="col-sm-3 control-label"><%= user.email %></label>
             </div>
@@ -35,8 +31,9 @@
             </div>
         </form>
     </div>
-    <div class="col-sm-offset-2">
+    <div class="col-sm-offset-1">
          <a id="edit" class="btn btn-warning">Edytuj dane</a>
+         <a id="password" class="btn btn-warning col-sm-offset-1">Zmień hasło</a>
          <a class="btn btn-danger col-sm-offset-1">Usuń egzaminatora</a>
     </div>
 </script>

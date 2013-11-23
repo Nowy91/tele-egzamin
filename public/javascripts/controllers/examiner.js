@@ -38,6 +38,10 @@ Teleegzam.module('Controllers', function(Controller, Teleegzam, Backbone, Marion
             examinerModel = collection.get(examinerId);
             layout.content.show(new App.Views.ExaminerEdit({model: examinerModel}));
         },
+        passwordForm : function(examinerId){
+            examinerModel = collection.get(examinerId);
+            layout.content.show(new App.Views.ExaminerPassword({model: examinerModel}));
+        },
         addExaminer : function(examiner) {
             var addExaminer = $.ajax({
                 type: 'POST',

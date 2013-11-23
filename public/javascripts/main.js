@@ -25,6 +25,7 @@
                 "examiner_view",
                 "examiner_menu",
                 "examiner_edit",
+                "examiner_password",
                 "menu_admin",
                 "question_item",
                 "question_list",
