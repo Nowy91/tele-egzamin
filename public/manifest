@@ -13,6 +13,9 @@ CACHE:
 /javascripts/libs/backbone-min.map
 /javascripts/libs/backbone.marionette.min.js
 /javascripts/libs/backbone.marionette.map
+/javascripts/libs/bootstrap.min.js
+/javascripts/libs/bootstrap-datetimepicker.min.js
+/javascripts/libs/bootstrap-datetimepicker.pl.js
 
 /javascripts/main.js
 
@@ -76,8 +79,8 @@ CACHE:
 /javascripts/views/question/add.js
 
 /stylesheets/bootstrap.min.css
-/stylesheets/datepicker.css
 /stylesheets/style.css
+/stylesheets/bootstrap-datetimepicker.min.css
 
 NETWORK:
 *
