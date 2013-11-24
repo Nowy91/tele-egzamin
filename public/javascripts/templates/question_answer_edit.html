@@ -1,0 +1,29 @@
+<script id="question_answer_edit_template" type="text/template">
+        <div class="form-group">
+            <label for="" class="col-sm-2 control-label">
+                Odp</label>
+
+            <div class="col-sm-5">
+                <div class="answers">
+
+                </div>
+                <a class="btn btn-success addClosedAnswer">Dodaj odpowiedź</a>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-info">
+                    Zatwierdź
+                    odpowiedzi
+                </button>
+            </div>
+        </div>
+    <script>
+        $(document).ready(function () {
+            $(".addClosedAnswer").click(function () {
+                $(".answers").append('<div class="input-group answer"><span class="input-group-addon"><input type="checkbox"></span><input type="text" class="form-control"><span class="input-group-addon"><a class="removeClosedAnswer" onclick="$(this).closest(\'.input-group\').remove();"><div class="glyphicon glyphicon-remove"></div></a></span></div>');
+            });
+        });
+</script>
+</script>

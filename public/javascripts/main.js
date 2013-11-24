@@ -34,6 +34,8 @@
                 "question_edit",
                 "question_answer_item",
                 "question_answer_list",
+                "question_answer_input",
+                "question_answer_edit",
                 "token_list",
                 "token_item"
             ],

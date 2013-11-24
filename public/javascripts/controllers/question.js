@@ -44,18 +44,18 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             $.when(addQuestion).done(function (newQuestion) {
                 questionCollection.add(newQuestion);
 
-                answers.forEach(function (model) {
-                    model.set({questionId: newQuestion.id});
-                    $.ajax({
-                        type: 'POST',
-                        url: '/questions/answers/add',
-                        data: model.toJSON(),
-                        dataType: 'json'
-                    });
+                var addAnswers = $.ajax({
+                    type: 'POST',
+                    url: '/questions/answers/add/' + newQuestion.id,
+                    data: JSON.stringify(answers),
+                    contentType: 'application/json',
+                    dataType: 'json'
                 });
 
-                var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
-                layout.content.show(questionList);
+                $.when(addAnswers).done(function () {
+                    var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
+                    layout.content.show(questionList);
+                });
             });
         },
 
@@ -72,11 +72,10 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
 
             $.when(getQuestionAnswers).done(function (answers) {
-
                 if (answers.length != 0) {
                     answerCollection = new App.Collections.QuestionAnswers(answers);
                     var answersList = new App.Views.QuestionAnswerList({collection: answerCollection});
-                    layout.addRegion('answers', "#answers")
+                    layout.addRegion('answers', "#answers");
                     layout.answers.show(answersList);
                 }
             });
@@ -99,6 +98,12 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             var editForm = new App.Views.QuestionEdit({ model: questionModel});
             layout.content.show(editForm);
         },
+
+        editAnswersForm: function () {
+            var editAnswersForm = new App.Views.QuestionAnswerEdit({collection: answerCollection});
+            layout.content.show(editAnswersForm);
+        },
+
         edit: function (question) {
 
             var editQuestion = $.ajax({
@@ -114,6 +119,33 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                 layout.content.show(questionList);
             });
+        },
+
+        editAnswers: function (answers) {
+
+            answers.forEach(function (model) {
+                model.set({questionId: questionModel.id});
+            });
+
+            var editAnswers = $.ajax({
+                type: 'POST',
+                url: '/questions/answers/edit/' + questionModel.id,
+                data: JSON.stringify(answers),
+                contentType: 'application/json',
+                dataType: 'json'
+            });
+
+            layout.content.show(new App.Views.QuestionView({model: questionModel}));
+
+            $.when(editAnswers).done(function (answers) {
+                if (answers.length != 0) {
+                    answerCollection = new App.Collections.QuestionAnswers(answers);
+                    var answersList = new App.Views.QuestionAnswerList({collection: answerCollection});
+                    layout.addRegion('answers', "#answers");
+                    layout.answers.show(answersList);
+                }
+            });
+
         }
     }
 });

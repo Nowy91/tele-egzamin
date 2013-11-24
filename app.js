@@ -23,6 +23,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
@@ -51,9 +52,10 @@ app.delete('/exam/delete/:id', exam.delete);
 app.get('/questions/view/:id', question.view);
 app.get('/questions/view/:id/answers', question.getAnswers);
 app.post('/questions/add', question.add);
-app.post('/questions/answers/add', question.addAnswers);
+app.post('/questions/answers/add/:id', question.addAnswers);
 app.delete('/questions/delete/:id', question.delete);
 app.post('/questions/edit/:id', question.edit);
+app.post('/questions/answers/edit/:id', question.editAnswers);
 
 //examiners
 app.get('/examiners', examiner.list);

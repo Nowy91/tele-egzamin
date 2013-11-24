@@ -31,9 +31,8 @@ models.forEach(function(model) {
   		.hasMany(m.Question, { foreignKey : 'examId' })
   		.hasOne(m.Grade, { foreignKey : 'examId' });
 	m.Question
-		.hasMany(m.Answer, { foreignKey : 'questionId' })
-		.hasOne(m.OpenedAnswer, { foreignKey : 'answerId' })
-		.hasMany(m.ClosedAnswer, { foreignKey : 'answerId' });
+		.hasMany(m.QuestionAnswer, { foreignKey : 'questionId' });
+
 })(module.exports);
 
 // export connection

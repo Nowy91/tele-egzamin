@@ -1,21 +1,22 @@
-App.Views.QuestionAdd = Marionette.ItemView.extend({
+App.Views.QuestionAnswerEdit = Marionette.CompositeView.extend({
+
+    tagName: 'form',
+    className: 'form-horizontal',
+
+    itemView: App.Views.QuestionAnswerInput,
+
+    itemViewContainer: '.answers',
 
     events: {
         'submit': 'submit'
     },
 
-    initialize: function () {
-        this.template = App.Templates.get('question_add');
+    initialize: function() {
+        this.template = App.Templates.get('question_answer_edit');
     },
 
-    submit: function (e) {
+    submit: function(e) {
         e.preventDefault();
-
-        var newQuestion = new App.Models.Question({
-            content: $(e.currentTarget).find('#content').val(),
-            maxPoints: $(e.currentTarget).find('input#maxpoints').val(),
-            examId: this.model.id
-        });
 
         var answer;
         var answers = new App.Collections.QuestionAnswers;
@@ -27,8 +28,7 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
             });
             answers.add(answer);
         });
-
-        Teleegzam.Controllers.Question.add(newQuestion, answers);
+        Teleegzam.Controllers.Question.editAnswers(answers);
 
     }
 

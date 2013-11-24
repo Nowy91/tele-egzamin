@@ -34,54 +34,18 @@
         </div>
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            Jeżeli pytanie ma być typu zamkniętego - dodaj odpowiedzi. Kolejność odpowiedzi nie ma znaczenia, ponieważ podczas tworzenia instancji egzaminu system ją losuje.
+            Jeżeli pytanie ma być typu zamkniętego - dodaj odpowiedzi. O tym czy odpowiedź jest poprawna decyduje zaznaczenie pola w pierwszej kolumnie odpowiedzi. Kolejność odpowiedzi nie ma znaczenia, ponieważ
+            podczas tworzenia instancji egzaminu system ją losuje.
         </div>
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">
                 Odpowiedzi</label>
 
             <div class="col-sm-5">
-                <div class="input-group" id="0" style="display: none">
-                                                <span class="input-group-addon">
-                                                    <input type="checkbox" id="answerCorrect0">
-                                                </span>
-                    <input type="text" class="form-control" id="answerContent0">
+                <div class="answers">
 
                 </div>
-                <div class="input-group" id="1" style="display: none">
-                                                <span class="input-group-addon">
-                                                    <input type="checkbox" id="answerCorrect1">
-                                                </span>
-                    <input type="text" class="form-control" id="answerContent1">
-
-                </div>
-                <div class="input-group" id="2" style="display: none">
-                                                <span class="input-group-addon">
-                                                    <input type="checkbox" id="answerCorrect2">
-                                                </span>
-                    <input type="text" class="form-control" id="answerContent2">
-                </div>
-                <div class="input-group" id="3" style="display: none">
-                                                <span class="input-group-addon">
-                                                    <input type="checkbox" id="answerCorrect3">
-                                                </span>
-                    <input type="text" class="form-control" id="answerContent3">
-                </div>
-                <div class="input-group" id="4" style="display: none">
-                                                <span class="input-group-addon">
-                                                    <input type="checkbox" id="answerCorrect4">
-                                                </span>
-                    <input type="text" class="form-control" id="answerContent4">
-                </div>
-                <div class="input-group" id="5" style="display: none">
-                                                <span class="input-group-addon">
-                                                    <input type="checkbox" id="answerCorrect5">
-                                                </span>
-                    <input type="text" class="form-control" id="answerContent5">
-                </div>
-
                 <a class="btn btn-success addClosedAnswer">Dodaj odpowiedź</a>
-                <a class="btn btn-danger removeClosedAnswer">Usuń odpowiedź</a>
 
             </div>
         </div>
@@ -92,9 +56,10 @@
         <div class="form-group">
             <label for="" class="col-sm-2 control-label">
                 Obraz</label>
+
             <div class="col-sm-5">
-            <a class="btn btn-warning addClosedAnswer">Dodaj obraz</a>
-                </div>
+                <a class="btn btn-warning addClosedAnswer">Dodaj obraz</a>
+            </div>
         </div>
         <div class="alert alert-info alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -114,19 +79,8 @@
     </div>
     <script>
         $(document).ready(function () {
-            var answerIndex = 0;
             $(".addClosedAnswer").click(function () {
-                $("#" + answerIndex).fadeIn();
-                answerIndex++;
-                if(answerIndex>6)answerIndex = 6;
-            });
-            $(".removeClosedAnswer").click(function () {
-                answerIndex--;
-                $("#" + answerIndex).fadeOut(function(){
-                    $(this).children("input").val("");
-                });
-
-                if(answerIndex<0)answerIndex = 0;
+                $(".answers").append('<div class="input-group answer"><span class="input-group-addon"><input type="checkbox"></span><input type="text" class="form-control"><span class="input-group-addon"><a class="removeClosedAnswer" onclick="$(this).closest(\'.input-group\').remove();"><div class="glyphicon glyphicon-remove"></div></a></span></div>');
             });
         });
 </script>

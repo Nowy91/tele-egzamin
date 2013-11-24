@@ -23,12 +23,15 @@ exports.add = function (req, res) {
 }
 
 exports.addAnswers = function (req, res) {
-    QuestionAnswer.create(req.body)
-        .success(function (question) {
-            res.json(question);
-        })
-        .error(function (err) {
-            res.end(err);
+    QuestionAnswer.bulkCreate(req.body, ['content', 'isCorrect'])
+        .success(function () {
+            QuestionAnswer.findAll({where: {questionId: null}})
+                .success(function (answers) {
+                    Question.find(req.params.id).success(function (question) {
+                        question.setQuestionAnswers(answers);
+                        res.json(answers);
+                    });
+                });
         });
 }
 
@@ -68,7 +71,7 @@ exports.delete = function (req, res) {
 exports.edit = function (req, res) {
     Question.find(req.params.id)
         .success(function (question) {
-            question.updateAttributes({content: req.body.content,maxPoints: req.body.maxPoints})
+            question.updateAttributes({content: req.body.content, maxPoints: req.body.maxPoints})
                 .success(function () {
                     res.json(question);
                 });
@@ -76,4 +79,42 @@ exports.edit = function (req, res) {
         .error(function (err) {
             res.end(err);
         });
+}
+
+exports.editAnswers = function (req, res) {
+
+    QuestionAnswer.bulkCreate(req.body, ['content', 'isCorrect','questionId']).success(function (newAnswers) {
+        QuestionAnswer.findAll({where: {questionId: req.params.id}})
+            .success(function (oldAnswers) {
+
+                //if less
+                if (oldAnswers.length > newAnswers.length) {
+                    for (var i in newAnswers) {
+                        oldAnswers[i].updateAttributes({content: newAnswers[i].content, isCorrect: newAnswers[i].isCorrect});
+                    }
+                    for (var i = newAnswers.length; i < oldAnswers.length; i++) {
+                        oldAnswers[i].destroy();
+                    }
+                }
+                else {
+                    //if equal
+
+                    for (var i in oldAnswers) {
+                        oldAnswers[i].updateAttributes({content: newAnswers[i].content, isCorrect: newAnswers[i].isCorrect});
+                    }
+
+                    //if more
+                    if (oldAnswers.length < newAnswers.length) {
+                        for (var i = oldAnswers.length; i < newAnswers.length; i++) {
+                            newAnswers[i].questionId = req.params.id;
+                            QuestionAnswer.create(newAnswers[i]);
+                        }
+                    }
+                }
+
+
+                res.json(newAnswers);
+            });
+    });
+
 }

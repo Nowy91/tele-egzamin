@@ -13,9 +13,6 @@ module.exports = function (sequelize, DataTypes) {
         },
         isCorrect: {
             type: Sequelize.BOOLEAN
-        },
-        questionId: {
-            type: Sequelize.INTEGER
         }
     });
 };

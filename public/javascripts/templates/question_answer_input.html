@@ -1,0 +1,12 @@
+<script id="question_answer_input_template" type="text/template">
+
+    <span class="input-group-addon">
+        <input type="checkbox" <%=isCorrect%> <%if(isCorrect){%>checked<%}%> >
+    </span>
+    <input type="text" class="form-control" value="<%= content %>"/>
+    <span class="input-group-addon">
+        <a class="removeClosedAnswer" onclick="$(this).closest('.input-group').remove();">
+            <div class="glyphicon glyphicon-remove"></div>
+        </a>
+    </span>
+</script>
