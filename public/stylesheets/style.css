@@ -1,6 +1,6 @@
 body {font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;}
 td, th{text-align:center;}
-th.small {width:20px;}
+th.small {width: 50px;}
 .nav hr {margin: 0  0 5px 0;}
 .nav h4 {margin: 20px 0 5px 0;}
 a {color: #00b7ff; cursor: pointer}

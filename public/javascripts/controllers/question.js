@@ -44,18 +44,26 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             $.when(addQuestion).done(function (newQuestion) {
                 questionCollection.add(newQuestion);
 
-                var addAnswers = $.ajax({
-                    type: 'POST',
-                    url: '/questions/answers/add/' + newQuestion.id,
-                    data: JSON.stringify(answers),
-                    contentType: 'application/json',
-                    dataType: 'json'
-                });
-
-                $.when(addAnswers).done(function () {
+                if (answers.length != 0) {
+                    var addAnswers = $.ajax({
+                        type: 'POST',
+                        url: '/questions/answers/add/' + newQuestion.id,
+                        data: JSON.stringify(answers),
+                        contentType: 'application/json',
+                        dataType: 'json'
+                    });
+                    $.when(addAnswers).done(function () {
+                        var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
+                        layout.content.show(questionList);
+                    });
+                }
+                else
+                {
                     var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                     layout.content.show(questionList);
-                });
+                }
+
+
             });
         },
 

@@ -29,8 +29,9 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
         },
 
         showExam: function (examId) {
+
             examModel = collection.get(examId);
-            layout.menu.show(new App.Views.ExamMenu);
+            layout.menu.show(new App.Views.ExamMenu({model: examModel}));
             layout.content.show(new App.Views.ExamView({model: examModel}));
         },
 

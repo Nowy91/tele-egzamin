@@ -2,6 +2,7 @@ App.Views.ExamMenu = Marionette.ItemView.extend({
 
     events: {
         'click .back-button': 'backToExamList',
+        'click .exam_data': 'examData',
         'click .exam_questions': 'questionList',
         'click .exam_tokens': 'tokensList'
     },
@@ -10,11 +11,15 @@ App.Views.ExamMenu = Marionette.ItemView.extend({
         this.template = App.Templates.get('exam_menu');
     },
 
-    questionList: function() {
+    examData: function () {
+        Teleegzam.Controllers.Exam.showExam(this.model.id);
+    },
+
+    questionList: function () {
         Teleegzam.Controllers.Question.showAll();
     },
 
-    tokensList: function() {
+    tokensList: function () {
         Teleegzam.Controllers.Token.showAll();
     },
 
