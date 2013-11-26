@@ -70,7 +70,6 @@ CACHE:
 /javascripts/views/examiner/menu.js
 /javascripts/views/examiner/view.js
 /javascripts/views/examiner/edit.js
-/javascripts/views/examiner/date.js
 
 /javascripts/views/question/item.js
 /javascripts/views/question/edit.js

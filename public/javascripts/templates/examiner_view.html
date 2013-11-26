@@ -4,36 +4,48 @@
         <div class="page-header">
             <h1>Dane egzaminatora</h1>
         </div>
-        <form class="form-horizontal" action="" id="add_examiner">
-            <div class="form-group">
-                <label class="col-sm-3 control-label">Imię</label>
-                <label class="col-sm-3 control-label"><%= user.firstname %></label>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">Nazwisko</label>
-                <label class="col-sm-3 control-label"><%= user.lastname %></label>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">Nazwa użytkownika</label>
-                <label class="col-sm-3 control-label"><%= user.username %></label>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">Email</label>
-                <label class="col-sm-3 control-label"><%= user.email %></label>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">Data utworzenia</label>
-                <label class="col-sm-3 control-label"><%= user.createdAt %></label>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">Data modyfikacji</label>
-                <label class="col-sm-3 control-label"><%= user.updatedAt %></label>
-            </div>
-        </form>
+        <div class="col-xs-6 exam_data_left">
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    Dane osobowe
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"><%= user.firstname %></span>
+                    Imię
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"><%= user.lastname %></span>
+                    Nazwisko
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"><%= user.email %></span>
+                    E-mail
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-6 exam_data_right">
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    Dane konta
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"><%= user.username %></span>
+                    Login
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">zablokowane</span>
+                    Hasło
+                </li>
+                <li class="list-group-item">
+                    <span class="badge"><%= formattedCreate %></span>
+                    Data utworzenia
+                </li>
+            </ul>
+        </div>
+
     </div>
-    <div class="col-sm-offset-1">
-         <a id="edit" class="btn btn-warning">Edytuj dane</a>
-         <a id="password" class="btn btn-warning col-sm-offset-1">Zmień hasło</a>
-         <a class="btn btn-danger col-sm-offset-1">Usuń egzaminatora</a>
-    </div>
+    <a class="btn btn-danger pull-right mLeft10">Usuń egzaminatora</a>
+    <a id="edit" class="btn btn-warning pull-right mLeft10">Edytuj dane</a>
+
+
 </script>

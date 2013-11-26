@@ -6,4 +6,10 @@
         <li class="active"><a class="examiners">Lista egzaminatorów</a></li>
         <li><a class="add_examiner">Stwórz egzaminatora</a></li>
     </ul>
+    <script>
+        $('.nav li a').click(function () {
+            $('.nav li.active').removeClass('active');
+            $(this).parent().addClass('active');
+        });
+</script>
 </script>

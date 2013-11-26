@@ -8,10 +8,11 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th class="small">#</th>
             <th>Imię</th>
             <th>Nazwisko</th>
-            <th>Login</th>
             <th>Email</th>
+            <th>Login</th>
             <th>Data utworzenia</th>
             <th>Data modyfikacji</th>
         </tr>
@@ -21,5 +22,12 @@
 
         </tbody>
     </table>
+    <script>
+        $(document).ready(function () {
+            $('tbody tr').each(function(idx){
+                $(this).children().first().html(idx + 1);
+            });
 
+        });
+</script>
 </script>

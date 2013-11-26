@@ -5,7 +5,8 @@ module.exports = function (sequelize, DataTypes) {
     return sequelize.define('examiner', {
         id: {
             type: Sequelize.BIGINT,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         }
     });
 }; 

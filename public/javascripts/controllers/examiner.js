@@ -2,6 +2,8 @@ Teleegzam.module('Controllers', function(Controller, Teleegzam, Backbone, Marion
 
     var layout;
     var collection;
+    var examinerModel;
+
     Controller.Examiner = {
         showAll : function() {
             layout = new App.Layouts.Dashboard;
@@ -11,11 +13,7 @@ Teleegzam.module('Controllers', function(Controller, Teleegzam, Backbone, Marion
                 dataType: 'json'
             });
             $.when(fetchingExaminers).done(function (examiners) {
-                for(var i=0;i<examiners.length;i++)
-                {
-                    examiners[i].user.createdAt = getDate(examiners[i].user.createdAt);
-                    examiners[i].user.updatedAt = getDate(examiners[i].user.updatedAt);
-                }
+
                 collection = new App.Collections.Examiners(examiners);
                 var examinersList = new App.Views.ExaminerList({collection: collection});
                 layout.on("show", function () {
@@ -26,57 +24,55 @@ Teleegzam.module('Controllers', function(Controller, Teleegzam, Backbone, Marion
                 Teleegzam.mainRegion.show(layout);
             });
         },
+
         showExaminer : function(examinerId) {
             examinerModel = collection.get(examinerId);
             layout.menu.show(new App.Views.ExaminerMenu);
             layout.content.show(new App.Views.ExaminerView({model: examinerModel}));
         },
+
         addForm : function() {
             layout.content.show(new App.Views.ExaminerAdd);
         },
+
         editForm : function(examinerId){
             examinerModel = collection.get(examinerId);
             layout.content.show(new App.Views.ExaminerEdit({model: examinerModel}));
         },
-        passwordForm : function(examinerId){
-            examinerModel = collection.get(examinerId);
-            layout.content.show(new App.Views.ExaminerPassword({model: examinerModel}));
-        },
+
         addExaminer : function(examiner) {
             var addExaminer = $.ajax({
                 type: 'POST',
                 url: '/examiner/add',
-                data: examiner.toJSON(),
+                data: JSON.stringify(examiner),
+                contentType: 'application/json',
                 dataType: 'json'
             });
             $.when(addExaminer)
                 .done(function(examiner) {
-                    examiner.user.createdAt = getDate(examiner.user.createdAt);
-                    examiner.user.updatedAt = getDate(examiner.user.updatedAt);
                     collection.add(examiner);
-                    Teleegzam.Controllers.Examiner.switchSelectedItem('examiners');
                     layout.menu.show(new App.Views.MenuAdmin);
                     layout.content.show(new App.Views.ExaminerList({collection: collection}));
                 });
         },
+
         editExaminer : function(user, examinerId) {
             var editExaminer = $.ajax({
                 type: 'POST',
                 url: '/examiner/edit/'+examinerId,
-                data: user.toJSON(),
+                data: JSON.stringify(user),
+                contentType: 'application/json',
                 dataType: 'json'
             });
             $.when(editExaminer)
                 .done(function(user) {
-                    user.createdAt = getDate(user.createdAt);
-                    user.updatedAt = getDate(user.updatedAt);
-
-                    var updatedModel = collection.get(examinerId);
-                    updatedModel.set("user", user);
+                    examinerModel = collection.get(examinerId);
+                    examinerModel.set("user", user);
                     layout.menu.show(new App.Views.MenuAdmin);
-                    layout.content.show(new App.Views.ExaminerList({collection: collection}));
+                    layout.content.show(new App.Views.ExaminerView({model: examinerModel}));
                 });
         },
+
         deleteExaminer : function (examinerId) {
             var deleteExaminer = $.ajax({
                 type: 'DELETE',
@@ -89,14 +85,6 @@ Teleegzam.module('Controllers', function(Controller, Teleegzam, Backbone, Marion
                 layout.menu.show(new App.Views.MenuAdmin);
                 layout.content.show(new App.Views.ExaminerList({collection: collection}));
             });
-        },
-        switchSelectedItem :  function(name) {
-            $('a').parent().each(function() {
-                if ($(this).hasClass('active')) {
-                    $(this).removeClass('active');
-                }
-            });
-            $('a.' + name).parent().addClass('active');
         }
     }
 });

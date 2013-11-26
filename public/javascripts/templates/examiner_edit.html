@@ -20,15 +20,27 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="input3" class="col-sm-3 control-label">Nazwa użytkownika</label>
+                <label for="input5" class="col-sm-3 control-label">Email</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="email" value="<%=user.email%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input5" class="col-sm-3 control-label">Nazwa użytkownika</label>
                 <div class="col-sm-5">
                     <input type="text" class="form-control" id="username" value="<%=user.username%>">
                 </div>
             </div>
             <div class="form-group">
-                <label for="input5" class="col-sm-3 control-label">Email</label>
+                <label for="input1" class="col-sm-3 control-label">Hasło</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="email" value="<%=user.email%>">
+                    <input type="password" class="form-control" id="password" placeholder="Jeśli nie chcesz zmienić hasła, pozostaw puste.">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input2" class="col-sm-3 control-label">Potwierdź hasło</label>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control" id="confirm_password" placeholder="Jeśli nie chcesz zmienić hasła, pozostaw puste.">
                 </div>
             </div>
             <div class="form-group">

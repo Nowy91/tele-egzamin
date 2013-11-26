@@ -1,10 +1,10 @@
 <script id="examiner_item_template" type="text/template">
-
-    <td><a><%= user.firstname %></a></td>
+    <td></td>
+    <td><%= user.firstname %></td>
     <td><%= user.lastname %></td>
-    <td><%= user.username %></td>
     <td><%= user.email %></td>
-    <td><%= user.createdAt %></td>
-    <td><%= user.updatedAt %></td>
+    <td><a><%= user.username %></a></td>
+    <td><%= formattedCreate %></td>
+    <td><%= formattedUpdate %></td>
 
 </script>
