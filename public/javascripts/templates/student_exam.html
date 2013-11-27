@@ -1,0 +1,49 @@
+<script id="student_exam_template" type="text/template">
+    <div class="page-header ">
+        <h1><%= title %>
+            <button type="button" class="btn btn-default btn-danger pull-right mLeft10 closeExam">Zakończ egzamin
+            </button>
+            <button type="button" class="btn btn-default btn-warning pull-right">Czas: <%= duration %>
+            </button>
+        </h1>
+
+    </div>
+    <div class="text-center">
+        <div class="btn-group question-nav">
+            <button type="button" class="btn btn-default btn-primary" id="1" >1</button>
+
+
+        </div>
+        <a type="button" class="btn btn-default btn-info pull-right nextQuestion">Następne
+            </a>
+        <a type="button" class="btn btn-default btn-info pull-left previousQuestion">Poprzednie
+            </a>
+    </div>
+    <hr/>
+
+
+
+
+    <script>
+        var number = parseInt(<%= questionNumber %>);
+        var current = 1;
+        for (var i = 2; i <= number; i++) {
+            $('.question-nav').append("<button type='button' class='btn btn-default' id=" + i + ">" + i + "</button>");
+        }
+        $('.question-nav button').click(function () {
+            $('.question-nav button.btn-primary').removeClass('btn-primary');
+            $(this).addClass('btn-primary');
+            current = $(this).attr('id');
+        });
+        $('.nextQuestion').click(function () {
+            $('.question-nav button.btn-primary').removeClass('btn-primary');
+            if(current<number)current++;
+            $('#'+current).addClass('btn-primary');
+        });
+        $('.previousQuestion').click(function () {
+            $('.question-nav button.btn-primary').removeClass('btn-primary');
+            if(current>1)current--;
+            $('#'+current).addClass('btn-primary');
+        });
+</script>
+</script>

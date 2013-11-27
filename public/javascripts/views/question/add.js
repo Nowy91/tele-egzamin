@@ -20,12 +20,13 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
         var answer;
         var answers = new App.Collections.QuestionAnswers;
 
-        $('.answer').each(function(input){
-            answer= new App.Models.QuestionAnswer({
+        $('.answer').each(function (input) {
+            answer = new App.Models.QuestionAnswer({
                 content: $(this).find('input[type=text]').val(),
                 isCorrect: $(this).find('input[type=checkbox]').is(':checked')
             });
-            answers.add(answer);
+            if (answer.get('content') != "")
+                answers.add(answer);
         });
 
         Teleegzam.Controllers.Question.add(newQuestion, answers);

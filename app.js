@@ -12,6 +12,7 @@ var exam = require('./routes/exam');
 var question = require('./routes/question');
 var examiner = require('./routes/examiner');
 var token = require('./routes/token');
+var student = require('./routes/student');
 
 var app = express();
 
@@ -25,8 +26,8 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-app.use(express.session());
+app.use(express.cookieParser());
+app.use(express.session({secret: 'my secret'}));
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -68,6 +69,9 @@ app.post('/examiner/edit/:id', examiner.edit);
 app.get('/tokens/:examId', token.list);
 app.post('/tokens/generate/', token.generate);
 
+//student
+app.get('/student/check/:token', student.check);
+app.get('/student/get/:examId', student.getQuestions);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));

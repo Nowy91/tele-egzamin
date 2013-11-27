@@ -1,0 +1,32 @@
+<script id="token_view_template" type="text/template">
+
+
+    <div class="page-header text-center">
+        <h1>Token: <%= currentToken %></h1>
+    </div>
+
+
+    <div class="col-sm-8 col-md-offset-2">
+        <ul class="list-group ">
+            <li class="list-group-item active">
+                Dane egzaminu:
+            </li>
+            <li class="list-group-item ">
+                <span class="badge"><%= title %></span>
+                Nazwa:
+            </li>
+
+
+            <li class="list-group-item">
+                <span class="badge"><%= duration %></span>
+                Czas trwania
+            </li>
+            <br>
+
+            <div class="text-center"><a type="button" class="btn btn-lg btn-default btn-success startExam">Rozpocznij egzamin</a>
+            </div>
+        </ul>
+
+    </div>
+
+</script>

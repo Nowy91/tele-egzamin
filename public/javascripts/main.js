@@ -37,7 +37,11 @@
                 "question_answer_input",
                 "question_answer_edit",
                 "token_list",
-                "token_item"
+                "token_item",
+                "student_start",
+                "student_question",
+                "student_exam",
+                "student_layout"
             ],
             templates: {},
 

@@ -1,7 +1,8 @@
 App.Views.Login = Marionette.ItemView.extend({
 
     events: {
-        'click a.exams': 'exams'
+        'click a.exams': 'exams',
+        'click .student': 'student'
     },
 
     initialize: function () {
@@ -10,6 +11,12 @@ App.Views.Login = Marionette.ItemView.extend({
 
     exams: function () {
         Teleegzam.Controllers.Exam.showAll();
+    },
+
+    student: function (e) {
+        e.preventDefault();
+        var token = $(e.currentTarget).parent().find('input#studentToken').val();
+        if(token)Teleegzam.Controllers.Student.check(token);
     }
 
 });

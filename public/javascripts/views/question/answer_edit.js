@@ -11,22 +11,23 @@ App.Views.QuestionAnswerEdit = Marionette.CompositeView.extend({
         'submit': 'submit'
     },
 
-    initialize: function() {
+    initialize: function () {
         this.template = App.Templates.get('question_answer_edit');
     },
 
-    submit: function(e) {
+    submit: function (e) {
         e.preventDefault();
 
         var answer;
         var answers = new App.Collections.QuestionAnswers;
 
-        $('.answer').each(function(input){
-            answer= new App.Models.QuestionAnswer({
+        $('.answer').each(function (input) {
+            answer = new App.Models.QuestionAnswer({
                 content: $(this).find('input[type=text]').val(),
                 isCorrect: $(this).find('input[type=checkbox]').is(':checked')
             });
-            answers.add(answer);
+            if (answer.get('content') != "")
+                answers.add(answer);
         });
         Teleegzam.Controllers.Question.editAnswers(answers);
 
