@@ -3,7 +3,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
     var layout;
     var myQuestions;
     var currentQuestion;
-
+    var currentAnswer;
     Controller.Student = {
         check: function (token) {
             var checkToken = $.ajax({
@@ -42,27 +42,57 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 myExam.set('questionNumber', myQuestions.length);
                 var examView = new App.Views.StudentExam({model: myExam});
                 layout.exam.show(examView);
-                currentQuestion = 0;
+
+                currentQuestion = myQuestions.at(0);
                 var questionView = new App.Views.StudentQuestion({model: myQuestions.at(0)});
                 layout.question.show(questionView);
 
+                currentAnswer = new App.Models.Answer({answer: ""});
+                var answerView = new App.Views.StudentAnswer({model: currentAnswer});
+                layout.answer.show(answerView);
+
+                window.localStorage.clear();
             });
         },
 
         changeQuestion: function (number, answer) {
-            localStorage.setItem('answer' + currentQuestion, JSON.stringify(answer));
-            currentQuestion = number;
+            localStorage.setItem('answer' + currentQuestion.id, JSON.stringify(answer));
+
+            currentQuestion = myQuestions.at(number);
             var questionView = new App.Views.StudentQuestion({model: myQuestions.at(number)});
             layout.question.show(questionView);
+
+            currentAnswer.set({answer: JSON.parse(localStorage.getItem('answer' + currentQuestion.id))});
+            var answerView = new App.Views.StudentAnswer({model: currentAnswer});
+            layout.answer.show(answerView);
         },
 
         saveAnswers: function () {
-            var answers = "";
-            for (var i = 0; i < myQuestions.length; i++) {
-                answers += JSON.parse(localStorage.getItem('answer' + i)) + "||";
-            }
-            console.log(answers);
+            var answers = new App.Collections.Answers;
 
+            for (var i = 0; i < myQuestions.length; i++) {
+                currentQuestion = myQuestions.at(i);
+                var answer = new App.Models.Answer;
+                answer.set('questionId', currentQuestion.id);
+                answer.set('token', myExam.get('currentToken'));
+                answer.set('content', JSON.parse(localStorage.getItem('answer' + currentQuestion.id)));
+                answers.push(answer);
+            }
+
+            console.log(JSON.stringify(answers));
+
+            var sendAnswers = $.ajax({
+                type: 'POST',
+                url: '/student/answers/' + myExam.id,
+                data: JSON.stringify(answers),
+                contentType: 'application/json',
+                dataType: 'json'
+            });
+
+            $.when(sendAnswers).done(function () {
+                var loginView = new App.Views.Login;
+                Teleegzam.mainRegion.show(loginView);
+            });
         }
     }
 });

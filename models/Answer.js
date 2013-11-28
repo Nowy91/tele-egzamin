@@ -5,14 +5,20 @@ module.exports = function (sequelize, DataTypes) {
     return sequelize.define('answer', {
         id: {
             type: Sequelize.BIGINT,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         },
-        reachedPoints: {
-            type: Sequelize.DECIMAL(6, 3)
-        },
-        type: {
-            // todo enum type against varchar
+
+        token: {
             type: Sequelize.STRING(20)
+        },
+
+        questionId: {
+            type: Sequelize.INTEGER
+        },
+
+        content: {
+            type: Sequelize.STRING
         }
     });
 }; 

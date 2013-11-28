@@ -41,7 +41,8 @@
                 "student_start",
                 "student_question",
                 "student_exam",
-                "student_layout"
+                "student_layout",
+                "student_answer"
             ],
             templates: {},
 

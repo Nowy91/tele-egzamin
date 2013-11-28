@@ -10,9 +10,7 @@ var models = [
   	'Grade',
   	'Question',
     'QuestionAnswer',
-  	'Answer',
-  	'OpenedAnswer',
-  	'ClosedAnswer'
+  	'Answer'
 ];
 
 models.forEach(function(model) {
@@ -31,7 +29,8 @@ models.forEach(function(model) {
   		.hasMany(m.Question, { foreignKey : 'examId' })
   		.hasOne(m.Grade, { foreignKey : 'examId' });
 	m.Question
-		.hasMany(m.QuestionAnswer, { foreignKey : 'questionId' });
+		.hasMany(m.QuestionAnswer, { foreignKey : 'questionId' })
+        .hasMany(m.Answer, { foreignKey : 'questionId' });
 
 })(module.exports);
 

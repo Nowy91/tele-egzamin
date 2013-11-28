@@ -2,7 +2,8 @@ App.Layouts.Student = Marionette.Layout.extend({
 
     regions: {
         exam: '#exam',
-        question: '#question'
+        question: '#question',
+        answer: '#answer'
     },
 
     initialize: function() {

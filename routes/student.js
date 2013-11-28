@@ -2,9 +2,10 @@ var models = require('./../models');
 var Token = models.Token;
 var Exam = models.Exam;
 var Question = models.Question;
+var Answer = models.Answer;
 
 exports.check = function (req, res) {
-    Token.find({ where: {content: "3757e2a"}})  //req.params.token}})
+    Token.find({ where: {content: req.params.token}})
         .success(function (token) {
             if (token == null)res.json(token);
             else
@@ -34,6 +35,17 @@ exports.getQuestions = function (req, res) {
         .error(function (err) {
             res.json(err);
         });
+    }
+};
+
+exports.saveAnswers = function (req, res) {
+    if(req.session.exam == req.params.examId)
+    {
+        Answer.bulkCreate(req.body, ['questionId', 'token', 'content'])
+            .success(function (answers) {
+                res.json("OK");
+            });
+        req.session.destroy();
     }
 };
 
