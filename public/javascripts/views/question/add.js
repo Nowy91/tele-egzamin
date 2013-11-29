@@ -29,6 +29,10 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
                 answers.add(answer);
         });
 
+        if (answers.length != 0) {newQuestion.set({type: 'closed'});}
+        else {newQuestion.set({type: 'open'});}
+
+
         Teleegzam.Controllers.Question.add(newQuestion, answers);
 
     }

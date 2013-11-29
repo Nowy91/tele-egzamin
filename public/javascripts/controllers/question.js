@@ -43,7 +43,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
             $.when(addQuestion).done(function (newQuestion) {
                 questionCollection.add(newQuestion);
-
                 if (answers.length != 0) {
                     var addAnswers = $.ajax({
                         type: 'POST',

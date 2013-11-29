@@ -42,7 +42,9 @@
                 "student_question",
                 "student_exam",
                 "student_layout",
-                "student_answer"
+                "student_open_answer",
+                "student_check_answer",
+                "student_check_answer_list"
             ],
             templates: {},
 

@@ -16,6 +16,9 @@ module.exports = function (sequelize, DataTypes) {
         },
         examId: {
             type: Sequelize.INTEGER
+        },
+        type: {
+            type: Sequelize.STRING
         }
     });
 }; 
