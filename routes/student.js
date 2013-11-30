@@ -11,7 +11,6 @@ exports.check = function (req, res) {
             if ((token == null)||(token.status != 'active'))res.json(null);
             else {
                 req.session.token = token.content;
-
                 Exam.find({where: {id: token.examId}})
                     .success(function (exam) {
                         req.session.exam = exam.id;
@@ -45,7 +44,8 @@ exports.saveAnswers = function (req, res) {
                 Token.find({where: {content: req.params.token}})
                     .success(function (token) {
                         token.updateAttributes({
-                            status: 'executed'
+                            status: 'executed',
+                            executedDate: new Date()
                         })
                     })
                 res.json("OK");

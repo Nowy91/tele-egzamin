@@ -14,6 +14,9 @@ module.exports = function (sequelize, DataTypes) {
         status: {
             type: Sequelize.STRING(20),
             defaultValue: 'active'
+        },
+        executedDate: {
+            type: Sequelize.DATE
         }
     });
 }; 
