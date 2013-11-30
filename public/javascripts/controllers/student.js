@@ -101,7 +101,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             if (answers.length != 0) {
                 var sendAnswers = $.ajax({
                     type: 'POST',
-                    url: '/student/answers/' + myExam.id,
+                    url: '/student/answers/' + myExam.get('currentToken'),
                     data: JSON.stringify(answers),
                     contentType: 'application/json',
                     dataType: 'json'

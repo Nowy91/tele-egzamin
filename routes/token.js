@@ -4,7 +4,7 @@ var Exam = models.Exam;
 var crypto = require('crypto');
 
 exports.list = function (req, res) {
-    Token.findAll({ where: { examId: req.params.examId }})
+    Token.findAll({ where: { examId: req.params.examId, status: req.params.status}})
         .success(function (tokens) {
             res.json(tokens);
         })

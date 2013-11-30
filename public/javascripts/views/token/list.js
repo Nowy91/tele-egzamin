@@ -1,4 +1,4 @@
-App.Views.TokenList = Marionette.CompositeView.extend({
+App.Views.ActiveTokenList = Marionette.CompositeView.extend({
 
     events: {
         'click a.btn-success': 'generateTokens'

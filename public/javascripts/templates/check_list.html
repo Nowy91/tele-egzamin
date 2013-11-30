@@ -1,0 +1,31 @@
+<script id="check_list_template" type="text/template">
+    <div class="page-header">
+        <h1><%= title %>
+            <small></small>
+        </h1>
+    </div>
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        Aby sprawdzić egzamin <strong>kliknij na token.</strong>.
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>token</th>
+            <th>status</th>
+            <th>data wygenerowania</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function () {
+            $('tbody tr').each(function(idx){
+                $(this).children().first().html(idx + 1);
+            });
+        });
+</script>
+</script>

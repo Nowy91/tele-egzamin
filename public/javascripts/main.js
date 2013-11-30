@@ -44,7 +44,9 @@
                 "student_layout",
                 "student_open_answer",
                 "student_check_answer",
-                "student_check_answer_list"
+                "student_check_answer_list",
+                "check_item",
+                "check_list"
             ],
             templates: {},
 

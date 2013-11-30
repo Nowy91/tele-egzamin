@@ -8,7 +8,7 @@ var Answer = models.Answer;
 exports.check = function (req, res) {
     Token.find({ where: {content: req.params.token}})
         .success(function (token) {
-            if (token == null)res.json(token);
+            if ((token == null)||(token.status != 'active'))res.json(null);
             else {
                 req.session.token = token.content;
 
@@ -39,11 +39,20 @@ exports.getQuestions = function (req, res) {
 };
 
 exports.saveAnswers = function (req, res) {
-    if (req.session.exam == req.params.examId) {
+    if (req.session.token == req.params.token) {
         Answer.bulkCreate(req.body, ['questionId', 'token', 'content'])
             .success(function (answers) {
+                Token.find({where: {content: req.params.token}})
+                    .success(function (token) {
+                        token.updateAttributes({
+                            status: 'executed'
+                        })
+                    })
                 res.json("OK");
             });
+
+
+
         req.session.destroy();
     }
 };

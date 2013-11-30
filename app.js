@@ -66,13 +66,13 @@ app.delete('/examiner/delete/:id', examiner.delete);
 app.post('/examiner/edit/:id', examiner.edit);
 
 //tokens
-app.get('/tokens/:examId', token.list);
+app.get('/tokens/:examId/:status', token.list);
 app.post('/tokens/generate/', token.generate);
 
 //student
 app.get('/student/check/:token', student.check);
 app.get('/student/get/:examId', student.getQuestions);
-app.post('/student/answers/:examId', student.saveAnswers);
+app.post('/student/answers/:token', student.saveAnswers);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
