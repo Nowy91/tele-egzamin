@@ -3,20 +3,17 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
     var layout;
     var collection;
     var examModel;
+    var examsList;
 
     Controller.Exam = {
         showAll: function () {
             layout = new App.Layouts.Dashboard;
 
-            var fetchingExams = $.ajax({
-                type: 'GET',
-                url: '/exams',
-                dataType: 'json'
-            });
+            collection = new App.Collections.Exams;
+            var fetching = collection.fetch();
 
-            $.when(fetchingExams).done(function (exams) {
-                collection = new App.Collections.Exams(exams);
-                var examsList = new App.Views.ExamList({collection: collection});
+            $.when(fetching).done(function() {
+                examsList = new App.Views.ExamList({collection: collection});
 
                 layout.on("show", function () {
                     layout.header.show(new App.Views.Header);
