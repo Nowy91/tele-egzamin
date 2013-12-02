@@ -34,7 +34,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             $.when(generateTokens)
                 .done(function (tokens) {
                     collection.add(tokens);
-                    layout.content.show(new App.Views.TokenList({collection: collection, model: examModel}));
+                    Teleegzam.Utils.Paginator.setIndexes();
                 });
         }
     }

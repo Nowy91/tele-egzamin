@@ -47,6 +47,7 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
             collection.getPage(parseInt(pageNumber));
             currentPage = parseInt(pageNumber);
             this.selectCurrentPage();
+            this.setIndexes();
         },
 
         nextPage: function () {
@@ -57,10 +58,12 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
                     collection.getNextPage();
                     this.insertPages();
                     this.selectCurrentPage();
+                    this.setIndexes();
                 }
                 else {
                     currentPage++;
                     this.selectCurrentPage();
+                    this.setIndexes();
                 }
             }
         },
@@ -78,6 +81,7 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
                 collection.getPage(currentPage);
                 this.insertPages();
                 this.selectCurrentPage();
+                this.setIndexes();
             }
         },
 
@@ -89,11 +93,13 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
                         currentSet -= totalPagesInView;
                         this.insertPages();
                         this.selectCurrentPage();
+                        this.setIndexes();
                     }
                     else {
                         collection.getPreviousPage();
                         currentPage--;
                         this.selectCurrentPage();
+                        this.setIndexes();
                     }
                 }
             }
@@ -105,6 +111,7 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
                     currentPage -= totalPagesInView;
                     currentSet -= totalPagesInView;
                     this.insertPages();
+                    this.setIndexes();
                 }
                 else {
                     currentPage = 1;
@@ -112,6 +119,7 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
 
                 collection.get(currentPage);
                 this.selectCurrentPage();
+                this.setIndexes();
             }
         },
 
@@ -189,6 +197,14 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
 
             collection.setSorting(sortKey);
             collection.fullCollection.sort();
+        },
+
+        setIndexes: function() {
+            index = (currentPage - 1) * collection.state.pageSize;
+
+            $('tbody tr').each(function(idx){
+                $(this).children().first().html(idx + index + 1);
+            });
         }
     }
 });

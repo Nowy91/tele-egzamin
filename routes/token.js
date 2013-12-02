@@ -16,10 +16,13 @@ exports.list = function (req, res) {
 exports.generate = function (req, res) {
     var tokens = randTokens(7, req.body.numberOfStudents);
 
-    Token.bulkCreate(tokens, ['content']).success(function () {
+    tokens.forEach(function(token) {
+        token.examId = req.body.id;
+    });
+
+    Token.bulkCreate(tokens, ['content', 'examId']).success(function () {
         Token.findAll({where: {content: getTokensValueFrom(tokens)}}).success(function (tokens) {
             Exam.find(req.body.id).success(function (exam) {
-                exam.setTokens(tokens);
                 res.json(tokens);
             });
         });
