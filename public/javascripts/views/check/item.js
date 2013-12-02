@@ -18,7 +18,7 @@ App.Views.CheckItem = Marionette.ItemView.extend({
     },
 
     checkToken: function() {
-
+        Teleegzam.Controllers.Check.showToken(this.model.get('content'));
     }
 
 });
