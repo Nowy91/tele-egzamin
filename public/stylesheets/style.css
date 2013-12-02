@@ -11,3 +11,7 @@ form{margin-top:30px;}
 .back-button {text-align: left; margin-top:30px;}
 .mLeft10 {margin-left:10px;}
 .mBottom25 {margin-bottom:25px;}
+.leftAnswers li, .rightAnswers li {border-radius: 0; border: 0;}
+.leftAnswers, .rightAnswers {width:50%}
+.leftAnswers ul, .rightAnswers ul{margin:0; padding:0}
+.closedAnswer {color: blue}

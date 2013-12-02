@@ -15,10 +15,24 @@
             </div>
         </td>
     </tr>
-    <tr>
-        <td style="border-bottom: 2px solid #DDDDDD;">
-            <%= studentAnswer %>
-        </td>
+    <tr <%=type%>>
+
+
+    <%if(type == "open" ){%>
+    <td style="border-bottom: 2px solid #DDDDDD;">
+        <%= studentAnswer %>
+    </td>
+    <%} else {%>
+    <td style="border-bottom: 2px solid #DDDDDD; padding: 0" id="<%= id %>">
+        <div class="leftAnswers pull-left">
+
+        </div>
+        <div class="rightAnswers pull-right">
+
+        </div>
+    </td>
+    <%}%>
+
 
     </tr>
 </script>
