@@ -25,10 +25,6 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
         show: function (collection, selector) {
             this.init(collection, selector);
 
-            if (totalPages == 1) {
-                $pagination.hide();
-            }
-
             if (totalPages > 1) {
                 this.insertNavigation();
                 this.insertPages();
@@ -37,6 +33,7 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
 
             $selector.append($pagination);
             this.selectCurrentPage();
+            this.setIndexes();
         },
 
         goToPage: function (button, pageNumber) {
@@ -198,6 +195,7 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
 
             collection.setSorting(sortKey);
             collection.fullCollection.sort();
+            this.setIndexes();
         },
 
         setIndexes: function() {
