@@ -6,7 +6,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
     var questionModel;
     var answerCollection;
 
-
     Controller.Question = {
 
         showAll: function () {
@@ -21,7 +20,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
             $.when(getQuestions).done(function (questions) {
                 questionCollection = new App.Collections.Questions(questions);
-                questionCollection.sort();
+                //questionCollection.sort();
                 var questionsList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                 layout.content.show(questionsList);
             });

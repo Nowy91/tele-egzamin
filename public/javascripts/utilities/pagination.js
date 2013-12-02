@@ -19,6 +19,7 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
             $pagination.empty();
             collection = items;
             $selector = selector;
+            currentPage = 1;
             totalPages = collection.state.totalPages;
         },
 
