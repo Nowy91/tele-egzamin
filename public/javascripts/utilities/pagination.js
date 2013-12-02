@@ -62,6 +62,7 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
                 }
                 else {
                     currentPage++;
+                    collection.getPage(currentPage);
                     this.selectCurrentPage();
                     this.setIndexes();
                 }
