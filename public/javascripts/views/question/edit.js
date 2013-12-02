@@ -22,7 +22,7 @@ App.Views.QuestionEdit = Marionette.ItemView.extend({
 
         var newQuestion = new App.Models.Question({
             content: $(e.currentTarget).find('#content').val(),
-            maxPoints: $(e.currentTarget).find('input#maxpoints').val(),
+            maxPoints: $(e.currentTarget).find('input#maxPoints').val(),
             examId: this.model.id
         });
 
