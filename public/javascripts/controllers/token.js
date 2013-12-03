@@ -12,7 +12,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
             var getTokens = $.ajax({
                 type: 'GET',
-                url: '/tokens/' + examModel.id +"/active",
+                url: '/tokens/' + examModel.id + "/active",
                 dataType: 'json'
             });
 
@@ -34,7 +34,8 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             $.when(generateTokens)
                 .done(function (tokens) {
                     collection.add(tokens);
-                    layout.content.show(new App.Views.TokenList({collection: collection, model: examModel}));
+                    Teleegzam.Utils.Paginator.show(collection, $('div.paginator'));
+                    Teleegzam.Utils.Paginator.setIndexes();
                 });
         }
     }

@@ -4,10 +4,12 @@
             <small></small>
         </h1>
     </div>
+
     <div class="alert alert-info alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         Aby edytować egzamin <strong>kliknij na jego nazwę</strong>.
     </div>
+
     <table class="table table-striped">
         <thead>
         <tr>
@@ -24,12 +26,6 @@
         <!-- place to insert table -->
         </tbody>
     </table>
-    <script>
-        $(document).ready(function () {
-            $('tbody tr').each(function(idx){
-                $(this).children().first().html(idx + 1);
-            });
 
-        });
-</script>
+    <div class="text-center paginator"></div>
 </script>

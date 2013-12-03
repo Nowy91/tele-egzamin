@@ -15,10 +15,13 @@ exports.list = function (req, res) {
 exports.add = function (req, res) {
     Question.create(req.body)
         .success(function (question) {
-            res.json(question);
+            var data = question.dataValues;
+            data.isValid = true;
+            res.json(data);
         })
-        .error(function (err) {
-            res.end(err);
+        .error(function (question) {
+            question.isValid = false;
+            res.json(question);
         });
 }
 
@@ -73,6 +76,12 @@ exports.edit = function (req, res) {
         .success(function (question) {
             question.updateAttributes({content: req.body.content, maxPoints: req.body.maxPoints})
                 .success(function () {
+                    var data = question.dataValues;
+                    data.isValid = true;
+                    res.json(data);
+                })
+                .error(function (question){
+                    question.isValid = false;
                     res.json(question);
                 });
         })
@@ -111,7 +120,6 @@ exports.editAnswers = function (req, res) {
                         }
                     }
                 }
-
 
                 res.json(newAnswers);
             });

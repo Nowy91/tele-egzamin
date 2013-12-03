@@ -1,5 +1,6 @@
 body {font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;}
 td, th{text-align:center;}
+th {cursor: pointer;}
 th.small {width: 50px;}
 th.middle {width: 200px;}
 .nav hr {margin: 0  0 5px 0;}
