@@ -16,11 +16,10 @@ App.Views.CheckQuestionList = Marionette.CompositeView.extend({
 
         e.preventDefault();
 
-        var sum = 0;
+        var sum = 0, max =0;
         $('input').each(function () {
-            sum += parseFloat($(this).val());
+            if($(this).val() != "")sum += parseFloat($(this).val());
         })
-
         Teleegzam.Controllers.Check.pointsAccept(sum);
 
     }
