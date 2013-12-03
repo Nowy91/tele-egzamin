@@ -4,5 +4,5 @@ a { text-decoration: underline; }
 h1, h2, h3, h4, h5, p, td { font-family: "Times New Roman", "Times", "serif"; }
 img{ display: none; }
 
-#header, #menu_hook, .paginator, .btn {display: none}
+#header, #menu_hook, .paginator, .btn-group {display: none}
 tr {width: 150px}

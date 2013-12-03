@@ -17,3 +17,5 @@ form{margin-top:30px;}
 .leftAnswers, .rightAnswers{width:50%}
 .leftAnswers ul, .rightAnswers ul, .leftTitle, .rightTitle{margin:0; padding:0}
 .closedAnswer {color: blue}
+
+.paginator .btn-group {margin: 20px 0; float: left}

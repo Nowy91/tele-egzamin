@@ -10,7 +10,8 @@ App.Views.ActiveTokenList = Marionette.CompositeView.extend({
         'click .paginator li.prevOne a': 'prevPage',
         'click .paginator li.prevTen a': 'prevPages',
         'click .paginator li.page a': 'goToPage',
-        'click table th': 'sort'
+        'click table th': 'sort',
+        'click .btn-group li a': 'pagesOnView'
     },
 
     initialize: function () {
@@ -53,6 +54,9 @@ App.Views.ActiveTokenList = Marionette.CompositeView.extend({
         if (header == 'data wygenerowania') { sortKey = 'createdAd'; }
 
         Teleegzam.Utils.Paginator.sort(sortKey);
-    }
+    },
 
+    pagesOnView: function (e) {
+        Teleegzam.Utils.Paginator.pagesOnView(e.currentTarget);
+    }
 });
