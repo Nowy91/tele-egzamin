@@ -15,13 +15,29 @@
         </thead>
 
     </table>
-<a class="btn btn-success pull-right mLeft10">Zatwierdź punktację</a>
+
+<a class="btn btn-success pull-right mLeft10 mBottom25 pointsAccept">Zatwierdź punktację</a>
+    <div class="btn btn-warning pull-right mBottom25 sum"></div>
     <script>
         $(document).ready(function () {
             $('tbody').each(function(idx){
                 $(this).children().children().first().html(idx + 1);
             });
 
+            setTimeout(function() {sum();}, 200);
+
+            $('input').keyup(function() {sum();});
+
+
         });
+
+        function sum()
+        {
+            var sum=0;
+            $('input').each(function(){
+                if($(this).val() != "")sum += parseFloat($(this).val());
+            })
+            $('.sum').html("Suma punktów: " + sum);
+        }
 </script>
 </script>

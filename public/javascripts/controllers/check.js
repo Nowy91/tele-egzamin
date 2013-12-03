@@ -3,7 +3,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
         var examModel;
         var layout;
         var collection;
-        var questionsCollection;
+        var currentToken;
 
         Controller.Check = {
 
@@ -25,6 +25,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             },
 
             showToken: function (token) {
+                currentToken = token;
                 var getData = $.ajax({
                     type: 'GET',
                     url: '/check/' + token + "/" + examModel.id,
@@ -56,22 +57,20 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                             var correctA = answersCollection.where({questionId: parseInt(currId)});
                             var studentA = studentAnswersCollection.where({questionId: parseInt(currId)});
 
+                            layout.addRegion('correctAns', '#' + currId + " .leftAnswers");
+                            layout.addRegion('studentAns', '#' + currId + " .rightAnswers");
+
+                            var correctCollection = new App.Collections.QuestionAnswers(correctA);
+                            var score = new App.Models.Answer({score: 0, questionId: currId});
+                            layout.correctAns.show(new App.Views.CheckAnswerList({collection: correctCollection, model: score}));
+
+                            var studentCollection = new App.Collections.QuestionAnswers;
+                            for (var k = 0; k < correctCollection.length; k++) {
+                                correctCollection.at(k).set({isSet: false});
+                                studentCollection.push(correctCollection.at(k));
+                            }
+
                             if (studentA[0] != undefined) {
-                                //alert(i);
-                                layout.addRegion('correctAns', '#' + currId + " .leftAnswers");
-                                layout.addRegion('studentAns', '#' + currId + " .rightAnswers");
-                                //console.log(layout);
-
-                                var correctCollection = new App.Collections.QuestionAnswers(correctA);
-                                var score = new App.Models.Answer({score: 10, questionId: currId});
-                                layout.correctAns.show(new App.Views.CheckAnswerList({collection: correctCollection, model: score}));
-
-                                var studentCollection = new App.Collections.QuestionAnswers;
-                                for (var k = 0; k < correctCollection.length; k++) {
-                                    correctCollection.at(k).set({isSet: false});
-                                    studentCollection.push(correctCollection.at(k));
-                                }
-
                                 var array = studentA[0].get("content");
                                 var points = 0, maxPoints = 0, zero = false;
                                 for (var j = 0; j < studentCollection.length; j++) {
@@ -91,15 +90,43 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
                                 }
                                 var finalScore = parseFloat(closedQuestions[i].get('maxPoints')) * points / maxPoints;
-                                score.set({score: finalScore});
-                                layout.studentAns.show(new App.Views.CheckAnswerList({collection: studentCollection, model: score }));
-
-                                //alert(i + "2");
+                                score.set({score: Math.round(finalScore*1000)/1000});
                             }
+                            layout.studentAns.show(new App.Views.CheckAnswerList({collection: studentCollection, model: score }));
                         }
 
                     });
-            }
+            },
+
+            pointsAccept: function(sum){
+                var savePoints = $.ajax({
+                    type: 'POST',
+                    url: '/check/' + currentToken + '/checked',
+                    data: JSON.stringify({reachedPoints: sum, token: currentToken}),
+                    contentType: 'application/json',
+                    dataType: 'json'
+                });
+                var model = collection.where({content: currentToken});
+                collection.remove(model);
+                layout.content.show(new App.Views.ExecutedTokenList({collection: collection, model: examModel}));
+            },
+
+            showChecked: function () {
+                examModel = Teleegzam.Controllers.Exam.getModel("examModel");
+                layout = Teleegzam.Controllers.Exam.getModel("layout");
+
+                var getTokens = $.ajax({
+                    type: 'GET',
+                    url: '/tokens/' + examModel.id + "/checked",
+                    dataType: 'json'
+                });
+
+                $.when(getTokens)
+                    .done(function (tokens) {
+                        collection = new App.Collections.Tokens(tokens);
+                        layout.content.show(new App.Views.CheckedTokenList({collection: collection, model: examModel}));
+                    });
+            },
         }
 
     }

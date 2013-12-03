@@ -50,9 +50,6 @@ exports.saveAnswers = function (req, res) {
                     })
                 res.json("OK");
             });
-
-
-
         req.session.destroy();
     }
 };
