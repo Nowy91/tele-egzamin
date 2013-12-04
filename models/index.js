@@ -28,6 +28,9 @@ models.forEach(function(model) {
   		.hasMany(m.Token, { foreignKey : 'examId' })
   		.hasMany(m.Question, { foreignKey : 'examId' })
   		.hasOne(m.Grade, { foreignKey : 'examId' });
+    m.Token
+        .hasOne(m.Grade, { foreignKey : 'tokenId' })
+        .hasMany(m.Answer, { foreignKey : 'tokenId' });
 	m.Question
 		.hasMany(m.QuestionAnswer, { foreignKey : 'questionId' })
         .hasMany(m.Answer, { foreignKey : 'questionId' });
