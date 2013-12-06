@@ -26,14 +26,12 @@ models.forEach(function(model) {
   		.hasMany(m.Exam, { foreignKey : 'examinerId' });
   	m.Exam
   		.hasMany(m.Token, { foreignKey : 'examId' })
-  		.hasMany(m.Question, { foreignKey : 'examId' })
-  		.hasOne(m.Grade, { foreignKey : 'examId' });
-    m.Token
-        .hasOne(m.Grade, { foreignKey : 'tokenId' })
-        .hasMany(m.Answer, { foreignKey : 'tokenId' });
+  		.hasMany(m.Question, { foreignKey : 'examId' });
 	m.Question
 		.hasMany(m.QuestionAnswer, { foreignKey : 'questionId' })
         .hasMany(m.Answer, { foreignKey : 'questionId' });
+    m.Token
+        .hasMany(m.Answer, { foreignKey: 'token'})
 
 })(module.exports);
 

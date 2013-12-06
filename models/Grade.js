@@ -5,7 +5,8 @@ module.exports = function (sequelize, DataTypes) {
     return sequelize.define('grade', {
         id: {
             type: Sequelize.BIGINT,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         },
         mark: {
             type: Sequelize.DECIMAL(2, 1)

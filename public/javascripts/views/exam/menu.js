@@ -5,7 +5,8 @@ App.Views.ExamMenu = Marionette.ItemView.extend({
         'click .exam_data': 'examData',
         'click .exam_questions': 'questionList',
         'click .exam_tokens': 'tokensList',
-        'click .exam_check': 'examCheck'
+        'click .exam_check': 'examCheck',
+        'click .exam_checked': 'examChecked'
     },
 
     initialize: function () {
@@ -26,6 +27,10 @@ App.Views.ExamMenu = Marionette.ItemView.extend({
 
     examCheck: function () {
         Teleegzam.Controllers.Check.showAll();
+    },
+
+    examChecked: function () {
+        Teleegzam.Controllers.Check.showChecked();
     },
 
     backToExamList: function () {

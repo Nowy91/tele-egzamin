@@ -13,6 +13,7 @@ var question = require('./routes/question');
 var examiner = require('./routes/examiner');
 var token = require('./routes/token');
 var student = require('./routes/student');
+var check = require('./routes/check');
 
 var app = express();
 
@@ -68,6 +69,8 @@ app.post('/examiner/edit/:id', examiner.edit);
 //tokens
 app.get('/tokens/:examId/:status', token.list);
 app.post('/tokens/generate/', token.generate);
+app.get('/check/:token/:examId', check.getData);
+app.post('/check/:token/checked', check.checked);
 
 //student
 app.get('/student/check/:token', student.check);

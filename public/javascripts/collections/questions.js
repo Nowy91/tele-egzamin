@@ -1,5 +1,12 @@
-App.Collections.Questions = Backbone.Collection.extend({
+App.Collections.Questions = Backbone.PageableCollection.extend({
 
     model: App.Models.Question,
-    comparator: 'id'
+    mode: 'client',
+
+    state: {
+        pageSize: 10,
+        sortKey: 'content',
+        order: 1
+    }
+
 });

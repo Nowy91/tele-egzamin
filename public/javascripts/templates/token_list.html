@@ -4,26 +4,23 @@
             <small></small>
         </h1>
     </div>
-    <table class="table table-striped">
+
+    <a class="btn btn-success pull-right mLeft10 mBottom25 clear">Generuj tokeny</a>
+    <a class="btn btn-primary pull-right" onClick="window.print();">Drukuj listę</a>
+
+    <table class="table table-striped" style="border-top: 1px solid #eee">
         <thead>
         <tr>
-            <th>#</th>
+            <th class="small">#</th>
             <th>token</th>
-            <th>status</th>
-            <th>data wygenerowania</th>
+            <th class="middle">data wygenerowania</th>
         </tr>
         </thead>
         <tbody>
         </tbody>
     </table>
 
-    <a class="btn btn-success pull-right mLeft10">Generuj tokeny</a>
+    <div class="text-center paginator"></div>
 
-    <script>
-        $(document).ready(function () {
-            $('tbody tr').each(function(idx){
-                $(this).children().first().html(idx + 1);
-            });
-        });
-    </script>
+
 </script>

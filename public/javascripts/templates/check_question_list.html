@@ -1,0 +1,43 @@
+<script id="check_question_list_template" type="text/template">
+    <div class="page-header">
+        <h1>
+            <%= title %>
+            <small>Token: #<%=token%></small>
+        </h1>
+    </div>
+    <table class="table" id="check">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Pytanie/Odpowiedź</th>
+            <th>Punkty</th>
+        </tr>
+        </thead>
+
+    </table>
+
+<a class="btn btn-success pull-right mLeft10 mBottom25 pointsAccept">Zatwierdź punktację</a>
+    <div class="btn btn-warning pull-right mBottom25 sum"></div>
+    <script>
+        $(document).ready(function () {
+            $('tbody').each(function(idx){
+                $(this).children().children().first().html(idx + 1);
+            });
+
+            setTimeout(function() {sum();}, 200);
+
+            $('input').keyup(function() {sum();});
+
+
+        });
+
+        function sum()
+        {
+            var sum=0;
+            $('input').each(function(){
+                if($(this).val() != "")sum += parseFloat($(this).val());
+            })
+            $('.sum').html("Suma punktów: " + sum);
+        }
+</script>
+</script>

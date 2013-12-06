@@ -6,7 +6,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
     var questionModel;
     var answerCollection;
 
-
     Controller.Question = {
 
         showAll: function () {
@@ -21,7 +20,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
             $.when(getQuestions).done(function (questions) {
                 questionCollection = new App.Collections.Questions(questions);
-                questionCollection.sort();
                 var questionsList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                 layout.content.show(questionsList);
             });
@@ -33,7 +31,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
         },
 
         add: function (question, answers) {
-
             var addQuestion = $.ajax({
                 type: 'POST',
                 url: '/questions/add',
@@ -42,27 +39,30 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
 
             $.when(addQuestion).done(function (newQuestion) {
-                questionCollection.add(newQuestion);
-                if (answers.length != 0) {
-                    var addAnswers = $.ajax({
-                        type: 'POST',
-                        url: '/questions/answers/add/' + newQuestion.id,
-                        data: JSON.stringify(answers),
-                        contentType: 'application/json',
-                        dataType: 'json'
-                    });
-                    $.when(addAnswers).done(function () {
+                if (newQuestion.isValid) {
+                    questionCollection.add(newQuestion);
+                    if (answers.length != 0) {
+                        var addAnswers = $.ajax({
+                            type: 'POST',
+                            url: '/questions/answers/add/' + newQuestion.id,
+                            data: JSON.stringify(answers),
+                            contentType: 'application/json',
+                            dataType: 'json'
+                        });
+                        $.when(addAnswers).done(function () {
+                            var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
+                            layout.content.show(questionList);
+                        });
+                    }
+                    else
+                    {
                         var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                         layout.content.show(questionList);
-                    });
+                    }
                 }
-                else
-                {
-                    var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
-                    layout.content.show(questionList);
+                else {
+                    Teleegzam.Validator.Form.messages(newQuestion);
                 }
-
-
             });
         },
 
@@ -121,10 +121,21 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
 
             $.when(editQuestion).done(function (newQuestion) {
-                questionCollection.get(newQuestion).set({content: newQuestion.content, maxPoints: newQuestion.maxPoints});
-                questionCollection.sort();
-                var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
-                layout.content.show(questionList);
+                if (newQuestion.isValid) {
+                    questionCollection
+                        .get(newQuestion)
+                        .set({content: newQuestion.content, maxPoints: newQuestion.maxPoints});
+
+                    var questionList = new App.Views.QuestionList({
+                        collection: questionCollection,
+                        model: examModel
+                    });
+
+                    layout.content.show(questionList);
+                }
+                else {
+                    Teleegzam.Validator.Form.messages(newQuestion);
+                }
             });
         },
 
@@ -152,7 +163,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                     layout.answers.show(answersList);
                 }
             });
-
         }
     }
 });

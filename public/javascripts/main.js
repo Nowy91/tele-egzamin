@@ -46,7 +46,14 @@
                 "student_check_answer",
                 "student_check_answer_list",
                 "check_item",
-                "check_list"
+                "check_list",
+                "check_question_item",
+                "check_question_list",
+                "check_answer_list",
+                "check_answer_item",
+                "check_student_item",
+                "checked_item",
+                "checked_list"
             ],
             templates: {},
 

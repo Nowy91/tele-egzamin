@@ -1,19 +1,18 @@
-<script id="check_list_template" type="text/template">
+<script id="checked_list_template" type="text/template">
     <div class="page-header">
         <h1><%= title %>
             <small></small>
         </h1>
     </div>
-    <div class="alert alert-info alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        Aby sprawdzić egzamin <strong>kliknij na token.</strong>.
-    </div>
-    <table class="table table-striped">
+    <a class="btn btn-primary pull-right mBottom25" onClick="window.print();">Drukuj listę</a>
+    <table class="table table-striped" style="border-top: 1px solid #eee">
         <thead>
         <tr>
             <th class="small">#</th>
             <th>token</th>
             <th class="middle">data przeprowadzenia</th>
+            <th class="middle">uzyskane punkty</th>
+            <th class="small">ocena</th>
         </tr>
         </thead>
         <tbody>

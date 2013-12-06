@@ -1,0 +1,38 @@
+<script id="check_question_template" type="text/template">
+    <tr class="active">
+        <td rowspan="2"
+            style="vertical-align: middle; border-right: 1px solid #DDDDDD; border-bottom: 2px solid #DDDDDD;width:50px">
+
+        </td>
+        <td>
+            <%= content %>
+        </td>
+        <td rowspan="2"
+            style="vertical-align: middle; border-left: 1px solid #DDDDDD; border-bottom: 2px solid #DDDDDD;width:150px">
+            <div class="input-group">
+                <input type="text" class="form-control" style="width:75px">
+                <span class="input-group-addon" style="width:90px">/<%= formattedMaxPoints %></span>
+            </div>
+        </td>
+    </tr>
+    <tr <%=type%>>
+
+
+    <%if(type == "open" ){%>
+    <td style="border-bottom: 2px solid #DDDDDD;">
+        <%= studentAnswer %>
+    </td>
+    <%} else {%>
+    <td style="border-bottom: 2px solid #DDDDDD; padding: 0" id="<%= id %>">
+        <div class="leftAnswers pull-left">
+
+        </div>
+        <div class="rightAnswers pull-right">
+
+        </div>
+    </td>
+    <%}%>
+
+
+    </tr>
+</script>
