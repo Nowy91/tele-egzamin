@@ -1,4 +1,5 @@
 var models = require('./../models');
+var fs = require('fs');
 var Question = models.Question;
 var QuestionAnswer = models.QuestionAnswer;
 
@@ -38,6 +39,15 @@ exports.addAnswers = function (req, res) {
         });
 }
 
+exports.addFile = function (req, res){
+    var newPath = __dirname;
+    fs.readFile(req.files.image.path, function (err, data) {
+        newPath = newPath.replace("\\routes", '/public/images/') + req.files.image.name;
+        fs.writeFile(newPath, data, function (err) {
+            res.json("back");
+        });
+    });
+}
 exports.getAnswers = function (req, res) {
     QuestionAnswer.findAll({ where: {questionId: req.params.id}})
         .success(function (answers) {
@@ -80,7 +90,7 @@ exports.edit = function (req, res) {
                     data.isValid = true;
                     res.json(data);
                 })
-                .error(function (question){
+                .error(function (question) {
                     question.isValid = false;
                     res.json(question);
                 });
@@ -92,7 +102,7 @@ exports.edit = function (req, res) {
 
 exports.editAnswers = function (req, res) {
 
-    QuestionAnswer.bulkCreate(req.body, ['content', 'isCorrect','questionId']).success(function (newAnswers) {
+    QuestionAnswer.bulkCreate(req.body, ['content', 'isCorrect', 'questionId']).success(function (newAnswers) {
         QuestionAnswer.findAll({where: {questionId: req.params.id}})
             .success(function (oldAnswers) {
 

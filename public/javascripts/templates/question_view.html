@@ -11,13 +11,15 @@
                 <li class="list-group-item active">
                     Dane podstawowe:
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item"  <%= imageName %>>
                     <%= content %>
                 </li>
+                <%if(imageName != ""){%><li class="list-group-item"><img src="/images/<%= imageName %>" max-width="200px"/></li><%}%>
 
                 <li class="list-group-item">
                     <%= formattedMaxPoints %>
                 </li>
+
             </ul>
         </div>
 

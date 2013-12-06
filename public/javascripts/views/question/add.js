@@ -9,12 +9,17 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
     },
 
     submit: function (e) {
-        e.preventDefault();
+
+
+
+        //e.preventDefault();
 
         var newQuestion = new App.Models.Question({
             content: $(e.currentTarget).find('#content').val(),
             maxPoints: $(e.currentTarget).find('input#maxPoints').val(),
-            examId: this.model.id
+            examId: this.model.id,
+            type: 'open',
+            imageName: ""
         });
 
         var answer;
@@ -34,10 +39,12 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
         if (answers.length != 0) {
             newQuestion.set({type: 'closed'});
         }
-        else {
-            newQuestion.set({type: 'open'});
-        }
 
+        if($(e.currentTarget).find('input[type=file]').val() !== ""){
+            var fileName = $(e.currentTarget).find('input[type=file]').val();
+            newQuestion.set({imageName: fileName.replace("C:\\fakepath\\", "")});
+        }
+        console.log("PRZECHODZĘ DO KONTROLERA")
         Teleegzam.Controllers.Question.add(newQuestion, answers);
     }
 

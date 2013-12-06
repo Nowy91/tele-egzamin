@@ -55,6 +55,7 @@ app.get('/questions/view/:id', question.view);
 app.get('/questions/view/:id/answers', question.getAnswers);
 app.post('/questions/add', question.add);
 app.post('/questions/answers/add/:id', question.addAnswers);
+app.post('/questions/file/add', question.addFile);
 app.delete('/questions/delete/:id', question.delete);
 app.post('/questions/edit/:id', question.edit);
 app.post('/questions/answers/edit/:id', question.editAnswers);
