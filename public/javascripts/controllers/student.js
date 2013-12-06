@@ -62,7 +62,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             currentQuestion = myQuestions.at(number);
             var questionView = new App.Views.StudentQuestion({model: myQuestions.at(number)});
             layout.question.show(questionView);
-
+            console.log(currentQuestion);
             if (currentQuestion.get('type') == "open") {
                 currentAnswer.set({answer: JSON.parse(localStorage.getItem('answer' + currentQuestion.id))});
                 var answerView = new App.Views.StudentOpenAnswer({model: currentAnswer});
@@ -83,6 +83,10 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
                 var questionAnswers = new App.Views.StudentCheckAnswerList({collection: thisAnswers});
                 layout.answer.show(questionAnswers);
+            } else if (currentQuestion.get('type') == "image") {
+                currentAnswer.set({imageName: currentQuestion.get('imageName')});
+                var canvasView = new App.Views.StudentImageAnswer({model: currentAnswer});
+                layout.answer.show(canvasView);
             }
         },
 
@@ -107,6 +111,8 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                     dataType: 'json'
                 });
             }
+
+            window.localStorage.clear();
 
             var loginView = new App.Views.Login;
             Teleegzam.mainRegion.show(loginView);

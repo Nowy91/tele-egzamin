@@ -12,7 +12,8 @@
         pytanie ma być <strong>otwarte</strong> pozostaw pola odpowiedzi puste.
     </div>
     <iframe id="hidden-iframe" style="display: none"></iframe>
-    <form class="form-horizontal" role="form" target="hidden-iframe" action="/questions/file/add" method="POST" enctype="multipart/form-data">
+    <form class="form-horizontal" role="form" target="hidden-iframe" action="/questions/file/add" method="POST"
+          enctype="multipart/form-data">
 
         <div class="form-group">
             <label for="content" class="col-sm-2 control-label">
@@ -34,7 +35,8 @@
         </div>
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            Jeżeli pytanie ma być typu zamkniętego - dodaj odpowiedzi. O tym czy odpowiedź jest poprawna decyduje zaznaczenie pola w pierwszej kolumnie odpowiedzi. Kolejność odpowiedzi nie ma znaczenia, ponieważ
+            Jeżeli pytanie ma być typu zamkniętego - dodaj odpowiedzi. O tym czy odpowiedź jest poprawna decyduje
+            zaznaczenie pola w pierwszej kolumnie odpowiedzi. Kolejność odpowiedzi nie ma znaczenia, ponieważ
             podczas tworzenia instancji egzaminu system ją losuje.
         </div>
         <div class="form-group">
@@ -58,13 +60,18 @@
                 Obraz</label>
 
             <div class="fileinput fileinput-new col-sm-5" data-provides="fileinput">
+
                 <!--<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">-->
-                    <!--<img data-src="" alt="">-->
+                <!--<img data-src="" alt="">-->
                 <!--</div>-->
-                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                <div class="fileinput-preview fileinput-exists thumbnail"
+                     style="max-width: 200px; max-height: 150px;"></div>
+                <div class="error"></div>
                 <div>
-                    <span class="btn btn-warning btn-file"><span class="fileinput-new">Dodaj obrazek</span><span class="fileinput-exists">Zmień</span><input type="file" name="image"></span>
-                    <a href="#" class="btn btn-warning fileinput-exists" data-dismiss="fileinput">Usuń</a>
+                    <span class="btn btn-warning btn-file"><span class="fileinput-new">Dodaj obrazek</span>
+                    <span class="fileinput-exists">Zmień</span><input type="file" id="myFile" name="image"></span>
+                    <a class="btn btn-warning fileinput-exists" data-dismiss="fileinput">Usuń</a>
+                    <a class="btn btn-warning fileinput-exists draw">Włącz rysowanie</a>
                 </div>
             </div>
         </div>
@@ -84,6 +91,24 @@
     </div>
     <script>
         $(document).ready(function () {
+            /*var myFile = document.getElementById('myFile');
+
+             myFile.addEventListener('change', function () {
+             if (this.files[0].size > 500000) $(".error").html("<p style=\"color:red\">Za duży plik (max. 0,5 MB)</p>");
+             else $(".error").html("");
+             });*/
+            $('.draw').click(function () {
+                if ($(this).hasClass('btn-warning')) {
+                    $(this).removeClass("btn-warning");
+                    $(this).addClass("btn-success");
+                    $(this).html("Wyłącz rysowanie");
+                }
+                else {
+                    $(this).removeClass("btn-success");
+                    $(this).addClass("btn-warning");
+                    $(this).html("Włącz rysowanie");
+                }
+            })
 
             $(".addClosedAnswer").click(function () {
                 $(".answers").append('<div class="input-group answer"><span class="input-group-addon"><input type="checkbox"></span><input type="text" class="form-control"><span class="input-group-addon"><a class="removeClosedAnswer" onclick="$(this).closest(\'.input-group\').remove();"><div class="glyphicon glyphicon-remove"></div></a></span></div>');

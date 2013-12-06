@@ -45,6 +45,7 @@
                 "student_open_answer",
                 "student_check_answer",
                 "student_check_answer_list",
+                "student_image_answer",
                 "check_item",
                 "check_list",
                 "check_question_item",

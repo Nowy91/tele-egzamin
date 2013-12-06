@@ -1,7 +1,9 @@
 <script id="student_question_template" type="text/template">
-    <h3>Pytanie:</h3>
-
+    <h3 <%= type %>>Pytanie:</h3>
     <p><%= content %></p>
 
+
+  <%if(type!="image"){%> <img style="max-width:300px" src="/images/<%= imageName %>" />
+     <%}%>
 
 </script>
