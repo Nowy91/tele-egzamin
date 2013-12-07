@@ -44,11 +44,11 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 myQuestions = new App.Collections.Questions(data.questions);
                 myAnswers = new App.Collections.QuestionAnswers(data.answers);
 
+                window.localStorage.clear();
+
                 myExam.set('questionNumber', myQuestions.length);
                 var examView = new App.Views.StudentExam({model: myExam});
                 layout.exam.show(examView);
-
-                window.localStorage.clear();
 
                 currentQuestion = myQuestions.at(0);
                 currentAnswer = new App.Models.Answer;
@@ -62,7 +62,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             currentQuestion = myQuestions.at(number);
             var questionView = new App.Views.StudentQuestion({model: myQuestions.at(number)});
             layout.question.show(questionView);
-            console.log(currentQuestion);
+
             if (currentQuestion.get('type') == "open") {
                 currentAnswer.set({answer: JSON.parse(localStorage.getItem('answer' + currentQuestion.id))});
                 var answerView = new App.Views.StudentOpenAnswer({model: currentAnswer});
@@ -85,6 +85,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 layout.answer.show(questionAnswers);
             } else if (currentQuestion.get('type') == "image") {
                 currentAnswer.set({imageName: currentQuestion.get('imageName')});
+                currentAnswer.set({saveImage: JSON.parse(localStorage.getItem('answer' + currentQuestion.id))});
                 var canvasView = new App.Views.StudentImageAnswer({model: currentAnswer});
                 layout.answer.show(canvasView);
             }

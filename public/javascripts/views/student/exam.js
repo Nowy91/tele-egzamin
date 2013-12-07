@@ -12,8 +12,11 @@ App.Views.StudentExam = Marionette.ItemView.extend({
     },
 
     changeQuestion: function () {
-        var currentAnswer = $('#myTextArea').val();
-        if (currentAnswer == undefined) {
+        if (document.getElementById('myTextArea')) {
+            var currentAnswer = $('#myTextArea').val();
+        }
+
+        if (document.getElementById('answers')) {
             currentAnswer = [];
             $('.answer').each(function () {
                 var answer = {
@@ -25,6 +28,12 @@ App.Views.StudentExam = Marionette.ItemView.extend({
                     currentAnswer.push(answer.content);
             });
         }
+        if (document.getElementById('draw')) {
+            var canvas = document.querySelector('#draw');
+            currentAnswer = canvas.toDataURL();
+        }
+
+
         var currentQuestion = parseInt($('.btn-primary').attr('id')) - 1;
         Teleegzam.Controllers.Student.changeQuestion(currentQuestion, currentAnswer);
     },

@@ -1,4 +1,5 @@
 var models = require('./../models');
+var fs = require('fs');
 var Token = models.Token;
 var Exam = models.Exam;
 var Question = models.Question;
@@ -27,6 +28,19 @@ exports.check = function (req, res) {
 exports.getQuestions = function (req, res) {
     if (req.session.exam == req.params.examId) {
         Question.findAll({ where: {examId: req.params.examId}}).success(function (questions) {
+
+
+            questions.forEach(function(model){
+                var newPath = __dirname;
+                newPath = newPath.replace("\\routes", '/public/images/') + model.imageName;
+
+                var base64_data = new Buffer(fs.readFileSync(newPath).toString('base64'));
+                model.imageName = 'data:image/jpg;base64,' + base64_data + '>';
+            });
+
+
+
+
             QuestionAnswer.findAll({ where: {questionId: getIdValueFrom(questions)}}).success(function (answers) {
                 res.json({ questions: questions, answers: getContentFrom(answers)});
             })

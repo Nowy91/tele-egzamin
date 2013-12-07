@@ -44,6 +44,7 @@ exports.addFile = function (req, res){
     fs.readFile(req.files.image.path, function (err, data) {
         newPath = newPath.replace("\\routes", '/public/images/') + req.files.image.name;
         fs.writeFile(newPath, data, function (err) {
+            console.log(data);
             res.json("back");
         });
     });
