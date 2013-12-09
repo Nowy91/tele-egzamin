@@ -77,6 +77,7 @@ app.post('/check/:token/checked', check.checked);
 app.get('/student/check/:token', student.check);
 app.get('/student/get/:examId', student.getQuestions);
 app.post('/student/answers/:token', student.saveAnswers);
+app.post('/student/images/:token', student.saveImageAnswers);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));

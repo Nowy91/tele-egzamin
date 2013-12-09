@@ -71,7 +71,7 @@
                     <span class="btn btn-warning btn-file"><span class="fileinput-new">Dodaj obrazek</span>
                     <span class="fileinput-exists">Zmień</span><input type="file" id="myFile" name="image"></span>
                     <a class="btn btn-warning fileinput-exists" data-dismiss="fileinput">Usuń</a>
-                    <a class="btn btn-warning fileinput-exists draw">Włącz rysowanie</a>
+                    <a class="btn btn-warning fileinput-exists drawCheck">Włącz rysowanie</a>
                 </div>
             </div>
         </div>
@@ -97,7 +97,7 @@
              if (this.files[0].size > 500000) $(".error").html("<p style=\"color:red\">Za duży plik (max. 0,5 MB)</p>");
              else $(".error").html("");
              });*/
-            $('.draw').click(function () {
+            $('.drawCheck').click(function () {
                 if ($(this).hasClass('btn-warning')) {
                     $(this).removeClass("btn-warning");
                     $(this).addClass("btn-success");

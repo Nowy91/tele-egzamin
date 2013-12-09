@@ -39,15 +39,16 @@ exports.addAnswers = function (req, res) {
         });
 }
 
-exports.addFile = function (req, res){
+exports.addFile = function (req, res) {
     var newPath = __dirname;
     fs.readFile(req.files.image.path, function (err, data) {
-        newPath = newPath.replace("\\routes", '/public/images/') + req.files.image.name;
+        newPath = newPath.replace("routes", 'public/images/') + req.files.image.name;
+
         fs.writeFile(newPath, data, function (err) {
-            console.log(data);
             res.json("back");
         });
     });
+
 }
 exports.getAnswers = function (req, res) {
     QuestionAnswer.findAll({ where: {questionId: req.params.id}})

@@ -1,6 +1,6 @@
 <script id="student_image_answer_template" type="text/template">
     <h3>Ilustracja:</h3>
-    <img class="draw" src=<%=imageName%>/>
+    <img class="draw" src=<%=imageName%>
     <canvas id="draw"></canvas>
 
     <button  id="margin" class="btn btn-info clear">Wyczyść zaznaczenie</button>
@@ -12,6 +12,11 @@
             var margin = document.querySelector('#margin');
 
             var ctx = canvas.getContext('2d');
+            ctx.lineWidth = 5;
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = 'red';
+
             var imgStyle = getComputedStyle(image);
             var mouse = {x: 0, y: 0};
             var el = canvas, pos = {x: 0, y: 0};
@@ -43,11 +48,6 @@
                 mouse.x = e.pageX - pos.x;
                 mouse.y = e.pageY - pos.y;
             }, false);
-
-            ctx.lineWidth = 2;
-            ctx.lineJoin = 'round';
-            ctx.lineCap = 'round';
-            ctx.strokeStyle = 'red';
 
             canvas.addEventListener('mousedown', function (e) {
                 ctx.beginPath();

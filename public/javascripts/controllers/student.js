@@ -93,6 +93,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
         saveAnswers: function () {
             var answers = new App.Collections.Answers;
+            var imagesAnswers = new App.Collections.Answers;
 
             for (var i = 0; i < myQuestions.length; i++) {
                 currentQuestion = myQuestions.at(i);
@@ -100,7 +101,11 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 answer.set('questionId', currentQuestion.id);
                 answer.set('token', myExam.get('currentToken'));
                 answer.set('content', JSON.parse(localStorage.getItem('answer' + currentQuestion.id)));
-                if ((answer.get('content') != "") && (answer.get('content') != null))answers.push(answer);
+                if ((answer.get('content') != "") && (answer.get('content') != null))
+                {
+                    if(currentQuestion.get('type') == "image")imagesAnswers.push(answer);
+                    else answers.push(answer);
+                }
             }
 
             if (answers.length != 0) {
@@ -108,6 +113,16 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                     type: 'POST',
                     url: '/student/answers/' + myExam.get('currentToken'),
                     data: JSON.stringify(answers),
+                    contentType: 'application/json',
+                    dataType: 'json'
+                });
+            }
+
+            if (imagesAnswers.length != 0) {
+                var sendImageAnswers = $.ajax({
+                    type: 'POST',
+                    url: '/student/images/' + myExam.get('currentToken'),
+                    data: JSON.stringify(imagesAnswers),
                     contentType: 'application/json',
                     dataType: 'json'
                 });

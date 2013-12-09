@@ -43,7 +43,7 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
         if($(e.currentTarget).find('input[type=file]').val() !== ""){
             var fileName = $(e.currentTarget).find('input[type=file]').val();
             newQuestion.set({imageName: fileName.replace("C:\\fakepath\\", "")});
-            if($(e.currentTarget).find('.draw').hasClass('btn-success')){
+            if($(e.currentTarget).find('.drawCheck').hasClass('btn-success')){
                 newQuestion.set({type: 'image'});
             }
         }

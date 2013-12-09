@@ -17,9 +17,9 @@
         </li>
         <%if(imageName != ""){%>
         <li class="list-group-item"><p>Obrazek (tryb rysowania
-            <%if(type=="image"){%>włączony<%}else{%>wyłączony<%}%>):</p><img style="max-width:300px"
-                                                                             src="<%= imageName %>"/></li>
-        <%}%>
+                <%if(type=="image"){%>włączony<%}else{%>wyłączony<%}%>):</p><img style="max-width:300px"
+                                                                                 src="/images/<%= imageName %>"/></li>
+            <%}%>
 
         <li class="list-group-item">
             Ilość punktów: <%= formattedMaxPoints %>

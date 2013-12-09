@@ -6,7 +6,9 @@
         </td>
         <td>
             <%= content %>
+
         </td>
+
         <td rowspan="2"
             style="vertical-align: middle; border-left: 1px solid #DDDDDD; border-bottom: 2px solid #DDDDDD;width:150px">
             <div class="input-group">
@@ -22,7 +24,8 @@
     <td style="border-bottom: 2px solid #DDDDDD;">
         <%= studentAnswer %>
     </td>
-    <%} else {%>
+    <%}%>
+    <%if(type == "closed" ){%>
     <td style="border-bottom: 2px solid #DDDDDD; padding: 0" id="<%= id %>">
         <div class="leftAnswers pull-left">
 
@@ -32,7 +35,14 @@
         </div>
     </td>
     <%}%>
+    <%if(type == "image" ){%>
+    <td style="border-bottom: 2px solid #DDDDDD; ">
+        <img class="drawAnswer" src="/images/<%= imageName %>"/>
+        <img class="canvasAnswer" src="/images/student/<%= studentAnswer %>">
 
+    </td>
+    <%}%>
 
-    </tr>
+</tr>
+
 </script>

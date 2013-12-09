@@ -32,7 +32,8 @@
                 setTimeout(function(){time(min, --sec)},1000);
             else
             {
-                setTimeout(function(){time(--min, 59)},1000);
+                if(min>0)setTimeout(function(){time(--min, 59)},1000);
+                else alert("KONIEC CZASU");
             }
         }
         time(<%=duration%>,0);

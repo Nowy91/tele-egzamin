@@ -7,9 +7,9 @@ var QuestionAnswer = models.QuestionAnswer;
 var Answer = models.Answer;
 
 exports.check = function (req, res) {
-    Token.find({ where: {content: "3ce1ba2"}})//req.params.token}})
+    Token.find({ where: {content: req.params.token}})
         .success(function (token) {
-            if ((token == null)||(token.status != 'active'))res.json(null);
+            if ((token == null) || (token.status != 'active'))res.json(null);
             else {
                 req.session.token = token.content;
                 Exam.find({where: {id: token.examId}})
@@ -30,15 +30,13 @@ exports.getQuestions = function (req, res) {
         Question.findAll({ where: {examId: req.params.examId}}).success(function (questions) {
 
 
-            questions.forEach(function(model){
+            questions.forEach(function (model) {
                 var newPath = __dirname;
                 newPath = newPath.replace("\\routes", '/public/images/') + model.imageName;
 
                 var base64_data = new Buffer(fs.readFileSync(newPath).toString('base64'));
                 model.imageName = 'data:image/jpg;base64,' + base64_data + '>';
             });
-
-
 
 
             QuestionAnswer.findAll({ where: {questionId: getIdValueFrom(questions)}}).success(function (answers) {
@@ -50,6 +48,29 @@ exports.getQuestions = function (req, res) {
             });
     }
 };
+
+exports.saveImageAnswers = function (req, res) {
+    if (req.session.token == req.params.token) {
+        req.body.forEach(function (image) {
+            var base64Data = image.content.replace(/^data:image\/png;base64,/, "");
+            var filePath = __dirname;
+            var fileName = image.token + image.questionId + ".png";
+            filePath = filePath.replace("routes", 'public/images/student/') + fileName;
+            fs.writeFile(filePath, base64Data, 'base64', function (err) {
+            });
+            Answer.create({questionId: image.questionId, token: image.token, content: fileName});
+        });
+        Token.find({where: {content: req.params.token}})
+            .success(function (token) {
+                token.updateAttributes({
+                    status: 'executed',
+                    executedDate: new Date()
+                })
+            })
+        res.json("OK");
+    }
+}
+
 
 exports.saveAnswers = function (req, res) {
     if (req.session.token == req.params.token) {
@@ -64,7 +85,6 @@ exports.saveAnswers = function (req, res) {
                     })
                 res.json("OK");
             });
-        req.session.destroy();
     }
 };
 
