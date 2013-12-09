@@ -4,8 +4,8 @@
             <small></small>
         </h1>
     </div>
-    <div class="alert alert-info alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <div id="1" class="alert alert-info alert-dismissable">
+        <button type="button" id="button_question_list_1" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         Aby edytować pytanie kliknij na jego treść.
     </div>
     <table class="table table-striped">
@@ -24,4 +24,9 @@
     <div class="text-center paginator"></div>
 
     <a class="btn btn-success pull-right question_add">Dodaj pytanie</a>
+    <script>
+        $(document).ready(function () {
+            hide_clouds();
+        });
+    </script>
 </script>

@@ -5,8 +5,8 @@
         </h1>
     </div>
 
-    <div class="alert alert-info alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <div id="1" class="alert alert-info alert-dismissable">
+        <button type="button" id="button_exam_list1" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         Aby edytować egzamin <strong>kliknij na jego nazwę</strong>.
     </div>
 
@@ -28,4 +28,9 @@
     </table>
 
     <div class="text-center paginator"></div>
+    <script>
+        $(document).ready(function () {
+            hide_clouds();
+        });
+    </script>
 </script>

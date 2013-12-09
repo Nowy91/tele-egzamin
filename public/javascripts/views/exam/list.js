@@ -15,6 +15,7 @@ App.Views.ExamList = Marionette.CompositeView.extend({
 
     initialize: function () {
         this.template = App.Templates.get('exam_list');
+
     },
 
     onShow: function() {

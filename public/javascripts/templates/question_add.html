@@ -5,8 +5,8 @@
             <small></small>
         </h1>
     </div>
-    <div class="alert alert-info alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <div id="1" class="alert alert-info alert-dismissable">
+        <button type="button" id="button_question_add1" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         Aby pytanie stało się <strong>zamknięte</strong> muszą pojawić się co najmniej dwie odpowiedzi. Liczba
         wypełnionych pól to liczba wariontów. Każda zaznaczona odpowiedź po lewej stronie jest prawidłową. Jeżeli
         pytanie ma być <strong>otwarte</strong> pozostaw pola odpowiedzi puste.
@@ -32,8 +32,8 @@
                 <input type="text" class="form-control" id="maxPoints">
             </div>
         </div>
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <div id="2" class="alert alert-success alert-dismissable">
+            <button type="button" id="button_question_add2" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             Jeżeli pytanie ma być typu zamkniętego - dodaj odpowiedzi. O tym czy odpowiedź jest poprawna decyduje zaznaczenie pola w pierwszej kolumnie odpowiedzi. Kolejność odpowiedzi nie ma znaczenia, ponieważ
             podczas tworzenia instancji egzaminu system ją losuje.
         </div>
@@ -49,8 +49,8 @@
 
             </div>
         </div>
-        <div class="alert alert-warning alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <div id="3" class="alert alert-warning alert-dismissable">
+            <button type="button" id="button_question_add3" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             Jeżeli chcesz użyć w zadaniu obrazu kliknij - dodaj obraz.
         </div>
         <div class="form-group">
@@ -61,8 +61,8 @@
                 <a class="btn btn-warning addClosedAnswer">Dodaj obraz</a>
             </div>
         </div>
-        <div class="alert alert-info alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <div id="4" class="alert alert-info alert-dismissable">
+            <button type="button" id="button_question_add4" class="close" data-dismiss="alert" aria-hidden="true">×</button>
             Sprawdź poprawność danych i kliknij zatwierdź pytanie
         </div>
         <div class="form-group">
@@ -82,6 +82,8 @@
             $(".addClosedAnswer").click(function () {
                 $(".answers").append('<div class="input-group answer"><span class="input-group-addon"><input type="checkbox"></span><input type="text" class="form-control"><span class="input-group-addon"><a class="removeClosedAnswer" onclick="$(this).closest(\'.input-group\').remove();"><div class="glyphicon glyphicon-remove"></div></a></span></div>');
             });
+            hide_clouds();
         });
+
 </script>
 </script>
