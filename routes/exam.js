@@ -73,3 +73,19 @@ exports.delete = function (req, res) {
             res.end(err);
         });
 }
+
+exports.activate = function (req, res) {
+    Exam.find(req.params.id)
+        .success(function(exam) {
+            exam.updateAttributes({status: 'activated'})
+                .success(function (updatedExam) {
+                    res.json(updatedExam);
+                })
+                .error(function () {
+                    res.status(500);
+                });
+        })
+        .error(function () {
+            res.status(500);
+        });
+}

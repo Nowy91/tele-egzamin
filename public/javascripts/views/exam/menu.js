@@ -6,7 +6,8 @@ App.Views.ExamMenu = Marionette.ItemView.extend({
         'click .exam_questions': 'questionList',
         'click .exam_tokens': 'tokensList',
         'click .exam_check': 'examCheck',
-        'click .exam_checked': 'examChecked'
+        'click .exam_checked': 'examChecked',
+        'click .exam_activation': 'examActivation'
     },
 
     initialize: function () {
@@ -35,6 +36,11 @@ App.Views.ExamMenu = Marionette.ItemView.extend({
 
     backToExamList: function () {
         Teleegzam.Controllers.Exam.showAll();
+    },
+
+    examActivation: function () {
+        socket = io.connect();
+        activated = Teleegzam.Controllers.Exam.activate(this.model.id, socket);
     }
 
 })
