@@ -61,7 +61,8 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         status: {
-            type: Sequelize.STRING(20)
+            type: Sequelize.STRING(20),
+            defaultValue: 'ready'
         }
     });
 }; 
