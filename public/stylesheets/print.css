@@ -4,5 +4,5 @@ a { text-decoration: underline; }
 h1, h2, h3, h4, h5, p, td { font-family: "Times New Roman", "Times", "serif"; }
 img{ display: none; }
 
-#header, #menu_hook, .paginator, .btn, .btn-group, .datetimepicker {display: none}
+#header, #menu_hook, .paginator, .btn, .btn-group,  .datetimepicker {display: none}
 td {min-width: 110px; text-align: center}

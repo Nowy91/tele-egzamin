@@ -33,7 +33,11 @@
             else
             {
                 if(min>0)setTimeout(function(){time(--min, 59)},1000);
-                else alert("KONIEC CZASU");
+                else
+                {
+                    //TODO
+                    console.log("KONIEC CZASU");
+                }
             }
         }
         time(<%=duration%>,0);
