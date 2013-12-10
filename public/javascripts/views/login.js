@@ -15,8 +15,11 @@ App.Views.Login = Marionette.ItemView.extend({
 
     student: function (e) {
         e.preventDefault();
-        var token = $(e.currentTarget).parent().find('input#studentToken').val();
-        if(token)Teleegzam.Controllers.Student.check(token);
+        token = $(e.currentTarget).parent().find('input#studentToken').val();
+
+        if (token) {
+            Teleegzam.Controllers.Student.check(token);
+        }
     }
 
 });
