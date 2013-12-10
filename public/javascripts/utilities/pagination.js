@@ -13,6 +13,17 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
     var $prevPagesButton = $('<li class="disabled prevTen"><a>&laquo;</a></li>');
     var $nextPageButton = $('<li class="disabled nextOne"><a>&rsaquo;</a></li>');
     var $nextPagesButton = $('<li class="disabled nextTen"><a>&raquo;</a></li>');
+    var $pagesOnView = $('<div class="btn-group dropup">' +
+        '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">' +
+            'Wyników na stronę <span class="caret"></span>' +
+            '<span class="sr-only"></span>' +
+        '</button>' +
+        '<ul class="dropdown-menu text-center">' +
+            '<li class="active"><a>10</a></li>' +
+            '<li><a>25</a></li>' +
+            '<li><a>50</a></li>' +
+        '</ul>' +
+    '</div>');
 
     Utils.Paginator = {
         init: function (items, selector) {
@@ -30,9 +41,12 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
                 this.insertNavigation();
                 this.insertPages();
                 this.goToPage(null, currentPage);
+
+                $selector.append($pagination);
             }
 
-            $selector.append($pagination);
+            $('table').before($pagesOnView);
+
             this.selectCurrentPage();
             this.setIndexes();
         },
@@ -205,6 +219,16 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
             $('tbody tr').each(function(idx){
                 $(this).children().first().html(idx + index + 1);
             });
+        },
+
+        pagesOnView: function(button) {
+            value = $(button).text();
+            collection.setPageSize(parseInt(value));
+
+            $(button).parent().siblings().removeClass('active');
+            $(button).parent().addClass('active');
+
+            this.show(collection, $selector);
         }
     }
 });

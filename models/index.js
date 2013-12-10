@@ -26,9 +26,9 @@ models.forEach(function(model) {
   		.hasMany(m.Exam, { foreignKey : 'examinerId' });
   	m.Exam
   		.hasMany(m.Token, { foreignKey : 'examId' })
-  		.hasMany(m.Question, { foreignKey : 'examId' });
+  		.hasMany(m.Question, { foreignKey : 'examId'});
 	m.Question
-		.hasMany(m.QuestionAnswer, { foreignKey : 'questionId' })
+		.hasMany(m.QuestionAnswer, { foreignKey : 'questionId', onDelete: 'cascade'})
         .hasMany(m.Answer, { foreignKey : 'questionId' });
     m.Token
         .hasMany(m.Answer, { foreignKey: 'token'})

@@ -26,7 +26,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
         },
 
         showExam: function (examId) {
-
             examModel = collection.get(examId);
             layout.menu.show(new App.Views.ExamMenu({model: examModel}));
             layout.content.show(new App.Views.ExamView({model: examModel}));
@@ -96,6 +95,23 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
                 layout.menu.show(new App.Views.Menu);
                 layout.content.show(new App.Views.ExamList({collection: collection}));
+            });
+        },
+
+        activate: function(examId, socket) {
+            var activatingExam = $.ajax({
+                type: 'POST',
+                url: '/exam/activate/' + examId,
+                contentType: 'json'
+            });
+
+            $.when(activatingExam).done(function(exam) {
+                if (exam.status === 'activated') {
+                    socket.emit('exam activation', examId);
+                }
+                else {
+                    return false;
+                }
             });
         },
 

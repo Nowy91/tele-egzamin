@@ -59,6 +59,11 @@ exports.edit = function (req, res) {
 exports.delete = function (req, res) {
     Exam.find(req.params.id)
         .success(function (exam) {
+            exam.getQuestions().success(function(questions){
+               questions.forEach(function(question){
+                   question.destroy();
+               });
+            });
             exam.destroy()
                 .success(function () {
                     res.end();
@@ -66,5 +71,21 @@ exports.delete = function (req, res) {
         })
         .error(function (err) {
             res.end(err);
+        });
+}
+
+exports.activate = function (req, res) {
+    Exam.find(req.params.id)
+        .success(function(exam) {
+            exam.updateAttributes({status: 'activated'})
+                .success(function (updatedExam) {
+                    res.json(updatedExam);
+                })
+                .error(function () {
+                    res.status(500);
+                });
+        })
+        .error(function () {
+            res.status(500);
         });
 }

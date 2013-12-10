@@ -15,7 +15,14 @@ var token = require('./routes/token');
 var student = require('./routes/student');
 var check = require('./routes/check');
 
+var models = require('./models');
+var Exam = models.Exam;
+
 var app = express();
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
+
+server.listen(3000);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -49,6 +56,7 @@ app.get('/exam/view/:id/questions', question.list);
 app.post('/exam/add', exam.add);
 app.post('/exam/edit/:id', exam.edit);
 app.delete('/exam/delete/:id', exam.delete);
+app.post('/exam/activate/:id', exam.activate);
 
 //questions
 app.get('/questions/view/:id', question.view);
@@ -79,6 +87,8 @@ app.get('/student/get/:examId', student.getQuestions);
 app.post('/student/answers/:token', student.saveAnswers);
 app.post('/student/images/:token', student.saveImageAnswers);
 
-http.createServer(app).listen(app.get('port'), function () {
-    console.log('Express server listening on port ' + app.get('port'));
+io.sockets.on('connection', function(socket){
+    socket.on('exam activation', function(examId) {
+        io.sockets.emit('activated exam', examId);
+    });
 });

@@ -24,3 +24,8 @@ canvas,.draw{cursor: crosshair;position: absolute;left:50%; max-width: 300px;}
 .canvasAnswer {position: relative; max-width: 300px; left: -150px;}
 #margin {margin-bottom: 30px;}
 .draw {opacity: 0}
+
+.paginator .btn-group {margin: 20px 0; float: left}
+.space {clear: both; margin-top: 20px;}
+.red {background-color: #d9534f;}
+.green {background-color: #5cb85c;}

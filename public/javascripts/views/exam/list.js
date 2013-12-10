@@ -9,11 +9,13 @@ App.Views.ExamList = Marionette.CompositeView.extend({
         'click .paginator li.prevOne a': 'prevPage',
         'click .paginator li.prevTen a': 'prevPages',
         'click .paginator li.page a': 'goToPage',
-        'click table th': 'sort'
+        'click table th': 'sort',
+        'click .btn-group li a': 'pagesOnView'
     },
 
     initialize: function () {
         this.template = App.Templates.get('exam_list');
+
     },
 
     onShow: function() {
@@ -50,6 +52,9 @@ App.Views.ExamList = Marionette.CompositeView.extend({
         if (header == 'Status') { sortKey = 'status'; }
 
         Teleegzam.Utils.Paginator.sort(sortKey);
-    }
+    },
 
+    pagesOnView: function (e) {
+        Teleegzam.Utils.Paginator.pagesOnView(e.currentTarget);
+    }
 });
