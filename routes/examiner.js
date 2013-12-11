@@ -14,8 +14,6 @@ exports.add = function(req, res) {
     var confirmPassword = req.body.confirmPassword;
     delete req.body.confirmPassword;
 
-    var u = User.build(req.body);
-
     var confirmPasswordError = {};
 
     if (confirmPassword === '') {
@@ -25,6 +23,9 @@ exports.add = function(req, res) {
         confirmPasswordError.confirmPassword = ['Niezgodność haseł.'];
     }
 
+    req.body.password = crypto.createHash('sha1').update(req.body.password).digest('hex');
+
+    var u = User.build(req.body);
     var otherErrors = {};
 
     validation = u.validate().success(function(errors) {
