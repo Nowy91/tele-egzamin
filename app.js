@@ -19,10 +19,6 @@ var models = require('./models');
 var Exam = models.Exam;
 
 var app = express();
-var server = http.createServer(app);
-var io = require('socket.io').listen(server);
-
-server.listen(3000);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -87,8 +83,29 @@ app.get('/student/get/:examId', student.getQuestions);
 app.post('/student/answers/:token', student.saveAnswers);
 app.post('/student/images/:token', student.saveImageAnswers);
 
+//user
+app.get('/login', function(req, res) {
+});
+
+var server = http.createServer(app).listen(app.get('port'));
+var io = require('socket.io').listen(server);
+
+io.configure(function () {
+    io.set("transports", ['xhr-polling']);
+    io.set("polling duration", 10);
+});
+
 io.sockets.on('connection', function(socket){
     socket.on('exam activation', function(examId) {
         io.sockets.emit('activated exam', examId);
     });
 });
+
+function auth(req, res, next) {
+    if (!req.session.user_id) {
+        res.send('Nie jesteś zalogowany!');
+    }
+    else {
+        next();
+    }
+}
