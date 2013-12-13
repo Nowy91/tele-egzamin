@@ -26,16 +26,19 @@ exports.check = function (req, res) {
 };
 
 exports.getQuestions = function (req, res) {
-    if (req.session.exam == req.params.examId) {
+    //if (req.session.exam == req.params.examId) {
         Question.findAll({ where: {examId: req.params.examId}}).success(function (questions) {
 
 
             questions.forEach(function (model) {
+                if(model.imageName != "")
+                {
                 var newPath = __dirname;
                 newPath = newPath.replace("\\routes", '/public/images/') + model.imageName;
 
                 var base64_data = new Buffer(fs.readFileSync(newPath).toString('base64'));
                 model.imageName = 'data:image/jpg;base64,' + base64_data + '>';
+                }
             });
 
 
@@ -46,7 +49,7 @@ exports.getQuestions = function (req, res) {
             .error(function (err) {
                 res.json(err);
             });
-    }
+    //}
 };
 
 exports.saveImageAnswers = function (req, res) {
