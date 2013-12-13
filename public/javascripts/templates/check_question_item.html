@@ -6,7 +6,7 @@
         </td>
         <td>
             <%= content %>
-            <%if(type!="image"){%> <br/><img style="max-width:200px" src="/images/<%=imageName%>">
+            <%if((type!="image") && (imageName!="")){%> <br/><img style="max-width:200px" src="/images/<%=imageName%>">
             <%}%>
         </td>
 

@@ -13,7 +13,7 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
     var $prevPagesButton = $('<li class="disabled prevTen"><a>&laquo;</a></li>');
     var $nextPageButton = $('<li class="disabled nextOne"><a>&rsaquo;</a></li>');
     var $nextPagesButton = $('<li class="disabled nextTen"><a>&raquo;</a></li>');
-    var $pagesOnView = $('<div class="btn-group dropup">' +
+    var $pagesOnView = $('<div id="pagesOnView" class="btn-group dropup">' +
         '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">' +
             'Wyników na stronę <span class="caret"></span>' +
             '<span class="sr-only"></span>' +
@@ -45,6 +45,7 @@ Teleegzam.module('Utils', function (Utils, Teleegzam, Backbone, Marionette, $, _
                 $selector.append($pagination);
             }
 
+            $('#pagesOnView').remove();
             $('table').before($pagesOnView);
 
             this.selectCurrentPage();
