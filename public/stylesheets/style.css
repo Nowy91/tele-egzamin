@@ -27,5 +27,9 @@ canvas,.draw{cursor: crosshair;position: absolute;left:50%; max-width: 500px;}
 
 .paginator .btn-group {margin: 20px 0; float: left}
 .space {clear: both; margin-top: 20px;}
-.red {background-color: #d9534f;}
-.green {background-color: #5cb85c;}
+.required {margin-right: -9px;}
+
+.red {color: #d9534f;}
+
+.red_bg {background-color: #d9534f;}
+.green_bg {background-color: #5cb85c;}

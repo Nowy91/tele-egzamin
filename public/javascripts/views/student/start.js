@@ -28,11 +28,11 @@ App.Views.StudentStart = Marionette.ItemView.extend({
     checkButtonStart: function () {
         if (this.model.get('status') === 'activated') {
             $('a.startExam').attr('disabled', false);
-            $('span#status').text('activated').toggleClass('green');
+            $('span#status').text('activated').toggleClass('green_bg');
         }
         else {
             $('a.startExam').attr('disabled', true);
-            $('span#status').text('ready').toggleClass('red');
+            $('span#status').text('ready').toggleClass('red_bg');
         }
     }
 

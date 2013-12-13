@@ -12,15 +12,17 @@ Teleegzam.module('Controllers', function(Controller, Teleegzam, Backbone, Marion
                 url: '/examiners',
                 dataType: 'json'
             });
-            $.when(fetchingExaminers).done(function (examiners) {
 
+            $.when(fetchingExaminers).done(function (examiners) {
                 collection = new App.Collections.Examiners(examiners);
                 var examinersList = new App.Views.ExaminerList({collection: collection});
+
                 layout.on("show", function () {
                     layout.header.show(new App.Views.Header);
                     layout.menu.show(new App.Views.MenuAdmin);
                     layout.content.show(examinersList);
                 });
+
                 Teleegzam.mainRegion.show(layout);
             });
         },
@@ -44,15 +46,20 @@ Teleegzam.module('Controllers', function(Controller, Teleegzam, Backbone, Marion
             var addExaminer = $.ajax({
                 type: 'POST',
                 url: '/examiner/add',
-                data: JSON.stringify(examiner),
-                contentType: 'application/json',
+                data: examiner.toJSON(),
                 dataType: 'json'
             });
+
             $.when(addExaminer)
                 .done(function(examiner) {
-                    collection.add(examiner);
-                    layout.menu.show(new App.Views.MenuAdmin);
-                    layout.content.show(new App.Views.ExaminerList({collection: collection}));
+                    if (examiner.isValid) {
+                        collection.add(examiner);
+                        layout.menu.show(new App.Views.MenuAdmin);
+                        layout.content.show(new App.Views.ExaminerList({collection: collection}));
+                    }
+                    else {
+                        Teleegzam.Validator.Form.messages(examiner);
+                    }
                 });
         },
 
@@ -64,6 +71,7 @@ Teleegzam.module('Controllers', function(Controller, Teleegzam, Backbone, Marion
                 contentType: 'application/json',
                 dataType: 'json'
             });
+
             $.when(editExaminer)
                 .done(function(user) {
                     examinerModel = collection.get(examinerId);
