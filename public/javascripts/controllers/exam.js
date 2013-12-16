@@ -11,10 +11,8 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
             collection = new App.Collections.Exams;
             var fetching = collection.fetch();
-
             $.when(fetching).done(function() {
                 examsList = new App.Views.ExamList({collection: collection});
-
                 layout.on("show", function () {
                     layout.header.show(new App.Views.Header);
                     layout.menu.show(new App.Views.Menu);

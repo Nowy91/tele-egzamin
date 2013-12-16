@@ -37,7 +37,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 data: question.toJSON(),
                 dataType: 'json'
             });
-
             $.when(addQuestion).done(function (newQuestion) {
                 if (newQuestion.isValid) {
                     questionCollection.add(newQuestion);
@@ -56,6 +55,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                     }
                     else
                     {
+
                         var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                         layout.content.show(questionList);
                     }
@@ -71,7 +71,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             questionModel = questionCollection.get(qId);
             questionModel.set({title: examModel.get("title")});
             layout.content.show(new App.Views.QuestionView({model: questionModel}));
-
             var getQuestionAnswers = $.ajax({
                 type: 'GET',
                 url: '/questions/view/' + questionModel.id + '/answers',

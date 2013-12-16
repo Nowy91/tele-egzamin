@@ -37,9 +37,11 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                         var answersCollection = new App.Collections.QuestionAnswers(data.answers);
                         var studentAnswersCollection = new App.Collections.Answers(data.studentAnswers);
 
+
                         for (var i = 0; i < questionsCollection.length; i++) {
                             var currentQuestion = questionsCollection.at(i).get('id');
                             var currentAnswer = studentAnswersCollection.where({questionId: parseInt(currentQuestion)});
+                            console.log(currentAnswer);
                             if (currentAnswer[0] != undefined)questionsCollection.at(i).set('studentAnswer', currentAnswer[0].get('content'));
                             else questionsCollection.at(i).set('studentAnswer', "");
                         }
