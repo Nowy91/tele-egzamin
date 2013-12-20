@@ -31,8 +31,11 @@ Teleegzam.module('Validator', function (Validator, Teleegzam, Backbone, Marionet
                     $textarea.after($label.attr('for', key).text(message));
                 });
             });
-        }
 
+            if (inputs.alert !== undefined) {
+                $.notify(inputs.alert);
+            }
+        }
     }
 
 });
