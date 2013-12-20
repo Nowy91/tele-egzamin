@@ -18,7 +18,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 dataType: 'json'
             });
 
-            $.when(getQuestions).done(function (questions) {
+            $.whenDone(getQuestions, function (questions) {
                 questionCollection = new App.Collections.Questions(questions);
                 var questionsList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                 layout.content.show(questionsList);
@@ -38,7 +38,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 dataType: 'json'
             });
 
-            $.when(addQuestion).done(function (newQuestion) {
+            $.whenDone(addQuestion, function (newQuestion) {
                 if (newQuestion.isValid) {
                     questionCollection.add(newQuestion);
                     if (answers.length != 0) {
@@ -54,8 +54,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                             layout.content.show(questionList);
                         });
                     }
-                    else
-                    {
+                    else {
                         var questionList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                         layout.content.show(questionList);
                     }
@@ -78,7 +77,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 dataType: 'json'
             });
 
-            $.when(getQuestionAnswers).done(function (answers) {
+            $.whenDone(getQuestionAnswers, function (answers) {
                 if (answers.length != 0) {
                     answerCollection = new App.Collections.QuestionAnswers(answers);
                     var answersList = new App.Views.QuestionAnswerList({collection: answerCollection});
@@ -95,7 +94,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 url: '/questions/delete/' + questionModel.id
             });
 
-            $.when(deleteQuestion).done(function () {
+            $.whenDone(deleteQuestion, function () {
                 questionCollection.remove(questionModel);
                 var questionsList = new App.Views.QuestionList({collection: questionCollection, model: examModel});
                 layout.content.show(questionsList);
@@ -120,7 +119,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 dataType: 'json'
             });
 
-            $.when(editQuestion).done(function (newQuestion) {
+            $.whenDone(editQuestion, function (newQuestion) {
                 if (newQuestion.isValid) {
                     questionCollection
                         .get(newQuestion)
@@ -155,7 +154,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
             layout.content.show(new App.Views.QuestionView({model: questionModel}));
 
-            $.when(editAnswers).done(function (answers) {
+            $.whenDone(editAnswers, function (answers) {
                 if (answers.length != 0) {
                     answerCollection = new App.Collections.QuestionAnswers(answers);
                     var answersList = new App.Views.QuestionAnswerList({collection: answerCollection});

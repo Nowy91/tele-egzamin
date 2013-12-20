@@ -1,7 +1,6 @@
 App.Collections.Exams = Backbone.PageableCollection.extend({
 
     model: App.Models.Exam,
-    url: "/exams",
     mode: "client",
 
     state: {

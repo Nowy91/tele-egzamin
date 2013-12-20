@@ -14,9 +14,14 @@ var examiner = require('./routes/examiner');
 var token = require('./routes/token');
 var student = require('./routes/student');
 var check = require('./routes/check');
+var crypto = require('crypto');
+var auth = require('./routes/auth');
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy;
 
 var models = require('./models');
 var Exam = models.Exam;
+var User = models.User;
 
 var app = express();
 
@@ -32,9 +37,37 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({secret: 'my secret'}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+    User.find(id).success(function (user) {
+        done(null, user);
+    });
+});
+
+passport.use(new LocalStrategy(
+    function (username, password, done) {
+        encryptedPassword = crypto.createHash('sha1').update(password).digest('hex');
+
+        User.find({where: {username: username}}).success(function (user) {
+            if (!user) {
+                return done(null, false, { message: 'Nieprawidłowy login!' });
+            }
+            if (user.password !== encryptedPassword) {
+                return done(null, false, { message: 'Nieprawidłowe hasło!' });
+            }
+            return done(null, user);
+        });
+    }
+));
 
 // development only
 if ('development' == app.get('env')) {
@@ -45,8 +78,17 @@ if ('development' == app.get('env')) {
 //main
 app.get('/', routes.index);
 
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    else {
+        return res.json({status: 'unathorized'});
+    }
+}
+
 //exams
-app.get('/exams', exam.list);
+app.get('/exams', ensureAuthenticated, exam.list);
 app.get('/exam/view/:id', exam.view);
 app.get('/exam/view/:id/questions', question.list);
 app.post('/exam/add', exam.add);
@@ -65,7 +107,7 @@ app.post('/questions/edit/:id', question.edit);
 app.post('/questions/answers/edit/:id', question.editAnswers);
 
 //examiners
-app.get('/examiners', examiner.list);
+app.get('/examiners', ensureAuthenticated, examiner.list);
 app.post('/examiner/add', examiner.add);
 app.get('/examiner/view/:id', examiner.view);
 app.delete('/examiner/delete/:id', examiner.delete);
@@ -83,9 +125,8 @@ app.get('/student/get/:examId', student.getQuestions);
 app.post('/student/answers/:token', student.saveAnswers);
 app.post('/student/images/:token', student.saveImageAnswers);
 
-//user
-app.get('/login', function(req, res) {
-});
+//auth
+app.post('/login', auth.login);
 
 var server = http.createServer(app).listen(app.get('port'));
 var io = require('socket.io').listen(server);
@@ -95,17 +136,8 @@ io.configure(function () {
     io.set("polling duration", 10);
 });
 
-io.sockets.on('connection', function(socket){
-    socket.on('exam activation', function(examId) {
+io.sockets.on('connection', function (socket) {
+    socket.on('exam activation', function (examId) {
         io.sockets.emit('activated exam', examId);
     });
 });
-
-function auth(req, res, next) {
-    if (!req.session.user_id) {
-        res.send('Nie jesteś zalogowany!');
-    }
-    else {
-        next();
-    }
-}
