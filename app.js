@@ -128,6 +128,7 @@ app.post('/student/images/:token', authorization, student.saveImageAnswers);
 //auth
 app.post('/login', auth.login);
 app.get('/logout', auth.logout);
+app.get('/is_authenticated', auth.isAuthenticated);
 
 var server = http.createServer(app).listen(app.get('port'));
 var io = require('socket.io').listen(server);

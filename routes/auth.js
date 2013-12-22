@@ -23,5 +23,10 @@ exports.login = function (req, res, next) {
 
 exports.logout = function (req, res, next) {
     req.logout();
+    delete req.session.passport.username;
     res.end();
+};
+
+exports.isAuthenticated = function(req, res) {
+    res.send(req.session);
 };
