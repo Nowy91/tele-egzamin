@@ -109,7 +109,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 contentType: 'json'
             });
 
-            $.when(activatingExam).done(function (exam) {
+            $.whenDone(activatingExam, function (exam) {
                 if (exam.status === 'activated') {
                     socket.emit('exam activation', examId);
                 }
