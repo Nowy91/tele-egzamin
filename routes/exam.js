@@ -10,8 +10,6 @@ exports.list = function (req, res) {
         .error(function (err) {
             res.end(err);
         });
-
-
 };
 
 exports.add = function (req, res) {
