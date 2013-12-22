@@ -5,27 +5,7 @@ var Question = models.Question;
 exports.list = function (req, res) {
     Exam.findAll()
         .success(function (exams) {
-            var examsData = [];
-            exams.forEach(function(exam){
-                Question.findAll({ where: {examId: exam.id}}).success(function (questions) {
-                    var maxPoints = 0, questionCount=0;
-                    questions.forEach(function(question){
-                        maxPoints+=parseFloat(question.maxPoints);
-                        questionCount++;
-                    });
-                    var examData = {
-                        id: exam.id,
-                        title: exam.title,
-                        date: exam.date,
-                        numberOfStudents: exam.numberOfStudents,
-                        duration: exam.duration,
-                        status: exam.status,
-                        maxPoints: maxPoints,
-                        questionCount: questionCount
-                    };
-                    res.json(examData);
-                });
-            });
+            res.json(exams);
         })
         .error(function (err) {
             res.end(err);
