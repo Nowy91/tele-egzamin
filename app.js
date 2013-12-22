@@ -78,7 +78,7 @@ if ('development' == app.get('env')) {
 //main
 app.get('/', routes.index);
 
-function ensureAuthenticated(req, res, next) {
+function authorization(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
@@ -88,45 +88,46 @@ function ensureAuthenticated(req, res, next) {
 }
 
 //exams
-app.get('/exams', ensureAuthenticated, exam.list);
-app.get('/exam/view/:id', exam.view);
-app.get('/exam/view/:id/questions', question.list);
-app.post('/exam/add', exam.add);
-app.post('/exam/edit/:id', exam.edit);
-app.delete('/exam/delete/:id', exam.delete);
-app.post('/exam/activate/:id', exam.activate);
+app.get('/exams', authorization, exam.list);
+app.get('/exam/view/:id', authorization, exam.view);
+app.get('/exam/view/:id/questions', authorization, question.list);
+app.post('/exam/add', authorization, exam.add);
+app.post('/exam/edit/:id', authorization, exam.edit);
+app.delete('/exam/delete/:id', authorization, exam.delete);
+app.post('/exam/activate/:id', authorization, exam.activate);
 
 //questions
-app.get('/questions/view/:id', question.view);
-app.get('/questions/view/:id/answers', question.getAnswers);
-app.post('/questions/add', question.add);
-app.post('/questions/answers/add/:id', question.addAnswers);
-app.post('/questions/file/add', question.addFile);
-app.delete('/questions/delete/:id', question.delete);
-app.post('/questions/edit/:id', question.edit);
-app.post('/questions/answers/edit/:id', question.editAnswers);
+app.get('/questions/view/:id', authorization, question.view);
+app.get('/questions/view/:id/answers', authorization, question.getAnswers);
+app.post('/questions/add', authorization, question.add);
+app.post('/questions/answers/add/:id', authorization, question.addAnswers);
+app.post('/questions/file/add', authorization, question.addFile);
+app.delete('/questions/delete/:id', authorization, question.delete);
+app.post('/questions/edit/:id', authorization, question.edit);
+app.post('/questions/answers/edit/:id', authorization, question.editAnswers);
 
 //examiners
-app.get('/examiners', ensureAuthenticated, examiner.list);
-app.post('/examiner/add', examiner.add);
-app.get('/examiner/view/:id', examiner.view);
-app.delete('/examiner/delete/:id', examiner.delete);
-app.post('/examiner/edit/:id', examiner.edit);
+app.get('/examiners', authorization, examiner.list);
+app.post('/examiner/add', authorization, examiner.add);
+app.get('/examiner/view/:id', authorization, examiner.view);
+app.delete('/examiner/delete/:id', authorization, examiner.delete);
+app.post('/examiner/edit/:id', authorization, examiner.edit);
 
 //tokens
-app.get('/tokens/:examId/:status', token.list);
-app.post('/tokens/generate/', token.generate);
-app.get('/check/:token/:examId', check.getData);
-app.post('/check/:token/checked', check.checked);
+app.get('/tokens/:examId/:status', authorization, token.list);
+app.post('/tokens/generate/', authorization, token.generate);
+app.get('/check/:token/:examId', authorization, check.getData);
+app.post('/check/:token/checked', authorization, check.checked);
 
 //student
-app.get('/student/check/:token', student.check);
-app.get('/student/get/:examId', student.getQuestions);
-app.post('/student/answers/:token', student.saveAnswers);
-app.post('/student/images/:token', student.saveImageAnswers);
+app.get('/student/check/:token', authorization, student.check);
+app.get('/student/get/:examId', authorization, student.getQuestions);
+app.post('/student/answers/:token', authorization, student.saveAnswers);
+app.post('/student/images/:token', authorization, student.saveImageAnswers);
 
 //auth
 app.post('/login', auth.login);
+app.get('/logout', auth.logout);
 
 var server = http.createServer(app).listen(app.get('port'));
 var io = require('socket.io').listen(server);

@@ -14,7 +14,14 @@ exports.login = function (req, res, next) {
             if (err) {
                 return res.send({'status': 'err', 'message': err.message});
             }
+
+            req.session.passport.username = user.username;
             return res.json({'status': 'ok', session: req.session});
         });
     })(req, res, next)
-}
+};
+
+exports.logout = function (req, res, next) {
+    req.logout();
+    res.end();
+};
