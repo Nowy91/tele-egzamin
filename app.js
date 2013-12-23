@@ -78,52 +78,59 @@ if ('development' == app.get('env')) {
 //main
 app.get('/', routes.index);
 
-function authorization(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    else {
+function allow(roles) {
+    return function(req, res, next) {
+        if (req.user !== undefined) {
+            if (roles.indexOf('*') > -1 && req.isAuthenticated()) {
+                return next();
+            }
+
+            if (roles.indexOf(req.user.role) > -1 && req.isAuthenticated()) {
+                return next();
+            }
+        }
+
         return res.json({status: 'unathorized'});
     }
 }
 
 //exams
-app.get('/exams', authorization, exam.list);
-app.get('/exam/view/:id', authorization, exam.view);
-app.get('/exam/view/:id/questions', authorization, question.list);
-app.post('/exam/add', authorization, exam.add);
-app.post('/exam/edit/:id', authorization, exam.edit);
-app.delete('/exam/delete/:id', authorization, exam.delete);
-app.post('/exam/activate/:id', authorization, exam.activate);
+app.get('/exams', allow(['*']), exam.list);
+app.get('/exam/view/:id', allow(['*']), exam.view);
+app.get('/exam/view/:id/questions', allow(['*']), question.list);
+app.post('/exam/add', allow(['*']), exam.add);
+app.post('/exam/edit/:id', allow(['*']), exam.edit);
+app.delete('/exam/delete/:id', allow(['*']), exam.delete);
+app.post('/exam/activate/:id', allow(['*']), exam.activate);
 
 //questions
-app.get('/questions/view/:id', authorization, question.view);
-app.get('/questions/view/:id/answers', authorization, question.getAnswers);
-app.post('/questions/add', authorization, question.add);
-app.post('/questions/answers/add/:id', authorization, question.addAnswers);
-app.post('/questions/file/add', authorization, question.addFile);
-app.delete('/questions/delete/:id', authorization, question.delete);
-app.post('/questions/edit/:id', authorization, question.edit);
-app.post('/questions/answers/edit/:id', authorization, question.editAnswers);
+app.get('/questions/view/:id', allow(['*']), question.view);
+app.get('/questions/view/:id/answers', allow(['*']), question.getAnswers);
+app.post('/questions/add', allow(['*']), question.add);
+app.post('/questions/answers/add/:id', allow(['*']), question.addAnswers);
+app.post('/questions/file/add', allow(['*']), question.addFile);
+app.delete('/questions/delete/:id', allow(['*']), question.delete);
+app.post('/questions/edit/:id', allow(['*']), question.edit);
+app.post('/questions/answers/edit/:id', allow(['*']), question.editAnswers);
 
 //examiners
-app.get('/examiners', authorization, examiner.list);
-app.post('/examiner/add', authorization, examiner.add);
-app.get('/examiner/view/:id', authorization, examiner.view);
-app.delete('/examiner/delete/:id', authorization, examiner.delete);
-app.post('/examiner/edit/:id', authorization, examiner.edit);
+app.get('/examiners', allow(['admin']), examiner.list);
+app.post('/examiner/add', allow(['admin']), examiner.add);
+app.get('/examiner/view/:id', allow(['admin']), examiner.view);
+app.delete('/examiner/delete/:id', allow(['admin']), examiner.delete);
+app.post('/examiner/edit/:id', allow(['admin']), examiner.edit);
 
 //tokens
-app.get('/tokens/:examId/:status', authorization, token.list);
-app.post('/tokens/generate/', authorization, token.generate);
-app.get('/check/:token/:examId', authorization, check.getData);
-app.post('/check/:token/checked', authorization, check.checked);
+app.get('/tokens/:examId/:status', allow(['*']), token.list);
+app.post('/tokens/generate/', allow(['*']), token.generate);
+app.get('/check/:token/:examId', allow(['*']), check.getData);
+app.post('/check/:token/checked', allow(['*']), check.checked);
 
 //student
-app.get('/student/check/:token', authorization, student.check);
-app.get('/student/get/:examId', authorization, student.getQuestions);
-app.post('/student/answers/:token', authorization, student.saveAnswers);
-app.post('/student/images/:token', authorization, student.saveImageAnswers);
+app.get('/student/check/:token', allow(['*']), student.check);
+app.get('/student/get/:examId', allow(['*']), student.getQuestions);
+app.post('/student/answers/:token', allow(['*']), student.saveAnswers);
+app.post('/student/images/:token', allow(['*']), student.saveImageAnswers);
 
 //auth
 app.post('/login', auth.login);

@@ -5,7 +5,6 @@ var Examiner = models.Examiner;
 
 exports.list = function(req, res) {
     Examiner.findAll({include: [{model: User, as: User.tableName}]}).success(function(examiners) {
-            console.log(examiners);
             res.json(examiners);
         })
 };
@@ -24,6 +23,7 @@ exports.add = function(req, res) {
     }
 
     req.body.password = crypto.createHash('sha1').update(req.body.password).digest('hex');
+    req.body.role = 'examiner';
 
     var u = User.build(req.body);
     var otherErrors = {};
