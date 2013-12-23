@@ -12,7 +12,7 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
 
 
 
-        //e.preventDefault();
+        e.preventDefault();
 
         var newQuestion = new App.Models.Question({
             content: $(e.currentTarget).find('#content').val(),
@@ -39,10 +39,9 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
         if (answers.length != 0) {
             newQuestion.set({type: 'closed'});
         }
-
-        if($(e.currentTarget).find('input[type=file]').val() !== ""){
-            var fileName = $(e.currentTarget).find('input[type=file]').val();
-            newQuestion.set({imageName: fileName.replace("C:\\fakepath\\", "")});
+        console.log("I CHECK FILE INPUT");
+        if($(e.currentTarget).find('input.fileUrl').val() !== ""){
+            newQuestion.set({imageName: $(e.currentTarget).find('input.fileUrl').val()});
             if($(e.currentTarget).find('.drawCheck').hasClass('btn-success')){
                 newQuestion.set({type: 'image'});
             }

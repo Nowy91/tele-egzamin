@@ -1,4 +1,5 @@
 var models = require('./../models');
+var transloadit = require('node-transloadit');
 var fs = require('fs');
 var Question = models.Question;
 var QuestionAnswer = models.QuestionAnswer;
@@ -40,16 +41,43 @@ exports.addAnswers = function (req, res) {
 }
 
 exports.addFile = function (req, res) {
-    var newPath = __dirname;
-    fs.readFile(req.files.image.path, function (err, data) {
-        newPath = newPath.replace("routes", 'public/images/') + req.files.image.name;
 
-        fs.writeFile(newPath, data, function (err) {
-            res.json("back");
-        });
+    var client = new transloadit('7989f49068cf11e38937ab04efb3d54d', 'caf40053fcf82d49cb760df02b84e63cd34b474f');
+
+
+
+    client.addFile("newFile",req.files.image.path);
+
+    var params = {
+        steps: {
+            redirect_to : {
+                robot : "/image/resize",
+                use : ":original",
+                width : 500,
+                height: 500
+            }
+        }
+    };
+
+    client.send(params, function (ok) {
+        // success callback [optional]
+        console.log('Success: ' + JSON.stringify(ok));
+    }, function (err) {
+        // error callback [optional]
+        console.log('Error: ' + JSON.stringify(err));
     });
+    /*
+     var newPath = __dirname;
+     fs.readFile(req.files.image.path, function (err, data) {
+     newPath = newPath.replace("routes", 'public/images/') + req.files.image.name;
 
+     fs.writeFile(newPath, data, function (err) {
+     res.json("back");
+     });
+     });*/
+    console.log("ADD FILE");
 }
+
 exports.getAnswers = function (req, res) {
     QuestionAnswer.findAll({ where: {questionId: req.params.id}})
         .success(function (answers) {

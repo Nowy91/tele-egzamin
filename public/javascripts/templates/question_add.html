@@ -12,8 +12,8 @@
         pytanie ma być <strong>otwarte</strong> pozostaw pola odpowiedzi puste.
     </div>
     <iframe id="hidden-iframe" style="display: none"></iframe>
-    <form class="form-horizontal" role="form" target="hidden-iframe" action="/questions/file/add" method="POST"
-          enctype="multipart/form-data">
+    <form id="addQuestionForm" class="form-horizontal" role="form" action="/questions/file/add" target="hidden-iframe"
+          method="POST" enctype="multipart/form-data">
 
         <div class="form-group">
             <label for="content" class="col-sm-2 control-label">
@@ -33,9 +33,14 @@
                 <input type="text" class="form-control" id="maxPoints" name="maxPoints">
             </div>
         </div>
+        <div class="form-group" style="display: none">
+            <input type="text" class="fileUrl" name="imageName">
+        </div>
         <div id="2" class="alert alert-success alert-dismissable">
-            <button type="button" id="button_question_add2" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            Jeżeli pytanie ma być typu zamkniętego - dodaj odpowiedzi. O tym czy odpowiedź jest poprawna decyduje zaznaczenie pola w pierwszej kolumnie odpowiedzi. Kolejność odpowiedzi nie ma znaczenia, ponieważ
+            <button type="button" id="button_question_add2" class="close" data-dismiss="alert" aria-hidden="true">×
+            </button>
+            Jeżeli pytanie ma być typu zamkniętego - dodaj odpowiedzi. O tym czy odpowiedź jest poprawna decyduje
+            zaznaczenie pola w pierwszej kolumnie odpowiedzi. Kolejność odpowiedzi nie ma znaczenia, ponieważ
             podczas tworzenia instancji egzaminu system ją losuje.
         </div>
         <div class="form-group">
@@ -48,7 +53,8 @@
             </div>
         </div>
         <div id="3" class="alert alert-warning alert-dismissable">
-            <button type="button" id="button_question_add3" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <button type="button" id="button_question_add3" class="close" data-dismiss="alert" aria-hidden="true">×
+            </button>
             Jeżeli chcesz użyć w zadaniu obrazu kliknij - dodaj obraz.
         </div>
         <div class="form-group">
@@ -69,7 +75,8 @@
             </div>
         </div>
         <div id="4" class="alert alert-info alert-dismissable">
-            <button type="button" id="button_question_add4" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <button type="button" id="button_question_add4" class="close" data-dismiss="alert" aria-hidden="true">×
+            </button>
             Sprawdź poprawność danych i kliknij zatwierdź pytanie
         </div>
         <div class="form-group">
@@ -83,6 +90,37 @@
     </div>
     </div>
     <script>
+        $(function () {
+            $('input[type=file]').change(function () {
+                if ($(this).val() != "") {
+                    $('form#addQuestionForm').transloadit({
+                        wait: true,
+                        params: {
+                            auth: {
+                                key: "7989f49068cf11e38937ab04efb3d54d"
+                            },
+                            steps: {
+                                resize_to: {
+                                    robot: "/image/resize",
+                                    use: ":original",
+                                    width: 500,
+                                    height: 500
+                                }
+                            }
+                        },
+                        onSuccess: function (assembly) {
+                            console.log(assembly.uploads[0].url);
+                            $("input.fileUrl").val(assembly.uploads[0].url);
+                        }
+                    });
+                }
+                else
+                {
+                    $('form#addQuestionForm').unbind('submit.transloadit');
+                }
+            });
+
+        });
         $(document).ready(function () {
             $('.drawCheck').click(function () {
                 if ($(this).hasClass('btn-warning')) {
@@ -102,5 +140,5 @@
             });
             hide_clouds();
         });
-    </script>
+</script>
 </script>

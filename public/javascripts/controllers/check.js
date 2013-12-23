@@ -126,7 +126,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                         collection = new App.Collections.Tokens(tokens);
                         layout.content.show(new App.Views.CheckedTokenList({collection: collection, model: examModel}));
                     });
-            },
+            }
         }
 
     }
