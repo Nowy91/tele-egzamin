@@ -1,5 +1,6 @@
 var models = require('./../models');
 var fs = require('fs');
+var http = require("http");
 var Token = models.Token;
 var Exam = models.Exam;
 var Question = models.Question;
@@ -26,52 +27,102 @@ exports.check = function (req, res) {
 };
 
 exports.getQuestions = function (req, res) {
-    //if (req.session.exam == req.params.examId) {
-        Question.findAll({ where: {examId: req.params.examId}}).success(function (questions) {
+
+    Question.findAll({ where: {examId: req.params.examId}}).success(function (questions) {
 
 
-            questions.forEach(function (model) {
-                if(model.imageName != "")
-                {
-                var newPath = __dirname;
-                newPath = newPath.replace("\\routes", '/public/images/') + model.imageName;
+        /*questions.forEach(function (model) {
+         if (model.imageName != "") {
 
-                var base64_data = new Buffer(fs.readFileSync(newPath).toString('base64'));
-                model.imageName = 'data:image/jpg;base64,' + base64_data + '>';
-                }
-            });
+         http.get(model.imageName, function (res) {
+
+         var buffers = [];
+         var length = 0;
+
+         res.on("data", function (chunk) {
+
+         // store each block of data
+         length += chunk.length;
+         buffers.push(chunk);
+
+         });
+
+         res.on("end", function () {
+
+         // combine the binary data into single buffer
 
 
-            QuestionAnswer.findAll({ where: {questionId: getIdValueFrom(questions)}}).success(function (answers) {
-                res.json({ questions: questions, answers: getContentFrom(answers)});
-            })
+         var base64_data = new Buffer(buffers).toString('base64');
+         model.imageName = 'data:image/jpg;base64,' + base64_data + '>';
+
+         });
+
+         });
+
+
+         }
+         });*/
+
+
+        QuestionAnswer.findAll({ where: {questionId: getIdValueFrom(questions)}}).success(function (answers) {
+            res.json({ questions: questions, answers: getContentFrom(answers)});
         })
-            .error(function (err) {
-                res.json(err);
-            });
-    //}
+    })
+        .error(function (err) {
+            res.json(err);
+        });
+
 };
 
 exports.saveImageAnswers = function (req, res) {
-    if (req.session.token == req.params.token) {
-        req.body.forEach(function (image) {
-            var base64Data = image.content.replace(/^data:image\/png;base64,/, "");
-            var filePath = __dirname;
-            var fileName = image.token + image.questionId + ".png";
-            filePath = filePath.replace("routes", 'public/images/student/') + fileName;
-            fs.writeFile(filePath, base64Data, 'base64', function (err) {
-            });
-            Answer.create({questionId: image.questionId, token: image.token, content: fileName});
-        });
-        Token.find({where: {content: req.params.token}})
-            .success(function (token) {
-                token.updateAttributes({
-                    status: 'executed',
-                    executedDate: new Date()
-                })
+
+    console.log(req.body)
+    req.body.forEach(function (image) {
+        Answer.create({questionId: image.questionId, token: image.token, content: image.content})
+    });
+
+    /*req.body.forEach(function (image) {
+     //var base64Data = image.content.replace(/^data:image\/png;base64,/, "");
+     //var filePath = __dirname;
+     //var fileName = image.token + image.questionId + ".png";
+     //filePath = filePath.replace("routes", 'public/images/student/') + fileName;
+     //fs.writeFile(filePath, base64Data, 'base64', function (err) {
+     //});
+     //Answer.create({questionId: image.questionId, token: image.token, content: fileName});
+
+     var client = new transloadit('7989f49068cf11e38937ab04efb3d54d', 'caf40053fcf82d49cb760df02b84e63cd34b474f');
+     var params = {
+     steps: {
+     redirect_to : {
+     robot : "/image/resize",
+     use : ":original",
+     width : 300,
+     height: 300
+     }
+     }
+     };
+     client.addFile(image.content);
+
+
+     client.send(params, function (ok) {
+     // success callback [optional]
+     console.log('Success: ' + JSON.stringify(ok));
+     }, function (err) {
+     // error callback [optional]
+     console.log('Error: ' + JSON.stringify(err));
+     });
+
+     });
+     */
+    Token.find({where: {content: req.params.token}})
+        .success(function (token) {
+            token.updateAttributes({
+                status: 'executed',
+                executedDate: new Date()
             })
-        res.json("OK");
-    }
+        })
+    res.json("OK");
+
 }
 
 

@@ -44,8 +44,6 @@ exports.addFile = function (req, res) {
 
     var client = new transloadit('7989f49068cf11e38937ab04efb3d54d', 'caf40053fcf82d49cb760df02b84e63cd34b474f');
 
-
-
     client.addFile("newFile",req.files.image.path);
 
     var params = {

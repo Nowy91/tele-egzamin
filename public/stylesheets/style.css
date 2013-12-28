@@ -17,7 +17,11 @@ form{margin-top:30px;}
 .leftAnswers li, .rightAnswers li {border-radius: 0; border: 0;}
 .leftAnswers, .rightAnswers{width:50%}
 .leftAnswers ul, .rightAnswers ul, .leftTitle, .rightTitle{margin:0; padding:0}
-.closedAnswer {color: blue}
+
+.list-group-item {border-radius: 0; border: 0; margin-bottom:1px}
+.redItem {background: #ffe8ea}
+.greenItem {background: #e6ffd3}
+.blueItem {background: #fffbd8}
 
 canvas,.draw{cursor: crosshair;position: absolute;left:50%; max-width: 500px;}
 .drawAnswer {position: relative; max-width: 300px; left: 150px;}

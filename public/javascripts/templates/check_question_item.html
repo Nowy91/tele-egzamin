@@ -1,12 +1,12 @@
 <script id="check_question_template" type="text/template">
-    <tr class="active">
+    <tr>
         <td rowspan="2"
             style="vertical-align: middle; border-right: 1px solid #DDDDDD; border-bottom: 2px solid #DDDDDD;width:50px">
 
         </td>
         <td>
             <%= content %>
-            <%if((type!="image") && (imageName!="")){%> <br/><img style="max-width:200px" src="/images/<%=imageName%>">
+            <%if((type!="image") && (imageName!="")){%> <br/><img style="max-width:200px" src="<%=imageName%>">
             <%}%>
         </td>
 
@@ -38,8 +38,8 @@
     <%}%>
     <%if(type == "image" ){%>
     <td style="border-bottom: 2px solid #DDDDDD; ">
-        <img class="drawAnswer" src="/images/<%= imageName %>"/>
-        <img class="canvasAnswer" src="/images/student/<%= studentAnswer %>">
+        <%if(studentAnswer != ""){%><img class="drawAnswer" src="<%= imageName %>"><%}%>
+        <img class="canvasAnswer" src="<%= studentAnswer %>">
 
     </td>
     <%}%>

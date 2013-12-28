@@ -18,7 +18,7 @@ module.exports = function (sequelize, DataTypes) {
         },
 
         content: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         }
     });
 }; 

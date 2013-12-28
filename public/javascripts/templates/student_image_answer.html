@@ -1,14 +1,18 @@
 <script id="student_image_answer_template" type="text/template">
     <h3>Ilustracja:</h3>
-    <img class="draw" src=<%=imageName%>
-    <canvas id="draw"></canvas>
 
-    <button  id="margin" class="btn btn-info clear">Wyczyść zaznaczenie</button>
+    <img class="draw dimage" src=<%=imageName%>>
+    <canvas id="draw"></canvas>
+    <div class="progress progress-striped">
+        <div class="bar" style="width: 0%"></div>
+    </div>
+    <button id="margin" class="btn btn-info clear">Wyczyść zaznaczenie</button>
     <script>
 
         (function () {
             var canvas = document.querySelector('#draw');
-            var image = document.querySelector('.draw');
+            var image = document.querySelector('.dimage');
+            var button = document.querySelector('.clear');
             var margin = document.querySelector('#margin');
 
             var ctx = canvas.getContext('2d');
@@ -21,28 +25,49 @@
             var mouse = {x: 0, y: 0};
             var el = canvas, pos = {x: 0, y: 0};
 
-            setTimeout(function(){
-                canvas.width = parseInt(imgStyle.getPropertyValue('width'));
-                canvas.height = parseInt(imgStyle.getPropertyValue('height'));
-                image.style.marginLeft = (-0.5*canvas.width )+'px';
-                canvas.style.marginLeft = (-0.5*canvas.width )+'px';
-                margin.style.marginTop = (canvas.height + 20) +'px';
 
-                while ( el ) {
-                    pos.x += el.offsetLeft;
-                    pos.y += el.offsetTop;
-                    el = el.offsetParent;
+
+            $('document').ready(function(){
+                $(".bar").css("width",'10%');
+                function progressBar(widthBar)
+                {
+                    setTimeout(function () {
+
+                        $(".bar").css("width", widthBar + '%');
+                        if(widthBar != 110)
+                            progressBar(widthBar + 10);
+                        else
+                        {
+
+                            canvas.width = parseInt(imgStyle.getPropertyValue('width'));
+                            canvas.height = parseInt(imgStyle.getPropertyValue('height'));
+                            image.style.marginLeft = (-0.5 * canvas.width ) + 'px';
+                            canvas.style.marginLeft = (-0.5 * canvas.width ) + 'px';
+                            margin.style.marginTop = (canvas.height + 20) + 'px';
+                            canvas.style.opacity = 0;
+                            while (el) {
+                                pos.x += el.offsetLeft;
+                                pos.y += el.offsetTop;
+                                el = el.offsetParent;
+                            }
+
+                            var saveImg = new Image();
+                            saveImg.src = "<%=saveImage%>";
+                            saveImg.onload = function () {
+                                ctx.drawImage(saveImg, 0, 0);
+                            };
+                            $(".progress").fadeOut(function(){
+                                image.style.opacity = 1;
+                                button.style.opacity = 1;
+                                canvas.style.opacity = 1;
+                            });
+
+                        }
+
+                    }, 80);
                 }
-
-                var saveImg = new Image();
-                saveImg.src = "<%=saveImage%>";
-                saveImg.onload = function() {
-                    ctx.drawImage(saveImg, 0, 0);
-                };
-
-                image.style.opacity = 1;
-            }, 200);
-
+                progressBar(10)
+            });
 
             canvas.addEventListener('mousemove', function (e) {
                 mouse.x = e.pageX - pos.x;

@@ -1,0 +1,40 @@
+<script id="student_upload_list_template" type="text/template">
+    <iframe id="hidden-iframe" style="display: none"></iframe>
+    <form id="uploadForm" class="text-center" action="/student/upload" target="hidden-iframe"
+          method="POST" enctype="multipart/form-data">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Odpowiedź</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-info">Wyślij pliki</button>
+    </form>
+    <script>
+        $('form#uploadForm').transloadit({
+            wait: true,
+            params: {
+                auth: {
+                    key: "7989f49068cf11e38937ab04efb3d54d"
+                },
+                steps: {
+                    resize_to: {
+                        robot: "/image/resize",
+                        use: ":original",
+                        width: 500,
+                        height: 500
+                    }
+                }
+            },
+            onSuccess: function (assembly) {
+                console.log(assembly);
+
+            }
+        });
+    </script>
+</script>

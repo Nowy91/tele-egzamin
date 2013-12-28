@@ -101,9 +101,8 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 answer.set('questionId', currentQuestion.id);
                 answer.set('token', myExam.get('currentToken'));
                 answer.set('content', JSON.parse(localStorage.getItem('answer' + currentQuestion.id)));
-                if ((answer.get('content') != "") && (answer.get('content') != null))
-                {
-                    if(currentQuestion.get('type') == "image")imagesAnswers.push(answer);
+                if ((answer.get('content') != "") && (answer.get('content') != null)) {
+                    if (currentQuestion.get('type') == "image")imagesAnswers.push(answer);
                     else answers.push(answer);
                 }
             }
@@ -119,6 +118,12 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             }
 
             if (imagesAnswers.length != 0) {
+                /*var uploadView = new App.Views.StudentUploadList({collection: imagesAnswers});
+                 layout.removeRegion("question");
+                 layout.removeRegion("answer");
+
+                 layout.exam.show(uploadView);
+                 */
                 var sendImageAnswers = $.ajax({
                     type: 'POST',
                     url: '/student/images/' + myExam.get('currentToken'),
@@ -129,9 +134,10 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             }
 
             window.localStorage.clear();
-
             var loginView = new App.Views.Login;
             Teleegzam.mainRegion.show(loginView);
+
+
         }
     }
 });
