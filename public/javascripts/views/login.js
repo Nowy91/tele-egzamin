@@ -2,7 +2,7 @@ App.Views.Login = Marionette.ItemView.extend({
 
     events: {
         'submit #examinerLoginForm': 'examinerLogin',
-        'click a.student': 'student'
+        'submit #studentLoginForm': 'studentLogin'
     },
 
     initialize: function () {
@@ -20,13 +20,14 @@ App.Views.Login = Marionette.ItemView.extend({
         Teleegzam.Controllers.Examiner.login(user);
     },
 
-    student: function (e) {
+    studentLogin: function (e) {
         e.preventDefault();
-        token = $(e.currentTarget).parent().find('input#studentToken').val();
 
-        if (token) {
-            Teleegzam.Controllers.Student.check(token);
-        }
+        var token = new App.Models.Token({
+            content: $(e.currentTarget).parent().find('input[name="content"]').val()
+        });
+
+        Teleegzam.Controllers.Student.login(token);
     }
 
 });

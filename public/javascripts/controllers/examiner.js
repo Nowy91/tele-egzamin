@@ -107,6 +107,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
                 if (logging.status == 'ok') {
                     Teleegzam.Session = logging.session;
+                    console.log(logging.session);
                     Teleegzam.Controllers.Exam.showAll();
                 }
             });

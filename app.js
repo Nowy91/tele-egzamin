@@ -16,12 +16,13 @@ var student = require('./routes/student');
 var check = require('./routes/check');
 var crypto = require('crypto');
 var auth = require('./routes/auth');
-var passport = require('passport')
+var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var models = require('./models');
 var Exam = models.Exam;
 var User = models.User;
+var Token = models.Token;
 
 var app = express();
 
@@ -49,11 +50,19 @@ passport.serializeUser(function (user, done) {
 
 passport.deserializeUser(function (id, done) {
     User.find(id).success(function (user) {
-        done(null, user);
+        if (user == null) {
+            Token.find(id).success(function(token) {
+                done(null, token);
+            });
+        }
+        else {
+            done(null, user);
+        }
     });
 });
 
-passport.use(new LocalStrategy(
+// Uwierzytelnienie dla egzaminatora lub administratora
+passport.use('local_examiner', new LocalStrategy(
     function (username, password, done) {
         encryptedPassword = crypto.createHash('sha1').update(password).digest('hex');
 
@@ -66,6 +75,21 @@ passport.use(new LocalStrategy(
             }
             return done(null, user);
         });
+
+    }
+));
+
+// Uwierzytelnienie dla studenta
+passport.use('local_student', new LocalStrategy({
+        usernameField: 'content'
+    },
+    function (content, password, done) {
+        Token.find({where: {content: content}}).success(function (token) {
+            if (!token) {
+                return done(null, false, { message: 'Nieprawidłowy token!' });
+            }
+            return done(null, token);
+        })
     }
 ));
 
@@ -79,7 +103,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 
 function allow(roles) {
-    return function(req, res, next) {
+    return function (req, res, next) {
         if (req.user !== undefined) {
             if (roles.indexOf('*') > -1 && req.isAuthenticated()) {
                 return next();
@@ -134,6 +158,7 @@ app.post('/student/images/:token', allow(['*']), student.saveImageAnswers);
 
 //auth
 app.post('/login', auth.login);
+app.post('/login2', auth.login2);
 app.get('/logout', auth.logout);
 app.get('/is_authenticated', auth.isAuthenticated);
 

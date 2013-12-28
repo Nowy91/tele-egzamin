@@ -9,6 +9,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
     Controller.Student = {
         check: function (token) {
+
             var checkToken = $.ajax({
                 type: 'GET',
                 url: '/student/check/' + token,
@@ -140,6 +141,25 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
             var loginView = new App.Views.Login;
             Teleegzam.mainRegion.show(loginView);
+        },
+
+        login: function (token) {
+            var authentification = $.ajax({
+                type: 'POST',
+                url: '/login2',
+                data: token.toJSON()
+            });
+
+            $.when(authentification).done(function (logging) {
+                if (logging.status == 'fail') {
+                    $.notify(logging.message);
+                }
+
+                if (logging.status == 'ok') {
+                    Teleegzam.Session = logging.session;
+                    Controller.Student.check(logging.session.passport.token);
+                }
+            });
         }
     }
 });
