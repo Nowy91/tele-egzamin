@@ -42,8 +42,7 @@ exports.edit = function (req, res) {
                 title: req.body.title,
                 date: req.body.date,
                 numberOfStudents: req.body.numberOfStudents,
-                duration: req.body.duration,
-                status: req.body.status
+                duration: req.body.duration
             })
                 .success(function (exam) {
                     var data = exam.dataValues;
