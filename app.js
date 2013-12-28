@@ -14,9 +14,14 @@ var examiner = require('./routes/examiner');
 var token = require('./routes/token');
 var student = require('./routes/student');
 var check = require('./routes/check');
+var crypto = require('crypto');
+var auth = require('./routes/auth');
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy;
 
 var models = require('./models');
 var Exam = models.Exam;
+var User = models.User;
 
 var app = express();
 
@@ -32,9 +37,37 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({secret: 'my secret'}));
-app.use(app.router);
-app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('stylus').middleware(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(app.router);
+
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+    User.find(id).success(function (user) {
+        done(null, user);
+    });
+});
+
+passport.use(new LocalStrategy(
+    function (username, password, done) {
+        encryptedPassword = crypto.createHash('sha1').update(password).digest('hex');
+
+        User.find({where: {username: username}}).success(function (user) {
+            if (!user) {
+                return done(null, false, { message: 'Nieprawidłowy login!' });
+            }
+            if (user.password !== encryptedPassword) {
+                return done(null, false, { message: 'Nieprawidłowe hasło!' });
+            }
+            return done(null, user);
+        });
+    }
+));
 
 // development only
 if ('development' == app.get('env')) {
@@ -45,47 +78,64 @@ if ('development' == app.get('env')) {
 //main
 app.get('/', routes.index);
 
+function allow(roles) {
+    return function(req, res, next) {
+        if (req.user !== undefined) {
+            if (roles.indexOf('*') > -1 && req.isAuthenticated()) {
+                return next();
+            }
+
+            if (roles.indexOf(req.user.role) > -1 && req.isAuthenticated()) {
+                return next();
+            }
+        }
+
+        return res.json({status: 'unathorized'});
+    }
+}
+
 //exams
-app.get('/exams', exam.list);
-app.get('/exam/view/:id', exam.view);
-app.get('/exam/view/:id/questions', question.list);
-app.post('/exam/add', exam.add);
-app.post('/exam/edit/:id', exam.edit);
-app.delete('/exam/delete/:id', exam.delete);
-app.post('/exam/activate/:id', exam.activate);
+app.get('/exams', allow(['*']), exam.list);
+app.get('/exam/view/:id', allow(['*']), exam.view);
+app.get('/exam/view/:id/questions', allow(['*']), question.list);
+app.post('/exam/add', allow(['*']), exam.add);
+app.post('/exam/edit/:id', allow(['*']), exam.edit);
+app.delete('/exam/delete/:id', allow(['*']), exam.delete);
+app.post('/exam/activate/:id', allow(['*']), exam.activate);
 
 //questions
-app.get('/questions/view/:id', question.view);
-app.get('/questions/view/:id/answers', question.getAnswers);
-app.post('/questions/add', question.add);
-app.post('/questions/answers/add/:id', question.addAnswers);
-app.post('/questions/file/add', question.addFile);
-app.delete('/questions/delete/:id', question.delete);
-app.post('/questions/edit/:id', question.edit);
-app.post('/questions/answers/edit/:id', question.editAnswers);
+app.get('/questions/view/:id', allow(['*']), question.view);
+app.get('/questions/view/:id/answers', allow(['*']), question.getAnswers);
+app.post('/questions/add', allow(['*']), question.add);
+app.post('/questions/answers/add/:id', allow(['*']), question.addAnswers);
+app.post('/questions/file/add', allow(['*']), question.addFile);
+app.delete('/questions/delete/:id', allow(['*']), question.delete);
+app.post('/questions/edit/:id', allow(['*']), question.edit);
+app.post('/questions/answers/edit/:id', allow(['*']), question.editAnswers);
 
 //examiners
-app.get('/examiners', examiner.list);
-app.post('/examiner/add', examiner.add);
-app.get('/examiner/view/:id', examiner.view);
-app.delete('/examiner/delete/:id', examiner.delete);
-app.post('/examiner/edit/:id', examiner.edit);
+app.get('/examiners', allow(['admin']), examiner.list);
+app.post('/examiner/add', allow(['admin']), examiner.add);
+app.get('/examiner/view/:id', allow(['admin']), examiner.view);
+app.delete('/examiner/delete/:id', allow(['admin']), examiner.delete);
+app.post('/examiner/edit/:id', allow(['admin']), examiner.edit);
 
 //tokens
-app.get('/tokens/:examId/:status', token.list);
-app.post('/tokens/generate/', token.generate);
-app.get('/check/:token/:examId', check.getData);
-app.post('/check/:token/checked', check.checked);
+app.get('/tokens/:examId/:status', allow(['*']), token.list);
+app.post('/tokens/generate/', allow(['*']), token.generate);
+app.get('/check/:token/:examId', allow(['*']), check.getData);
+app.post('/check/:token/checked', allow(['*']), check.checked);
 
 //student
-app.get('/student/check/:token', student.check);
-app.get('/student/get/:examId', student.getQuestions);
-app.post('/student/answers/:token', student.saveAnswers);
-app.post('/student/images/:token', student.saveImageAnswers);
+app.get('/student/check/:token', allow(['*']), student.check);
+app.get('/student/get/:examId', allow(['*']), student.getQuestions);
+app.post('/student/answers/:token', allow(['*']), student.saveAnswers);
+app.post('/student/images/:token', allow(['*']), student.saveImageAnswers);
 
-//user
-app.get('/login', function(req, res) {
-});
+//auth
+app.post('/login', auth.login);
+app.get('/logout', auth.logout);
+app.get('/is_authenticated', auth.isAuthenticated);
 
 var server = http.createServer(app).listen(app.get('port'));
 var io = require('socket.io').listen(server);
@@ -95,17 +145,8 @@ io.configure(function () {
     io.set("polling duration", 10);
 });
 
-io.sockets.on('connection', function(socket){
-    socket.on('exam activation', function(examId) {
+io.sockets.on('connection', function (socket) {
+    socket.on('exam activation', function (examId) {
         io.sockets.emit('activated exam', examId);
     });
 });
-
-function auth(req, res, next) {
-    if (!req.session.user_id) {
-        res.send('Nie jesteś zalogowany!');
-    }
-    else {
-        next();
-    }
-}

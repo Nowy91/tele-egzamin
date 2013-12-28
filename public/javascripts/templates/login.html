@@ -24,22 +24,24 @@
                 <div class="well">
                     <h1>Egzaminator</h1>
                     <hr/>
-                    <form role="form">
+                    <form id="examinerLoginForm" role="form">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Email</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Hasło</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
+                            <label for="exampleInputEmail1">
+                                Nazwa użytkownika<span class="red required"> *</span>
+                            </label>
+                            <input id="username" type="text" class="form-control" id="exampleInputEmail1" name="username">
                         </div>
 
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"> Zapamiętaj mnie
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">
+                                Hasło<span class="red required"> *</span>
                             </label>
+                            <input id="password" type="password" class="form-control" id="exampleInputPassword1" name="password">
                         </div>
-                        <a href="#exams" class="btn btn-primary">Zaloguj się</a>
+
+                        <div class="checkbox"><input type="checkbox">Zapamiętaj mnie</input></div>
+
+                        <button type="submit" class="btn btn-primary">Zaloguj się</button>
                     </form>
                 </div>
             </div>

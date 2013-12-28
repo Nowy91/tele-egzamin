@@ -1,16 +1,23 @@
 App.Views.Login = Marionette.ItemView.extend({
 
     events: {
-        'click a.exams': 'exams',
-        'click .student': 'student'
+        'submit #examinerLoginForm': 'examinerLogin',
+        'click a.student': 'student'
     },
 
     initialize: function () {
         this.template = App.Templates.get('login');
     },
 
-    exams: function () {
-        Teleegzam.Controllers.Exam.showAll();
+    examinerLogin: function (e) {
+        e.preventDefault();
+
+        var user = new App.Models.User({
+            username: $(e.currentTarget).parent().find('input[name="username"]').val(),
+            password: $(e.currentTarget).parent().find('input[name="password"]').val()
+        });
+
+        Teleegzam.Controllers.Examiner.login(user);
     },
 
     student: function (e) {

@@ -89,6 +89,20 @@
         },
 
         init: function() {
+            (function ($) {
+                $.whenDone = function (options, callback) {
+                    $.when(options).done(function(data) {
+                        if (options.responseJSON.status !== undefined
+                            && options.responseJSON.status === 'unathorized') {
+                            Teleegzam.Router.navigate('/', {trigger: true});
+                        }
+                        else {
+                            callback(data);
+                        }
+                    });
+                }
+            })(jQuery);
+
             App.Templates.loadTemplates(function() {
                 Teleegzam.start();
             });

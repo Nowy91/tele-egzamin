@@ -1,10 +1,24 @@
 <script id="header_template" type="text/template">
-    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <nav class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Teleegzamin</a>
             </div>
+
+            <% if (username) { %>
+            <p class="nav navbar-text navbar-right">
+                Zalogowany jako:
+                <a class="logout"><%= username %></a>
+            </p>
+            <% } %>
         </div>
     </nav>
+
+    <script>
+        $('a.logout').tooltip({
+            title: 'Wyloguj',
+            placement: 'right'
+        });
+    </script>
 </script>
 

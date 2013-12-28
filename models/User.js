@@ -55,6 +55,10 @@ module.exports = function (sequelize, DataTypes) {
                     msg: "Pole nie może być puste."
                 }
             }
+        },
+
+        role: {
+            type: Sequelize.STRING(20)
         }
     });
 }; 

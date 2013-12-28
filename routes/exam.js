@@ -1,5 +1,6 @@
 var models = require('./../models');
 var Exam = models.Exam;
+var Question = models.Question;
 
 exports.list = function (req, res) {
     Exam.findAll()

@@ -16,11 +16,10 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 dataType: 'json'
             });
 
-            $.when(getTokens)
-                .done(function (tokens) {
-                    collection = new App.Collections.Tokens(tokens);
-                    layout.content.show(new App.Views.ActiveTokenList({collection: collection, model: examModel}));
-                });
+            $.whenDone(getTokens, function (tokens) {
+                collection = new App.Collections.Tokens(tokens);
+                layout.content.show(new App.Views.ActiveTokenList({collection: collection, model: examModel}));
+            });
         },
 
         generate: function () {
@@ -31,12 +30,11 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 data: examModel.toJSON()
             });
 
-            $.when(generateTokens)
-                .done(function (tokens) {
-                    collection.add(tokens);
-                    Teleegzam.Utils.Paginator.show(collection, $('div.paginator'));
-                    Teleegzam.Utils.Paginator.setIndexes();
-                });
+            $.whenDone(generateTokens, function (tokens) {
+                collection.add(tokens);
+                Teleegzam.Utils.Paginator.show(collection, $('div.paginator'));
+                Teleegzam.Utils.Paginator.setIndexes();
+            });
         }
     }
 

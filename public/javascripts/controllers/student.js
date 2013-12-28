@@ -15,7 +15,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 dataType: 'json'
             });
 
-            $.when(checkToken).done(function (exam) {
+            $.whenDone(checkToken, function (exam) {
                 if (exam != null) {
                     layout = new App.Layouts.Student;
                     myExam = new App.Models.Exam(exam);
@@ -39,7 +39,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 dataType: 'json'
             });
 
-            $.when(getQuestions).done(function (data) {
+            $.whenDone(getQuestions, function (data) {
 
                 myQuestions = new App.Collections.Questions(data.questions);
                 myAnswers = new App.Collections.QuestionAnswers(data.answers);
@@ -83,7 +83,8 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
                 var questionAnswers = new App.Views.StudentCheckAnswerList({collection: thisAnswers});
                 layout.answer.show(questionAnswers);
-            } else if (currentQuestion.get('type') == "image") {
+            }
+            else if (currentQuestion.get('type') == "image") {
                 currentAnswer.set({imageName: currentQuestion.get('imageName')});
                 currentAnswer.set({saveImage: JSON.parse(localStorage.getItem('answer' + currentQuestion.id))});
                 var canvasView = new App.Views.StudentImageAnswer({model: currentAnswer});
@@ -102,8 +103,10 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 answer.set('token', myExam.get('currentToken'));
                 answer.set('content', JSON.parse(localStorage.getItem('answer' + currentQuestion.id)));
                 if ((answer.get('content') != "") && (answer.get('content') != null)) {
-                    if (currentQuestion.get('type') == "image")imagesAnswers.push(answer);
-                    else answers.push(answer);
+                    if (currentQuestion.get('type') == "image")
+                        imagesAnswers.push(answer);
+                    else
+                        answers.push(answer);
                 }
             }
 
@@ -134,10 +137,9 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             }
 
             window.localStorage.clear();
+
             var loginView = new App.Views.Login;
             Teleegzam.mainRegion.show(loginView);
-
-
         }
     }
 });

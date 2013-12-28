@@ -9,10 +9,15 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
         showAll: function () {
             layout = new App.Layouts.Dashboard;
 
-            collection = new App.Collections.Exams;
-            var fetching = collection.fetch();
+            var fetching = $.ajax({
+                type: 'GET',
+                url: '/exams',
+                dataType: 'json'
+            });
 
-            $.when(fetching).done(function() {
+            $.whenDone(fetching, function (exams) {
+
+                collection = new App.Collections.Exams(exams);
                 examsList = new App.Views.ExamList({collection: collection});
 
                 layout.on("show", function () {
@@ -48,16 +53,15 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 dataType: 'json'
             });
 
-            $.when(addExam)
-                .done(function (newExam) {
-                    if (newExam.isValid) {
-                        collection.add(newExam);
-                        layout.content.show(new App.Views.ExamList({collection: collection}));
-                    }
-                    else {
-                        Teleegzam.Validator.Form.messages(newExam);
-                    }
-                });
+            $.whenDone(addExam, function (newExam) {
+                if (newExam.isValid) {
+                    collection.add(newExam);
+                    layout.content.show(new App.Views.ExamList({collection: collection}));
+                }
+                else {
+                    Teleegzam.Validator.Form.messages(newExam);
+                }
+            });
         },
 
         editExam: function (exam) {
@@ -68,8 +72,8 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 dataType: 'json'
             });
 
-            $.when(editExam).done(function (editedExam) {
-                if(editedExam.isValid) {
+            $.whenDone(editExam, function (editedExam) {
+                if (editedExam.isValid) {
                     var oldExam = collection.get(exam.id);
                     collection.remove(oldExam);
                     collection.add(editedExam);
@@ -98,14 +102,14 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
         },
 
-        activate: function(examId, socket) {
+        activate: function (examId, socket) {
             var activatingExam = $.ajax({
                 type: 'POST',
                 url: '/exam/activate/' + examId,
                 contentType: 'json'
             });
 
-            $.when(activatingExam).done(function(exam) {
+            $.whenDone(activatingExam, function (exam) {
                 if (exam.status === 'activated') {
                     socket.emit('exam activation', examId);
                 }

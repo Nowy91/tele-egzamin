@@ -28,6 +28,7 @@ canvas,.draw{cursor: crosshair;position: absolute;left:50%; max-width: 500px;}
 .canvasAnswer {position: relative; max-width: 300px; left: -150px;}
 #margin {margin-bottom: 30px;}
 .draw {opacity: 0}
+.logout {color: #00b7ff}
 
 .paginator .btn-group {margin: 20px 0; float: left}
 .space {clear: both; margin-top: 20px;}
