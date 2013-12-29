@@ -11,11 +11,11 @@ module.exports = function (sequelize, DataTypes) {
         mark: {
             type: Sequelize.DECIMAL(2, 1)
         },
-        reachedPoints: {
-            type: Sequelize.DECIMAL(6, 3)
+        percentPoints: {
+            type: Sequelize.DECIMAL(4, 1)
         },
-        maxPoints: {
-            type: Sequelize.DECIMAL(6, 3)
+        examId: {
+            type: Sequelize.INTEGER
         }
     });
 }; 

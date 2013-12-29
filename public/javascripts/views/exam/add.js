@@ -19,7 +19,18 @@ App.Views.ExamAdd = Marionette.ItemView.extend({
             status: $(e.currentTarget).find('input#status').val()
         });
 
-        Teleegzam.Controllers.Exam.addExam(newExam);
+        var newGrades = null;
+        var gType = $(e.currentTarget).find('select').val();
+        if(gType == "Akademickie")newExam.set('gradesType', 'study');
+        else if(gType == "Szkolne")newExam.set('gradesType', 'school');
+        else if(gType == "Zaliczenie")newExam.set('gradesType', 'credit');
+        else
+        {
+            newExam.set('gradesType', 'custom');
+            
+        }
+
+        Teleegzam.Controllers.Exam.addExam(newExam, newGrades);
     }
 
 });

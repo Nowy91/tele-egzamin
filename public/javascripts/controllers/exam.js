@@ -45,11 +45,12 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             layout.content.show(new App.Views.ExamEdit({model: examModel}));
         },
 
-        addExam: function (exam) {
+        addExam: function (exam, grades) {
             var addExam = $.ajax({
                 type: 'POST',
                 url: '/exam/add',
-                data: exam.toJSON(),
+                data: JSON.stringify({exam: exam, grades: grades}),
+                contentType: 'application/json',
                 dataType: 'json'
             });
 

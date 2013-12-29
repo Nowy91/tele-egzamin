@@ -14,7 +14,8 @@
             <div class="form-group">
                 <label for="input3" class="col-sm-3 control-label">Data</label>
 
-                <div class="date form_datetime col-md-5" data-date-format="yyyy-mm-dd HH:ii" data-link-field="dtp_input1">
+                <div class="date form_datetime col-md-5" data-date-format="yyyy-mm-dd HH:ii"
+                     data-link-field="dtp_input1">
                     <input type="text" class="form-control" id="date" data-original-title="" title="">
                 </div>
             </div>
@@ -35,6 +36,66 @@
             </div>
 
             <div class="form-group">
+                <label for="input2" class="col-sm-3 control-label">Progi ocen:</label>
+
+                <div class="col-sm-5">
+                    <select class="form-control">
+                        <option>Akademickie</option>
+                        <option>Szkolne</option>
+                        <option>Zaliczenie</option>
+                        <option>Własne</option>
+                    </select>
+                    <br/>
+
+                    <div class="grades">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Od (%)</th>
+                                <th>Do (%)</th>
+                                <th>Ocena</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>90</td>
+                                <td>100</td>
+                                <td>5.0</td>
+                            </tr>
+                            <tr>
+                                <td>80</td>
+                                <td>89</td>
+                                <td>4.5</td>
+                            </tr>
+                            <tr>
+                                <td>70</td>
+                                <td>79</td>
+                                <td>4.0</td>
+                            </tr>
+                            <tr>
+                                <td>60</td>
+                                <td>69</td>
+                                <td>3.5</td>
+                            </tr>
+                            <tr>
+                                <td>50</td>
+                                <td>59</td>
+                                <td>3.0</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>49</td>
+                                <td>2.0</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <a class="btn btn-default btn-success addRow" style="display: none">Dodaj wiersz</a>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-10">
                     <button type="submit" class="btn btn-default">Dodaj egzamin</button>
                 </div>
@@ -43,20 +104,50 @@
     </div>
 
     <script type="text/javascript">
-        $(function() {
-            if($('.datetimepicker').length > 0) {
+        $(function () {
+            if ($('.datetimepicker').length > 0) {
                 $('.datetimepicker').remove();
             }
 
             $('#date').datetimepicker({
-                language:  'pl',
+                language: 'pl',
                 weekStart: 1,
-                todayBtn:  1,
+                todayBtn: 1,
                 autoclose: 1,
                 todayHighlight: 1,
                 startView: 2,
                 forceParse: 0,
             });
+            $('.addRow').click(function () {
+                $('.gradesTable').append('<tr> <td><input type="text" class="form-control"/></td><td><input type="text" class="form-control"/></td> <td><input type="text" class="form-control"/></td> </tr>');
+            });
+            $('select').change(function () {
+                var value = $(this).val();
+                $('.addRow').css("display","none");
+                switch (value) {
+                    case "Akademickie":
+                    {
+                        $('.grades').html('<table class="table table-bordered"> <thead> <tr> <th>Od (%)</th> <th>Do (%)</th> <th>Ocena</th> </tr> </thead> <tbody> <tr> <td>90</td> <td>100</td> <td>5.0</td> </tr> <tr> <td>80</td> <td>89</td> <td>4.5</td> </tr> <tr> <td>70</td> <td>79</td> <td>4.0</td> </tr> <tr> <td>60</td> <td>69</td> <td>3.5</td> </tr> <tr> <td>50</td> <td>59</td> <td>3.0</td> </tr> <tr> <td>0</td> <td>49</td> <td>2.0</td> </tr> </tbody> </table>');
+                        break;
+                    }
+                    case "Szkolne":
+                    {
+                        $('.grades').html('<table class="table table-bordered"> <thead> <tr> <th>Od (%)</th> <th>Do (%)</th> <th>Ocena</th> </tr> </thead> <tbody> <tr> <td>99</td> <td>100</td> <td>6.0</td> </tr> <tr> <td>85</td> <td>98</td> <td>5.0</td> </tr> <tr> <td>70</td> <td>84</td> <td>4.0</td> </tr> <tr> <td>55</td> <td>69</td> <td>3.0</td> </tr> <tr> <td>40</td> <td>54</td> <td>2.0</td> </tr> <tr> <td>0</td> <td>39</td> <td>1.0</td> </tr> </tbody> </table>');
+                        break;
+                    }
+                    case "Zaliczenie":
+                    {
+                        $('.grades').html('<table class="table table-bordered"> <thead> <tr> <th>Od (%)</th> <th>Do (%)</th> <th>Ocena</th> </tr> </thead> <tbody> <tr> <td>50</td> <td>100</td> <td>zal.</td> </tr> <tr> <td>0</td> <td>49</td> <td>nzal.</td> </tr> </tbody> </table>');
+                        break;
+                    }
+                    case "Własne":
+                    {
+                        $('.grades').html('<table class="table table-bordered"> <thead> <tr> <th>Od (%)</th> <th>Do (%)</th> <th>Ocena</th> </tr> </thead> <tbody> <tr> <td><input type="text" class="form-control"/></td> <td>100</td> <td><input type="text" class="form-control"/></td> </tr> </tbody> <tbody class="gradesTable"> </tbody> <tbody> <tr> <td>0</td> <td><input type="text" class="form-control"/></td> <td><input type="text" class="form-control"/></td> </tr> </tbody> </table> ');
+                        $('.addRow').css("display","block");
+                        break;
+                    }
+                }
+            });
         });
-    </script>
+</script>
 </script>
