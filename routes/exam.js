@@ -17,13 +17,11 @@ exports.add = function (req, res) {
     Exam.create(req.body.exam)
         .success(function (exam) {
             if (req.body.grades != null) {
-                Grade.bulkCreate(req.body.grades, ['percentPoints', 'mark'])
+                Grade.bulkCreate(req.body.grades, ['threshold', 'mark'])
                     .success(function () {
                         Grade.findAll({where: {examId: null}})
                             .success(function (grades) {
-                                Exam.find(req.body.exam.id).success(function (exam) {
-                                    exam.setGrades(grades);
-                                });
+                                exam.setGrades(grades);
                             });
                     });
             }

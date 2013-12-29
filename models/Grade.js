@@ -9,9 +9,9 @@ module.exports = function (sequelize, DataTypes) {
             autoIncrement: true
         },
         mark: {
-            type: Sequelize.DECIMAL(2, 1)
+            type: Sequelize.STRING(20)
         },
-        percentPoints: {
+        threshold: {
             type: Sequelize.DECIMAL(4, 1)
         },
         examId: {

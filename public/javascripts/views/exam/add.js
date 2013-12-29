@@ -27,7 +27,15 @@ App.Views.ExamAdd = Marionette.ItemView.extend({
         else
         {
             newExam.set('gradesType', 'custom');
-            
+
+            newGrades = new App.Collections.Grades;
+            $('.grade').each(function () {
+                var singleGrade = new App.Models.Grade({
+                    threshold: $(this).find('.threshold').val(),
+                    mark: $(this).find('.mark').val()
+                });
+                newGrades.add(singleGrade);
+            });
         }
 
         Teleegzam.Controllers.Exam.addExam(newExam, newGrades);
