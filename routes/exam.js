@@ -66,7 +66,6 @@ exports.edit = function (req, res) {
                 gradesType: req.body.exam.gradesType
             })
                 .success(function (exam) {
-
                     Grade.findAll({where: {examId: exam.id}}).success(function (oldgrades) {
                         if (oldgrades != null) {
                             for (var i = 0; i < oldgrades.length; i++) {
@@ -83,7 +82,6 @@ exports.edit = function (req, res) {
                                 });
                         }
                     });
-
                     var data = exam.dataValues;
                     data.isValid = true;
                     res.json(data);

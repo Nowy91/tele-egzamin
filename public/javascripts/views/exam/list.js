@@ -10,7 +10,8 @@ App.Views.ExamList = Marionette.CompositeView.extend({
         'click .paginator li.prevTen a': 'prevPages',
         'click .paginator li.page a': 'goToPage',
         'click table th': 'sort',
-        'click .btn-group li a': 'pagesOnView'
+        'click .btn-group li a': 'pagesOnView',
+        'click a.exam_add': 'addExam'
     },
 
 
@@ -57,6 +58,11 @@ App.Views.ExamList = Marionette.CompositeView.extend({
 
     pagesOnView: function (e) {
         Teleegzam.Utils.Paginator.pagesOnView(e.currentTarget);
+    },
+
+    addExam: function() {
+        Teleegzam.Controllers.Exam.addForm();
     }
 
- });
+
+});
