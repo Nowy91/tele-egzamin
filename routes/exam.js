@@ -3,16 +3,29 @@ var Exam = models.Exam;
 var Question = models.Question;
 
 exports.list = function (req, res) {
-    Exam.findAll()
-        .success(function (exams) {
-            res.json(exams);
-        })
-        .error(function (err) {
-            res.end(err);
-        });
+    if (req.user.role == 'admin') {
+        Exam.findAll()
+            .success(function (exams) {
+                res.json(exams);
+            })
+            .error(function (err) {
+                res.end(err);
+            });
+    }
+
+    if (req.user.role == 'examiner') {
+        Exam.findAll({where: {examinerId: req.user.id}})
+            .success(function (exams) {
+                res.json(exams);
+            })
+            .error(function (err) {
+                res.end(err);
+            });
+    }
 };
 
 exports.add = function (req, res) {
+    req.body.examinerId = req.user.id;
     Exam.create(req.body)
         .success(function (exam) {
             var data = exam.dataValues;
@@ -42,8 +55,7 @@ exports.edit = function (req, res) {
                 title: req.body.title,
                 date: req.body.date,
                 numberOfStudents: req.body.numberOfStudents,
-                duration: req.body.duration,
-                status: req.body.status
+                duration: req.body.duration
             })
                 .success(function (exam) {
                     var data = exam.dataValues;

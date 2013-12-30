@@ -15,8 +15,7 @@ App.Views.ExamEdit = Marionette.ItemView.extend({
             title: $(e.currentTarget).find('input#title').val(),
             date: $(e.currentTarget).find('input#date').val(),
             numberOfStudents: $(e.currentTarget).find('input#numberOfStudents').val(),
-            duration: $(e.currentTarget).find('input#duration').val(),
-            status: $(e.currentTarget).find('input#status').val()
+            duration: $(e.currentTarget).find('input#duration').val()
         });
 
         Teleegzam.Controllers.Exam.editExam(this.model);
