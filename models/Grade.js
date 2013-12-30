@@ -9,13 +9,13 @@ module.exports = function (sequelize, DataTypes) {
             autoIncrement: true
         },
         mark: {
-            type: Sequelize.DECIMAL(2, 1)
+            type: Sequelize.STRING(20)
         },
-        reachedPoints: {
-            type: Sequelize.DECIMAL(6, 3)
+        threshold: {
+            type: Sequelize.DECIMAL(4, 1)
         },
-        maxPoints: {
-            type: Sequelize.DECIMAL(6, 3)
+        examId: {
+            type: Sequelize.INTEGER
         }
     });
 }; 

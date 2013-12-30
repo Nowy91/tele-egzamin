@@ -1,8 +1,7 @@
 App.Views.Menu = Marionette.ItemView.extend({
 
     events: {
-        'click a.exams': 'exams',
-        'click a.add_exam': 'addExam'
+        'click a.exams': 'exams'
     },
 
     initialize: function () {
@@ -11,10 +10,5 @@ App.Views.Menu = Marionette.ItemView.extend({
 
     exams: function() {
         Teleegzam.Controllers.Exam.showAll();
-    },
-
-    addExam: function() {
-        Teleegzam.Controllers.Exam.addForm();
     }
-
 });

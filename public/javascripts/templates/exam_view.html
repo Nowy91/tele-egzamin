@@ -18,13 +18,14 @@
                 Godzina
             </li>
             <li class="list-group-item">
-                <span class="badge">-</span>
-                Sala
-            </li>
-            <li class="list-group-item">
                 <span class="badge"><%= duration%> min.</span>
                 Czas trwania
             </li>
+            <li class="list-group-item">
+                <span class="badge"><%=gradesType%></span>
+                Progi ocen
+            </li>
+
         </ul>
     </div>
 
@@ -53,4 +54,8 @@
     </div>
     <a class="btn btn-danger pull-right mLeft10">Usuń egzamin</a>
     <a class="btn btn-warning pull-right">Edytuj dane</a>
+
+    <div class="mBottom70" id="grades">
+
+    </div>
 </script>

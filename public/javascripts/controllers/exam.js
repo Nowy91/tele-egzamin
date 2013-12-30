@@ -4,6 +4,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
     var collection;
     var examModel;
     var examsList;
+    var gradesCollection;
 
     Controller.Exam = {
         showAll: function () {
@@ -34,6 +35,20 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             examModel = collection.get(examId);
             layout.menu.show(new App.Views.ExamMenu({model: examModel}));
             layout.content.show(new App.Views.ExamView({model: examModel}));
+            if (examModel.get("gradesType") == "custom") {
+                var getExamGrades = $.ajax({
+                    type: 'GET',
+                    url: '/exam/view/' + examModel.id + '/grades',
+                    dataType: 'json'
+                });
+
+                $.whenDone(getExamGrades, function (grades) {
+                    gradesCollection = new App.Collections.Grades(grades);
+                    var gradesList = new App.Views.ExamGradeList({collection: gradesCollection});
+                    layout.addRegion('grades', "#grades");
+                    layout.grades.show(gradesList);
+                });
+            }
         },
 
         addForm: function () {
@@ -43,13 +58,18 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
         editForm: function (examId) {
             examModel = collection.get(examId);
             layout.content.show(new App.Views.ExamEdit({model: examModel}));
+            if(examModel.get("gradesType")=="custom"){
+                layout.addRegion("grades", ".grades");
+                layout.grades.show(new App.Views.ExamGradeEdit({collection: gradesCollection}));
+            }
         },
 
-        addExam: function (exam) {
+        addExam: function (exam, grades) {
             var addExam = $.ajax({
                 type: 'POST',
                 url: '/exam/add',
-                data: exam.toJSON(),
+                data: JSON.stringify({exam: exam, grades: grades}),
+                contentType: 'application/json',
                 dataType: 'json'
             });
 
@@ -64,11 +84,12 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
         },
 
-        editExam: function (exam) {
+        editExam: function (exam, grades) {
             var editExam = $.ajax({
                 type: 'POST',
                 url: '/exam/edit/' + exam.id,
-                data: exam.toJSON(),
+                data: JSON.stringify({exam: exam, grades: grades}),
+                contentType: 'application/json',
                 dataType: 'json'
             });
 

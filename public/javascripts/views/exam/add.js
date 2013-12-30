@@ -15,11 +15,29 @@ App.Views.ExamAdd = Marionette.ItemView.extend({
             title: $(e.currentTarget).find('input#title').val(),
             date: $(e.currentTarget).find('input#date').val(),
             numberOfStudents: $(e.currentTarget).find('input#numberOfStudents').val(),
-            duration: $(e.currentTarget).find('input#duration').val(),
-            status: $(e.currentTarget).find('input#status').val()
+            duration: $(e.currentTarget).find('input#duration').val()
         });
 
-        Teleegzam.Controllers.Exam.addExam(newExam);
+        var newGrades = null;
+        var gType = $(e.currentTarget).find('select').val();
+        if(gType == "Akademickie")newExam.set('gradesType', 'study');
+        else if(gType == "Szkolne")newExam.set('gradesType', 'school');
+        else if(gType == "Zaliczenie")newExam.set('gradesType', 'credit');
+        else
+        {
+            newExam.set('gradesType', 'custom');
+
+            newGrades = new App.Collections.Grades;
+            $('.grade').each(function () {
+                var singleGrade = new App.Models.Grade({
+                    threshold: $(this).find('.threshold').val(),
+                    mark: $(this).find('.mark').val()
+                });
+                newGrades.add(singleGrade);
+            });
+        }
+
+        Teleegzam.Controllers.Exam.addExam(newExam, newGrades);
     }
 
 });

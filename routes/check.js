@@ -3,6 +3,8 @@ var Question = models.Question;
 var QuestionAnswer = models.QuestionAnswer;
 var Answer = models.Answer;
 var Token = models.Token;
+var Exam = models.Exam;
+var Grade = models.Grade;
 
 exports.getData = function (req, res) {
     Question.findAll({ where: {examId: req.params.examId}}).success(function (questions) {
@@ -29,22 +31,56 @@ exports.checked = function (req, res) {
                         maxPoints += parseFloat(question.maxPoints);
                     });
 
-                    var percentage = req.body.reachedPoints / maxPoints, finalGrade;
+                    var percentage = (req.body.reachedPoints * 100) / maxPoints, finalGrade;
+                    var grades = [];
+                    var thresholds = [];
 
-                    if (percentage < 0.5)finalGrade = 2.0;
-                    else if (percentage < 0.6)finalGrade = 3.0;
-                    else if (percentage < 0.7)finalGrade = 3.5;
-                    else if (percentage < 0.8)finalGrade = 4.0;
-                    else if (percentage < 0.9)finalGrade = 4.5;
-                    else finalGrade = 5.0;
+                    Exam.find({where: {id: token.examId}}).success(function (examGrade) {
+                        if(examGrade.gradesType == "custom")
+                        {
+                            Grade.findAll({where:{examId: examGrade.id}, order: 'threshold'}).success(function(customGrades){
+                                customGrades.forEach(function(singleGrade){
+                                    grades.push(singleGrade.mark);
+                                    thresholds.push(parseFloat(singleGrade.threshold));
+                                })
+                                var num = thresholds.length-1;
+                                while (percentage <= thresholds[num]) {
+                                    num--;
+                                    if(num<0){num=0;break;}
+                                }
+                                finalGrade = grades[num];
+                                token.updateAttributes({reachedPoints: req.body.reachedPoints, status: 'checked', grade: finalGrade})
+                                    .success(function (token) {
+                                        res.json(token);
+                                    });
+                            });
+                        } else {
+                            if (examGrade.gradesType == "study") {
+                                grades = [2.0, 3.0, 3.5, 4.0, 4.5, 5.0];
+                                thresholds = [0, 50, 60, 70, 80, 90];
+                            } else if (examGrade.gradesType == "school") {
+                                grades = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0];
+                                thresholds = [0, 40, 55, 70, 85, 99];
+                            } else if (examGrade.gradesType == "credit") {
+                                grades = ["nzal", "zal"];
+                                thresholds = [0, 50];
+                            }
 
-                    token.updateAttributes({reachedPoints: req.body.reachedPoints, status: 'checked', grade: finalGrade})
-                        .success(function (token) {
-                            res.json(token);
-                        });
+                            var num = thresholds.length-1;
+                            while (percentage <= thresholds[num]) {
+                                num--;
+                                if(num<0){num=0;break;}
+                            }
+                            finalGrade = grades[num];
+                            token.updateAttributes({reachedPoints: req.body.reachedPoints, status: 'checked', grade: finalGrade})
+                                .success(function (token) {
+                                    res.json(token);
+                                });
+                        }
+
+
+                    });
                 });
-
-
         })
         .error(function (err) {
             res.end(err);

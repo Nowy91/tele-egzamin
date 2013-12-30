@@ -7,7 +7,32 @@ App.Views.ExamView = Marionette.ItemView.extend({
     render: function(){
         var context = this.model.toJSON();
         context['formattedDate'] = context['date'].substring(0,10);
-        context['formattedTime'] = context['date'].substring(11,16)
+        context['formattedTime'] = context['date'].substring(11,16);
+        var gType;
+        switch(context['gradesType'])
+        {
+            case "study":
+            {
+                gType="akademickie";
+                break;
+            }
+            case "school":
+            {
+                gType="szkolne";
+                break;
+            }
+            case "credit":
+            {
+                gType="zaliczenie";
+                break;
+            }
+            case "custom":
+            {
+                gType="własne";
+                break;
+            }
+        }
+        context['gradesType'] = gType;
         $(this.el).html(this.template(context));
     },
 

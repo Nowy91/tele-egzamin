@@ -39,7 +39,7 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
         if (answers.length != 0) {
             newQuestion.set({type: 'closed'});
         }
-        console.log("I CHECK FILE INPUT");
+
         if($(e.currentTarget).find('input.fileUrl').val() !== ""){
             newQuestion.set({imageName: $(e.currentTarget).find('input.fileUrl').val()});
             if($(e.currentTarget).find('.drawCheck').hasClass('btn-success')){

@@ -127,6 +127,7 @@ function allow(roles) {
 app.get('/exams', allow(['admin', 'examiner']), exam.list);
 app.get('/exam/view/:id', allow(['*']), exam.view);
 app.get('/exam/view/:id/questions', allow(['*']), question.list);
+app.get('/exam/view/:id/grades', allow(['*']), exam.getGrades);
 app.post('/exam/add', allow(['*']), exam.add);
 app.post('/exam/edit/:id', allow(['*']), exam.edit);
 app.delete('/exam/delete/:id', allow(['*']), exam.delete);

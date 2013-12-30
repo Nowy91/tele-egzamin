@@ -19,7 +19,7 @@ module.exports = function (sequelize, DataTypes) {
             type: Sequelize.DATE
         },
         grade: {
-            type: Sequelize.DECIMAL(2,1)
+            type: Sequelize.STRING(20)
         },
         reachedPoints: {
             type: Sequelize.DECIMAL(6,3)

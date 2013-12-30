@@ -9,8 +9,8 @@
         <button type="button" id="button_exam_list1" class="close" data-dismiss="alert" aria-hidden="true">×</button>
         Aby edytować egzamin <strong>kliknij na jego nazwę</strong>.
     </div>
-
-    <table class="table table-striped">
+    <a class="btn btn-success pull-right exam_add mBottom25">Dodaj egzamin</a>
+    <table class="table table-striped" style="border-top: 1px solid #eee">
         <thead>
         <tr>
             <th class="small">#</th>
@@ -18,8 +18,9 @@
             <th>Data</th>
             <th>Liczba studentów</th>
             <th>Czas trwania</th>
+            <th>Progi ocen</th>
             <th>Status</th>
-            <th>Opcje</th>
+
         </tr>
         </thead>
         <tbody>
@@ -31,6 +32,16 @@
     <script>
         $(document).ready(function () {
             hide_clouds();
+
+            $('.ready').tooltip({
+                title: 'gotowy',
+                placement: 'right'
+            });
+            $('.activated').tooltip({
+                title: 'aktywny',
+                placement: 'right'
+            });
+
         });
     </script>
 </script>
