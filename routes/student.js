@@ -1,6 +1,6 @@
 var models = require('./../models');
 var fs = require('fs');
-var http = require("http");
+var http = require('http');
 var Token = models.Token;
 var Exam = models.Exam;
 var Question = models.Question;
@@ -8,7 +8,6 @@ var QuestionAnswer = models.QuestionAnswer;
 var Answer = models.Answer;
 
 exports.check = function (req, res) {
-    console.log('huhu');
     Token.find({ where: {content: req.params.token}})
         .success(function (token) {
             if ((token == null) || (token.status != 'active')) {
