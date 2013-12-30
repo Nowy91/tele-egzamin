@@ -26,7 +26,7 @@ exports.list = function (req, res) {
 };
 
 exports.add = function (req, res) {
-    req.body.examinerId = req.user.id;
+    req.body.exam.examinerId = req.user.id;
     Exam.create(req.body.exam)
         .success(function (exam) {
             if (req.body.grades != null) {
