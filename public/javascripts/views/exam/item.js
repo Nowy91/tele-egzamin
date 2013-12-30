@@ -21,7 +21,7 @@ App.Views.ExamItem = Marionette.ItemView.extend({
                 gType="szkolne";
                 break;
             }
-            case "study":
+            case "credit":
             {
                 gType="zaliczenie";
                 break;
@@ -43,7 +43,7 @@ App.Views.ExamItem = Marionette.ItemView.extend({
             }
             case "activated":
             {
-                sType="<span class='glyphicon glyphicon-play-circle activated'></span>";
+                sType="<span class='glyphicon glyphicon-pencil activated'></span>";
                 break;
             }
         }

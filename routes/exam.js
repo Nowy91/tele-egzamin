@@ -59,12 +59,31 @@ exports.edit = function (req, res) {
     Exam.find(req.params.id)
         .success(function (exam) {
             exam.updateAttributes({
-                title: req.body.title,
-                date: req.body.date,
-                numberOfStudents: req.body.numberOfStudents,
-                duration: req.body.duration
+                title: req.body.exam.title,
+                date: req.body.exam.date,
+                numberOfStudents: req.body.exam.numberOfStudents,
+                duration: req.body.exam.duration,
+                gradesType: req.body.exam.gradesType
             })
                 .success(function (exam) {
+
+                    Grade.findAll({where: {examId: exam.id}}).success(function (oldgrades) {
+                        if (oldgrades != null) {
+                            for (var i = 0; i < oldgrades.length; i++) {
+                                oldgrades[i].destroy();
+                            }
+                        }
+                        if (req.body.grades != null) {
+                            Grade.bulkCreate(req.body.grades, ['threshold', 'mark'])
+                                .success(function () {
+                                    Grade.findAll({where: {examId: null}})
+                                        .success(function (grades) {
+                                            exam.setGrades(grades);
+                                        });
+                                });
+                        }
+                    });
+
                     var data = exam.dataValues;
                     data.isValid = true;
                     res.json(data);

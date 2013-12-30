@@ -46,6 +46,7 @@ exports.checked = function (req, res) {
                                 var num = thresholds.length-1;
                                 while (percentage <= thresholds[num]) {
                                     num--;
+                                    if(num<0){num=0;break;}
                                 }
                                 finalGrade = grades[num];
                                 token.updateAttributes({reachedPoints: req.body.reachedPoints, status: 'checked', grade: finalGrade})
@@ -68,6 +69,7 @@ exports.checked = function (req, res) {
                             var num = thresholds.length-1;
                             while (percentage <= thresholds[num]) {
                                 num--;
+                                if(num<0){num=0;break;}
                             }
                             finalGrade = grades[num];
                             token.updateAttributes({reachedPoints: req.body.reachedPoints, status: 'checked', grade: finalGrade})

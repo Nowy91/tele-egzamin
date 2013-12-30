@@ -14,8 +14,10 @@
             <div class="form-group">
                 <label for="input3" class="col-sm-3 control-label">Data</label>
 
-                <div class="date form_datetime col-md-5" data-date-format="yyyy-mm-dd HH:ii" data-link-field="dtp_input1">
-                    <input type="text" class="form-control" id="date" data-original-title="" title="" value="<%= date %>">
+                <div class="date form_datetime col-md-5" data-date-format="yyyy-mm-dd HH:ii"
+                     data-link-field="dtp_input1">
+                    <input type="text" class="form-control" id="date" data-original-title="" title=""
+                           value="<%= date %>">
                 </div>
             </div>
             <div class="form-group">
@@ -35,6 +37,25 @@
             </div>
 
             <div class="form-group">
+                <label class="col-sm-3 control-label" <%=gradesType%>>Progi ocen:</label>
+
+                <div class="col-sm-5">
+                    <select class="form-control">
+                        <option>Akademickie</option>
+                        <option>Szkolne</option>
+                        <option>Zaliczenie</option>
+                        <option>Własne</option>
+                    </select>
+                    <br/>
+                    <div class="grades">
+
+                    </div>
+                    <a class="btn btn-default btn-success addRow" style="display: none">Dodaj próg</a>
+                    <a class="btn btn-default btn-danger mLeft10 deleteRow" style="display: none">Usuń próg</a>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-10">
                     <button type="submit" class="btn btn-default">Edytuj egzamin</button>
                 </div>
@@ -43,20 +64,58 @@
     </div>
 
     <script type="text/javascript">
-        $(function() {
-            if($('.datetimepicker').length > 0) {
+        $(function () {
+            if ($('.datetimepicker').length > 0) {
                 $('.datetimepicker').remove();
             }
 
             $('#date').datetimepicker({
-                language:  'pl',
+                language: 'pl',
                 weekStart: 1,
-                todayBtn:  1,
+                todayBtn: 1,
                 autoclose: 1,
                 todayHighlight: 1,
                 startView: 2,
                 forceParse: 0,
             });
+            $('.addRow').click(function () {
+                $('.gradesTable').prepend('<tr class="grade newgrade"> <td><input type="text" class="form-control threshold"/></td> <td><input type="text" class="form-control mark"/></td> </tr>');
+            });
+
+            $('.deleteRow').click(function () {
+                $('.newgrade:first').remove();
+            });
+            $('select').change(function () {
+                var value = $(this).val();
+                $('.addRow').css("display", "none");
+                $('.deleteRow').css("display", "none");
+                switch (value) {
+                    case "Akademickie":
+                    {
+                        $('.grades').html('<table class="table table-bordered"> <thead> <tr> <th>Próg (%)</th> <th>Ocena</th> </tr> </thead> <tbody> <tr> <td>90</td> <td>5.0</td> </tr> <tr> <td>80</td> <td>4.5</td> </tr> <tr> <td>70</td> <td>4.0</td> </tr> <tr> <td>60</td> <td>3.5</td> </tr> <tr> <td>50</td> <td>3.0</td> </tr> <tr> <td>0</td> <td>2.0</td> </tr> </tbody> </table>');
+                        break;
+                    }
+                    case "Szkolne":
+                    {
+                        $('.grades').html('<table class="table table-bordered"> <thead> <tr> <th>Próg (%)</th> <th>Ocena</th> </tr> </thead> <tbody> <tr> <td>99</td> <td>6.0</td> </tr> <tr> <td>85</td> <td>5.0</td> </tr> <tr> <td>70</td> <td>4.0</td> </tr> <tr> <td>55</td> <td>3.0</td> </tr> <tr> <td>40</td> <td>2.0</td> </tr> <tr> <td>0</td> <td>1.0</td> </tr> </tbody> </table>');
+                        break;
+                    }
+                    case "Zaliczenie":
+                    {
+                        $('.grades').html('<table class="table table-bordered"> <thead> <tr> <th>Próg (%)</th> <th>Ocena</th> </tr> </thead> <tbody> <tr> <td>50</td> <td>zal.</td> </tr> <tr> <td>0</td> <td>nzal.</td> </tr> </tbody> </table>');
+                        break;
+                    }
+                    case "Własne":
+                    {
+                        $('.grades').html('<table class="table table-bordered"> <thead> <tr> <th>Próg (%)</th> <th>Ocena</th> </tr> </thead> <tbody class="gradesTable"> <tr class="grade"> <td><input type="text" class="form-control threshold" /></td> <td><input type="text" class="form-control mark"/></td> </tr> <tr class="grade"> <td><input type="text" class="form-control threshold" value="0" disabled/></td> <td><input type="text" class="form-control mark"/></td> </tr> </tbody> </table>');
+                        $('.addRow').css("display", "inline-block");
+                        $('.deleteRow').css("display", "inline-block");
+                        break;
+                    }
+                }
+            });
+            $('select').val("<%=gradesType%>");
+            <%if(gradesType=="Własne"){%>$('.addRow').css("display", "inline-block");$('.deleteRow').css("display", "inline-block");<%}%>
         });
 </script>
 </script>

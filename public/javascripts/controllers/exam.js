@@ -4,6 +4,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
     var collection;
     var examModel;
     var examsList;
+    var gradesCollection;
 
     Controller.Exam = {
         showAll: function () {
@@ -35,7 +36,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             layout.menu.show(new App.Views.ExamMenu({model: examModel}));
             layout.content.show(new App.Views.ExamView({model: examModel}));
             if (examModel.get("gradesType") == "custom") {
-                console.log("WYSYŁAM");
                 var getExamGrades = $.ajax({
                     type: 'GET',
                     url: '/exam/view/' + examModel.id + '/grades',
@@ -43,8 +43,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 });
 
                 $.whenDone(getExamGrades, function (grades) {
-                    console.log(grades);
-                    var gradesCollection = new App.Collections.Grades(grades);
+                    gradesCollection = new App.Collections.Grades(grades);
                     var gradesList = new App.Views.ExamGradeList({collection: gradesCollection});
                     layout.addRegion('grades', "#grades");
                     layout.grades.show(gradesList);
@@ -59,6 +58,10 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
         editForm: function (examId) {
             examModel = collection.get(examId);
             layout.content.show(new App.Views.ExamEdit({model: examModel}));
+            if(examModel.get("gradesType")=="custom"){
+                layout.addRegion("grades", ".grades");
+                layout.grades.show(new App.Views.ExamGradeEdit({collection: gradesCollection}));
+            }
         },
 
         addExam: function (exam, grades) {
@@ -81,11 +84,12 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
         },
 
-        editExam: function (exam) {
+        editExam: function (exam, grades) {
             var editExam = $.ajax({
                 type: 'POST',
                 url: '/exam/edit/' + exam.id,
-                data: exam.toJSON(),
+                data: JSON.stringify({exam: exam, grades: grades}),
+                contentType: 'application/json',
                 dataType: 'json'
             });
 

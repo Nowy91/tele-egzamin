@@ -21,6 +21,8 @@
                 "exam_edit",
                 "exam_grade_item",
                 "exam_grade_list",
+                "exam_grade_input",
+                "exam_grade_edit",
                 "examiner_item",
                 "examiner_list",
                 "examiner_add",

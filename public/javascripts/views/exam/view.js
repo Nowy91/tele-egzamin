@@ -21,12 +21,12 @@ App.Views.ExamView = Marionette.ItemView.extend({
                 gType="szkolne";
                 break;
             }
-            case "study":
+            case "credit":
             {
                 gType="zaliczenie";
                 break;
             }
-            case "study":
+            case "custom":
             {
                 gType="własne";
                 break;
