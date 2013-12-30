@@ -16,7 +16,8 @@ exports.login = function (req, res, next) {
             }
 
             req.session.passport.username = user.username;
-            return res.json({'status': 'ok', session: req.session});
+
+            return res.json({'status': 'ok', role: user.role, session: req.session});
         });
     })(req, res, next);
 };

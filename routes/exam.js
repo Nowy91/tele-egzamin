@@ -4,16 +4,29 @@ var Grade = models.Grade;
 var Question = models.Question;
 
 exports.list = function (req, res) {
-    Exam.findAll()
-        .success(function (exams) {
-            res.json(exams);
-        })
-        .error(function (err) {
-            res.end(err);
-        });
+    if (req.user.role == 'admin') {
+        Exam.findAll()
+            .success(function (exams) {
+                res.json(exams);
+            })
+            .error(function (err) {
+                res.end(err);
+            });
+    }
+
+    if (req.user.role == 'examiner') {
+        Exam.findAll({where: {examinerId: req.user.id}})
+            .success(function (exams) {
+                res.json(exams);
+            })
+            .error(function (err) {
+                res.end(err);
+            });
+    }
 };
 
 exports.add = function (req, res) {
+    req.body.examinerId = req.user.id;
     Exam.create(req.body.exam)
         .success(function (exam) {
             if (req.body.grades != null) {

@@ -17,7 +17,12 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                     Teleegzam.mainRegion.show(this.loginView);
                 }
                 else {
-                    Teleegzam.Controllers.Exam.showAll();
+                    if (session.passport.token === undefined) {
+                        Teleegzam.Controllers.Exam.showAll();
+                    }
+                    else {
+                        Teleegzam.Controllers.Student.check(session.passport.token);
+                    }
                 }
             });
 

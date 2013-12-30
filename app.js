@@ -45,20 +45,25 @@ app.use(passport.session());
 app.use(app.router);
 
 passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    if (user.content !== undefined) {
+        done(null, user.content);
+    }
+    else {
+        done(null, user.id);
+    }
 });
 
 passport.deserializeUser(function (id, done) {
-    User.find(id).success(function (user) {
-        if (user == null) {
-            Token.find(id).success(function(token) {
-                done(null, token);
-            });
-        }
-        else {
+    if (id % 1 === 0) {
+        User.find(id).success(function (user) {
             done(null, user);
-        }
-    });
+        });
+    }
+    else {
+        Token.find({where: {content: id}}).success(function(token) {
+            done(null, token);
+        });
+    }
 });
 
 // Uwierzytelnienie dla egzaminatora lub administratora
@@ -119,7 +124,7 @@ function allow(roles) {
 }
 
 //exams
-app.get('/exams', allow(['*']), exam.list);
+app.get('/exams', allow(['admin', 'examiner']), exam.list);
 app.get('/exam/view/:id', allow(['*']), exam.view);
 app.get('/exam/view/:id/questions', allow(['*']), question.list);
 app.get('/exam/view/:id/grades', allow(['*']), exam.getGrades);

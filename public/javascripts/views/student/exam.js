@@ -39,7 +39,20 @@ App.Views.StudentExam = Marionette.ItemView.extend({
     },
 
     closeExam: function () {
-        Teleegzam.Controllers.Student.saveAnswers();
+        var hash = Teleegzam.Controllers.Student.generateChecksum();
+
+        $('.modal-body').html(hash.toString().substring(0,10));
+       /*
+        $('.modal-body').css({
+           'width':'200px','margin': '0px 0 0 -400px'
+        });
+        */
+        $('#checksumModal').on('hidden.bs.modal', function () {
+            Teleegzam.Controllers.Student.saveAnswers();
+        });
+        $('#checksumModal').modal();
+
+
     }
 })
 

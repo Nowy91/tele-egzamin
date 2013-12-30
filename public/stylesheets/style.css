@@ -22,7 +22,15 @@ form{margin-top:30px;}
 .redItem {background: #ffe8ea}
 .greenItem {background: #e6ffd3}
 .blueItem {background: #fffbd8}
-
+#checksumModal
+{
+    overflow-y: hidden;
+}
+.modal-dialog
+{
+    width:400px;
+    margin: 0 0 0 -200px;
+}
 canvas,.draw{cursor: crosshair;position: absolute;left:50%; max-width: 500px;}
 .drawAnswer {position: relative; max-width: 300px; left: 150px;}
 .canvasAnswer {position: relative; max-width: 300px; left: -150px;}

@@ -160,6 +160,15 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                     Controller.Student.check(logging.session.passport.token);
                 }
             });
+        },
+        generateChecksum: function(){
+            var hash = 0;
+            for (var i = 0; i < myQuestions.length; i++) {
+                var answer = localStorage.getItem('answer' + currentQuestion.id);
+                hash += CryptoJS.MD5(answer);
+            }
+            //alert('Suma kontrolna: '+hash.toString().substring(0,10));
+            return hash;
         }
     }
 });
