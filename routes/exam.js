@@ -35,6 +35,16 @@ exports.add = function (req, res) {
         });
 }
 
+exports.getGrades = function (req, res) {
+    Grade.findAll({ where: {examId: req.params.id}})
+        .success(function (grades) {
+            res.json(grades);
+        })
+        .error(function (err) {
+            res.end(err);
+        });
+}
+
 exports.view = function (req, res) {
     Exam.find(req.params.id)
         .success(function (exam) {

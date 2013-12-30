@@ -13,6 +13,7 @@ App.Views.ExamList = Marionette.CompositeView.extend({
         'click .btn-group li a': 'pagesOnView'
     },
 
+
     initialize: function () {
         this.template = App.Templates.get('exam_list');
 
@@ -57,4 +58,5 @@ App.Views.ExamList = Marionette.CompositeView.extend({
     pagesOnView: function (e) {
         Teleegzam.Utils.Paginator.pagesOnView(e.currentTarget);
     }
-});
+
+ });

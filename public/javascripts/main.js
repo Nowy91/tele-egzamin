@@ -19,6 +19,8 @@
                 "exam_view",
                 "exam_menu",
                 "exam_edit",
+                "exam_grade_item",
+                "exam_grade_list",
                 "examiner_item",
                 "examiner_list",
                 "examiner_add",

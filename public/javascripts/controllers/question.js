@@ -71,20 +71,20 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             questionModel.set({title: examModel.get("title")});
             layout.content.show(new App.Views.QuestionView({model: questionModel}));
 
-            var getQuestionAnswers = $.ajax({
-                type: 'GET',
-                url: '/questions/view/' + questionModel.id + '/answers',
-                dataType: 'json'
-            });
+            if (questionModel.get("type") == "closed") {
+                var getQuestionAnswers = $.ajax({
+                    type: 'GET',
+                    url: '/questions/view/' + questionModel.id + '/answers',
+                    dataType: 'json'
+                });
 
-            $.whenDone(getQuestionAnswers, function (answers) {
-                if (answers.length != 0) {
+                $.whenDone(getQuestionAnswers, function (answers) {
                     answerCollection = new App.Collections.QuestionAnswers(answers);
                     var answersList = new App.Views.QuestionAnswerList({collection: answerCollection});
                     layout.addRegion('answers', "#answers");
                     layout.answers.show(answersList);
-                }
-            });
+                });
+            }
         },
 
         delete: function () {

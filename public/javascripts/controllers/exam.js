@@ -34,6 +34,22 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             examModel = collection.get(examId);
             layout.menu.show(new App.Views.ExamMenu({model: examModel}));
             layout.content.show(new App.Views.ExamView({model: examModel}));
+            if (examModel.get("gradesType") == "custom") {
+                console.log("WYSYŁAM");
+                var getExamGrades = $.ajax({
+                    type: 'GET',
+                    url: '/exam/view/' + examModel.id + '/grades',
+                    dataType: 'json'
+                });
+
+                $.whenDone(getExamGrades, function (grades) {
+                    console.log(grades);
+                    var gradesCollection = new App.Collections.Grades(grades);
+                    var gradesList = new App.Views.ExamGradeList({collection: gradesCollection});
+                    layout.addRegion('grades', "#grades");
+                    layout.grades.show(gradesList);
+                });
+            }
         },
 
         addForm: function () {

@@ -43,9 +43,9 @@ exports.checked = function (req, res) {
                                     grades.push(singleGrade.mark);
                                     thresholds.push(parseFloat(singleGrade.threshold));
                                 })
-                                var num = 0;
-                                while (percentage > thresholds[num]) {
-                                    num++;
+                                var num = thresholds.length-1;
+                                while (percentage <= thresholds[num]) {
+                                    num--;
                                 }
                                 finalGrade = grades[num];
                                 token.updateAttributes({reachedPoints: req.body.reachedPoints, status: 'checked', grade: finalGrade})
@@ -56,18 +56,18 @@ exports.checked = function (req, res) {
                         } else {
                             if (examGrade.gradesType == "study") {
                                 grades = [2.0, 3.0, 3.5, 4.0, 4.5, 5.0];
-                                thresholds = [50, 60, 70, 80, 90, 100];
+                                thresholds = [0, 50, 60, 70, 80, 90];
                             } else if (examGrade.gradesType == "school") {
                                 grades = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0];
-                                thresholds = [40, 55, 70, 85, 99, 100];
+                                thresholds = [0, 40, 55, 70, 85, 99];
                             } else if (examGrade.gradesType == "credit") {
                                 grades = ["nzal", "zal"];
-                                thresholds = [50, 100];
+                                thresholds = [0, 50];
                             }
 
-                            var num = 0;
-                            while (percentage > thresholds[num]) {
-                                num++;
+                            var num = thresholds.length-1;
+                            while (percentage <= thresholds[num]) {
+                                num--;
                             }
                             finalGrade = grades[num];
                             token.updateAttributes({reachedPoints: req.body.reachedPoints, status: 'checked', grade: finalGrade})

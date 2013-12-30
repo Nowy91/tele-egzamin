@@ -18,8 +18,9 @@
             <th>Data</th>
             <th>Liczba studentów</th>
             <th>Czas trwania</th>
+            <th>Progi ocen</th>
             <th>Status</th>
-            <th>Opcje</th>
+
         </tr>
         </thead>
         <tbody>
@@ -31,6 +32,16 @@
     <script>
         $(document).ready(function () {
             hide_clouds();
+
+            $('.ready').tooltip({
+                title: 'gotowy',
+                placement: 'right'
+            });
+            $('.activated').tooltip({
+                title: 'aktywny',
+                placement: 'right'
+            });
+
         });
     </script>
 </script>
