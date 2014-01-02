@@ -100,7 +100,13 @@ passport.use('local_student', new LocalStrategy({
 
 // development only
 if ('development' == app.get('env')) {
+    console.log('DEVELOPMENT MODE');
+    app.get('/initdb', db.init);
     app.use(express.errorHandler());
+}
+
+if ('test' == app.get('env')) {
+    console.log('TEST MODE');
     app.get('/initdb', db.init);
 }
 
@@ -174,6 +180,9 @@ var io = require('socket.io').listen(server);
 io.configure(function () {
     io.set("transports", ['xhr-polling']);
     io.set("polling duration", 10);
+    io.set('heartbeat timeout', 60);
+    io.set('heartbeat interval', 30);
+    io.set("log level", 0);
 });
 
 io.sockets.on('connection', function (socket) {
@@ -181,3 +190,26 @@ io.sockets.on('connection', function (socket) {
         io.sockets.emit('activated exam', examId);
     });
 });
+
+exports.start = function( readyCallback ) {
+    if(!server) {
+        console.log('SERVER ODPALONY!');
+        server = app.listen( app.get('port'), function() {
+            console.log('Server running on port %d in %s mode', app.get('port'), app.settings.env);
+
+            // callback to call when the server is ready
+            if(readyCallback) {
+                readyCallback();
+            }
+        });
+    }
+    else {
+        if(readyCallback) {
+            readyCallback();
+        }
+    }
+};
+
+exports.close = function() {
+    this.server.close();
+};
