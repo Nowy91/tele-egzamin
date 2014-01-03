@@ -124,12 +124,77 @@
     <script src="/javascripts/views/check/checked_list.js"></script>
 
     <script>
-        App.init();
+        function status(msg) {
+            console.log(msg);
+        }
+
+        window.applicationCache.onchecking = function() {
+            status("Checking for a new version.");
+            return false;
+        };
+
+        window.applicationCache.onnoupdate = function() {
+            status("This version is up-to-date.");
+            App.init();
+            return false;
+        };
+
+        window.applicationCache.ondownloading = function() {
+            status("Downloading new version");
+            $('#main-content').hide();
+            $('#progress-bar').removeClass('hide');
+            window.progresscount = 0;
+            return false;
+        };
+
+        window.applicationCache.onprogress = function(e) {
+            var progress = "";
+
+            if (e && e.lengthComputable) {
+                progress = " " + Math.round(100 * e.loaded / e.total) + "%";
+            }
+            else {
+                progress = " (" + ++progresscount + ")";
+            }
+
+            $('.progress-bar').css({width: progress});
+            status("Downloading new version" + progress);
+            return false;
+        };
+
+        window.applicationCache.oncached = function() {
+            status("This application is now cached locally");
+
+            App.init(function() {
+                $('#progress-bar').fadeOut(1000, function() {
+                    $(this).remove();
+                    $('#main-content').fadeIn(2000);
+                });
+            });
+
+            return false;
+        };
+
+        window.applicationCache.onupdateready = function() {
+            status("A new version has been downloaded.  Reload to run it");
+            return false;
+        };
+
+        window.applicationCache.onerror = function() {
+            status("Couldn't load manifest or cache application");
+            return false;
+        };
     </script>
 
 </head>
 
 <body>
+<div id="progress-bar" class="container hide">
+    <div class="progress progress-striped active">
+        <div class="progress-bar"  role="progressbar" aria-valuenow="0" aria-valuemin="0"
+             aria-valuemax="100" style="width: 50%"></div>
+    </div>
+</div>
 <div id="main-content"></div>
 
 </body>

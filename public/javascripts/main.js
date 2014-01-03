@@ -92,7 +92,7 @@
             }
         },
 
-        init: function() {
+        init: function(callback) {
             (function ($) {
                 $.whenDone = function (options, callback) {
                     $.when(options).done(function(data) {
@@ -109,6 +109,10 @@
 
             App.Templates.loadTemplates(function() {
                 Teleegzam.start();
+
+                if (callback) {
+                    callback();
+                }
             });
         }
     }
