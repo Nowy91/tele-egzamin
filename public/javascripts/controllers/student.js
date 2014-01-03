@@ -104,14 +104,14 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 answer.set('token', myExam.get('currentToken'));
                 answer.set('content', JSON.parse(localStorage.getItem('answer' + currentQuestion.id)));
                 if ((answer.get('content') != "") && (answer.get('content') != null)) {
-                    if (currentQuestion.get('type') == "image")
-                        imagesAnswers.push(answer);
-                    else
+                    //if (currentQuestion.get('type') == "image")
+                    //    imagesAnswers.push(answer);
+                    //else
                         answers.push(answer);
                 }
             }
 
-            if (answers.length != 0) {
+            //if (answers.length != 0) {
                 var sendAnswers = $.ajax({
                     type: 'POST',
                     url: '/student/answers/' + myExam.get('currentToken'),
@@ -119,15 +119,15 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                     contentType: 'application/json',
                     dataType: 'json'
                 });
-            }
-
+   //         }
+/*
             if (imagesAnswers.length != 0) {
-                /*var uploadView = new App.Views.StudentUploadList({collection: imagesAnswers});
+                var uploadView = new App.Views.StudentUploadList({collection: imagesAnswers});
                  layout.removeRegion("question");
                  layout.removeRegion("answer");
 
                  layout.exam.show(uploadView);
-                 */
+
                 var sendImageAnswers = $.ajax({
                     type: 'POST',
                     url: '/student/images/' + myExam.get('currentToken'),
@@ -135,7 +135,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                     contentType: 'application/json',
                     dataType: 'json'
                 });
-            }
+            }*/
 
             window.localStorage.clear();
 
