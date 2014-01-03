@@ -96,6 +96,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
         saveAnswers: function () {
             var answers = new App.Collections.Answers;
             var imagesAnswers = new App.Collections.Answers;
+            var hash = 0;
 
             for (var i = 0; i < myQuestions.length; i++) {
                 currentQuestion = myQuestions.at(i);
@@ -103,6 +104,8 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                 answer.set('questionId', currentQuestion.id);
                 answer.set('token', myExam.get('currentToken'));
                 answer.set('content', JSON.parse(localStorage.getItem('answer' + currentQuestion.id)));
+                var answerToHash = localStorage.getItem('answer' + currentQuestion.id);
+                hash += CryptoJS.MD5(answerToHash);
                 if ((answer.get('content') != "") && (answer.get('content') != null)) {
                     //if (currentQuestion.get('type') == "image")
                     //    imagesAnswers.push(answer);
@@ -138,9 +141,9 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             }*/
 
             window.localStorage.clear();
-
             var loginView = new App.Views.Login;
             Teleegzam.mainRegion.show(loginView);
+            return hash;
         },
 
         login: function (token) {
@@ -160,15 +163,6 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
                     Controller.Student.check(logging.session.passport.token);
                 }
             });
-        },
-        generateChecksum: function(){
-            var hash = 0;
-            for (var i = 0; i < myQuestions.length; i++) {
-                var answer = localStorage.getItem('answer' + currentQuestion.id);
-                hash += CryptoJS.MD5(answer);
-            }
-            //alert('Suma kontrolna: '+hash.toString().substring(0,10));
-            return hash;
         }
     }
 });
