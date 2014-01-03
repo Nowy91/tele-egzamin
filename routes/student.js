@@ -131,17 +131,25 @@ exports.saveImageAnswers = function (req, res) {
 
 exports.saveAnswers = function (req, res) {
     if (req.session.token == req.params.token) {
-        Answer.bulkCreate(req.body, ['questionId', 'token', 'content'])
-            .success(function (answers) {
-                Token.find({where: {content: req.params.token}})
-                    .success(function (token) {
-                        token.updateAttributes({
-                            status: 'executed',
-                            executedDate: new Date()
-                        })
-                    })
-                res.json("OK");
-            });
+        Token.find({where: {content: req.params.token}})
+            .success(function (token) {
+                token.updateAttributes({
+                    status: 'executed',
+                    executedDate: new Date()
+                })
+            })
+        if (req.body.length != 0) {
+            Answer.bulkCreate(req.body, ['questionId', 'token', 'content'])
+                .success(function (answers) {
+                    res.json("OK");
+                })
+                .error(function (error) {
+                    res.json(error);
+                });
+        }
+        else {
+            res.json("no answers");
+        }
     }
 };
 

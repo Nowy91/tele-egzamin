@@ -6,10 +6,10 @@ App.Views.CheckedTokenItem = Marionette.CompositeView.extend({
         var context = this.model.toJSON();
         context['formattedExecutedDate'] = context['executedDate'].substring(0, 10);
         var newPoints = context['reachedPoints'].replace(/0*$/, "");
-        if (newPoints.indexOf('.') == (newPoints.length - 1))
-            context['formattedReachedPoints'] = newPoints.substring(0, (newPoints.length - 1));
-        else
-            context['formattedReachedPoints'] = newPoints;
+        if (newPoints.indexOf('.') == (newPoints.length - 1)) {
+            newPoints = newPoints.substring(0, (newPoints.length - 1));
+        }
+        context['formattedReachedPoints'] = newPoints.concat('%');
         var html = this.template(context);
         $(this.el).html(html);
     },

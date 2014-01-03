@@ -49,7 +49,7 @@ exports.checked = function (req, res) {
                                     if(num<0){num=0;break;}
                                 }
                                 finalGrade = grades[num];
-                                token.updateAttributes({reachedPoints: req.body.reachedPoints, status: 'checked', grade: finalGrade})
+                                token.updateAttributes({reachedPoints: Math.round(percentage*100)/100, status: 'checked', grade: finalGrade})
                                     .success(function (token) {
                                         res.json(token);
                                     });
@@ -72,7 +72,7 @@ exports.checked = function (req, res) {
                                 if(num<0){num=0;break;}
                             }
                             finalGrade = grades[num];
-                            token.updateAttributes({reachedPoints: req.body.reachedPoints, status: 'checked', grade: finalGrade})
+                            token.updateAttributes({reachedPoints: Math.round(percentage*100)/100, status: 'checked', grade: finalGrade})
                                 .success(function (token) {
                                     res.json(token);
                                 });
