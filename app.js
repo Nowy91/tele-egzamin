@@ -179,9 +179,9 @@ var io = require('socket.io').listen(server);
 
 io.configure(function () {
     io.set("transports", ['xhr-polling']);
-    io.set("polling duration", 10);
-    io.set('heartbeat timeout', 60);
-    io.set('heartbeat interval', 30);
+    io.set("polling duration", 30);
+    io.set('heartbeat timeout', 10);
+    io.set('heartbeat interval', 5);
     io.set("log level", 0);
 });
 
