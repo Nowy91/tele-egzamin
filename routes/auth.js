@@ -48,6 +48,7 @@ exports.login2 = function(req, res, next) {
 exports.logout = function (req, res, next) {
     req.logout();
     delete req.session.passport.username;
+    delete req.session.passport.token;
     res.end();
 };
 

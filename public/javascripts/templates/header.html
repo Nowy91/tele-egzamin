@@ -2,13 +2,20 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Teleegzamin</a>
+                <a class="navbar-brand logo" href="#"></a>
             </div>
 
             <% if (username) { %>
             <p class="nav navbar-text navbar-right">
                 Zalogowany jako:
                 <a class="logout"><%= username %></a>
+            </p>
+            <% } %>
+
+            <% if (token) { %>
+            <p class="nav navbar-text navbar-right">
+                Zalogowany jako:
+                <a class="logout"><%= token %></a>
             </p>
             <% } %>
         </div>

@@ -19,6 +19,7 @@
                 "exam_view",
                 "exam_menu",
                 "exam_edit",
+                "exam_execute",
                 "exam_grade_item",
                 "exam_grade_list",
                 "exam_grade_input",
@@ -96,13 +97,20 @@
             (function ($) {
                 $.whenDone = function (options, callback) {
                     $.when(options).done(function(data) {
-                        if (options.responseJSON.status !== undefined
-                            && options.responseJSON.status === 'unathorized') {
-                            Teleegzam.Router.navigate('/', {trigger: true});
-                        }
-                        else {
+
+                        if (options.resonseJSON === undefined) {
                             callback(data);
                         }
+                        else {
+                            if (options.responseJSON.status !== undefined
+                                && options.responseJSON.status === 'unathorized') {
+                                Teleegzam.Router.navigate('/', {trigger: true});
+                            }
+                            else {
+                                callback(data);
+                            }
+                        }
+
                     });
                 }
             })(jQuery);

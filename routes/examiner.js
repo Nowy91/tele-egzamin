@@ -67,10 +67,10 @@ exports.delete = function(req, res){
     Examiner.find(req.params.id).success(function(examiner){
         examiner.getUser().success(function(user){
             user.destroy().success(function(){
+                examiner.destroy();
                 res.end();
             });
         });
-        examiner.destroy();
     });
 };
 
