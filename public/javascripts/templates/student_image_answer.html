@@ -10,10 +10,8 @@
     </div>
 
     <button id="margin" class="btn btn-info clear">Wyczyść zaznaczenie</button>
-
-
+            
     <script>
-
         (function () {
             var canvas = document.querySelector('#draw');
             var image = document.querySelector('.dimage');
@@ -30,12 +28,10 @@
             var mouse = {x: 0, y: 0};
             var el = canvas, pos = {x: 0, y: 0};
 
-
             $('document').ready(function () {
                 $("input[type=color]").change(function () {
                     currentColor = $(this).val()
                 });
-
 
                 $(".bar").css("width", '10%');
                 function progressBar(widthBar) {
@@ -68,12 +64,9 @@
                                 button.style.opacity = 1;
                                 canvas.style.opacity = 1;
                             });
-
                         }
-
                     }, 80);
                 }
-
                 progressBar(10)
             });
 
@@ -85,7 +78,6 @@
             canvas.addEventListener('mousedown', function (e) {
                 ctx.beginPath();
                 ctx.moveTo(mouse.x, mouse.y);
-
                 canvas.addEventListener('mousemove', onPaint, false);
             }, false);
 
@@ -101,10 +93,7 @@
                 ctx.strokeStyle = currentColor;
                 ctx.lineTo(mouse.x, mouse.y);
                 ctx.stroke();
-                //console.log("PAINT >> " + (mouse.x-this.offsetLeft) + " " + (mouse.y-this.offsetTop))
             };
-
         }());
-
 </script>
 </script>
