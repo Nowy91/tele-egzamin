@@ -2,6 +2,8 @@ var models = require('./../models');
 var crypto = require('crypto');
 var User = models.User;
 var Examiner = models.Examiner;
+var Exam = models.Exam;
+var Question = models.Question;
 
 exports.list = function(req, res) {
     Examiner.findAll({include: [{model: User, as: User.tableName}]}).success(function(examiners) {
@@ -65,6 +67,12 @@ exports.view = function(req, res) {
 
 exports.delete = function(req, res){
     Examiner.find(req.params.id).success(function(examiner){
+        Exam.findAll({where: {examinerId: examiner.userId}}).success(function(exams){
+            exams.forEach(function(exam){
+                Question.destroy({examId:exam.id});
+            });
+        });
+        Exam.destroy({examinerId: examiner.userId});
         examiner.getUser().success(function(user){
             user.destroy().success(function(){
                 res.end();

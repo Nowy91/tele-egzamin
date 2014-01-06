@@ -109,11 +109,7 @@ exports.edit = function (req, res) {
 exports.delete = function (req, res) {
     Exam.find(req.params.id)
         .success(function (exam) {
-            exam.getQuestions().success(function (questions) {
-                questions.forEach(function (question) {
-                    question.destroy();
-                });
-            });
+            Question.destroy({examId:exam.id});
             exam.destroy()
                 .success(function () {
                     res.end();
