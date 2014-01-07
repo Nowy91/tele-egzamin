@@ -5,6 +5,7 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var sockets = require('./routes/sockets');
 
 var routes = require('./routes');
 var db = require('./routes/db');
@@ -138,6 +139,8 @@ app.post('/exam/add', allow(['*']), exam.add);
 app.post('/exam/edit/:id', allow(['*']), exam.edit);
 app.delete('/exam/delete/:id', allow(['*']), exam.delete);
 app.post('/exam/activate/:id', allow(['*']), exam.activate);
+app.post('/exam/deactivate/:id', allow(['examiner']), exam.deactivate);
+app.get('/exam/execute/:id', allow(['examiner']), exam.execute);
 
 //questions
 app.get('/questions/view/:id', allow(['*']), question.view);
@@ -179,17 +182,11 @@ var io = require('socket.io').listen(server);
 
 io.configure(function () {
     io.set("transports", ['xhr-polling']);
-    io.set("polling duration", 30);
-    io.set('heartbeat timeout', 10);
-    io.set('heartbeat interval', 5);
+    io.set("polling duration", 10);
     io.set("log level", 0);
 });
 
-io.sockets.on('connection', function (socket) {
-    socket.on('exam activation', function (examId) {
-        io.sockets.emit('activated exam', examId);
-    });
-});
+sockets(io);
 
 exports.start = function( readyCallback ) {
     if(!server) {

@@ -1,11 +1,13 @@
 var models = require('./../models');
 var fs = require('fs');
 var http = require('http');
+var io = require('../app').sock;
 var Token = models.Token;
 var Exam = models.Exam;
 var Question = models.Question;
 var QuestionAnswer = models.QuestionAnswer;
 var Answer = models.Answer;
+var Activity = models.Activity;
 
 exports.check = function (req, res) {
     Token.find({ where: {content: req.params.token}})
@@ -29,9 +31,10 @@ exports.check = function (req, res) {
         });
 };
 
-exports.getQuestions = function (req, res) {
+exports.getQuestions = function (req, res, io) {
 
-    Question.findAll({ where: {examId: req.params.examId}}).success(function (questions) {
+    Question.findAll({ where: {examId: req.params.examId}})
+        .success(function (questions) {
 
 
         /*questions.forEach(function (model) {
@@ -67,10 +70,19 @@ exports.getQuestions = function (req, res) {
          });*/
 
 
-        QuestionAnswer.findAll({ where: {questionId: getIdValueFrom(questions)}}).success(function (answers) {
-            res.json({ questions: questions, answers: getContentFrom(answers)});
+            QuestionAnswer.findAll({ where: {questionId: getIdValueFrom(questions)}})
+                .success(function (answers) {
+
+                    Token.find({where: {content: req.user.dataValues.content}})
+                        .success(function (token) {
+                            token.updateAttributes({
+                                status: 'in_progress'
+                            });
+                        });
+
+                    res.json({ questions: questions, answers: getContentFrom(answers)});
+                })
         })
-    })
         .error(function (err) {
             res.json(err);
         });
@@ -151,6 +163,9 @@ exports.saveAnswers = function (req, res) {
             res.json("no answers");
         }
     }
+
+    req.logout();
+    delete req.session.passport.token;
 };
 
 

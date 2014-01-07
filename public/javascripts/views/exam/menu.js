@@ -39,8 +39,7 @@ App.Views.ExamMenu = Marionette.ItemView.extend({
     },
 
     examActivation: function () {
-        socket = io.connect();
-        activated = Teleegzam.Controllers.Exam.activate(this.model.id, socket);
+        Teleegzam.Controllers.Exam.execute(this.model.id);
     }
 
 })

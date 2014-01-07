@@ -1,0 +1,31 @@
+<script id="exam_execute_template" type="text/template">
+    <div class="page-header">
+        <h1><%= title %></h1>
+    </div>
+
+    <div class="col-xs exam_data_left">
+        <ul class="list-group">
+            <li class="list-group-item active">
+                Dane egzaminu
+            </li>
+            <li class="list-group-item">
+                Status:
+                <span class="badge status"><%= status %></span>
+            </li>
+            <li class="list-group-item">
+                Wygenerowanych tokenów:
+                <span class="badge generated"><%= generatedTokens %></span>
+            </li>
+            <li class="list-group-item">
+                Aktywnych tokenów:
+                <span class="badge activated"><%= activatedTokens %></span>
+            </li>
+            <li class="list-group-item">
+                Zakończonych tokenów:
+                <span class="badge finished"><%= finishedTokens %></span>
+            </li>
+        </ul>
+    </div>
+
+    <a class="btn pull-right exam-toggle-btn"></a>
+</script>

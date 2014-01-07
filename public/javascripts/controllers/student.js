@@ -46,8 +46,18 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             $.whenDone(getQuestions, function (data) {
 
                 if (data != null) {
-                    socket = io.connect();
-                    socket.emit('entrance of student', myToken);
+                    socketData = { token: myToken, examId: myExam.id };
+
+                    App.socketConnection();
+                    App.Socket.emit('entrance of student', socketData, function (done) {
+                        if (done.error)
+                            console.log('Something went wrong on the server');
+
+                        if (done.ok) {
+                            App.Socket.removeAllListeners();
+                            App.Socket.disconnect();
+                        }
+                    });
                 }
 
                 myQuestions = new App.Collections.Questions(data.questions);
@@ -123,13 +133,30 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             }
 
             //if (answers.length != 0) {
-                var sendAnswers = $.ajax({
-                    type: 'POST',
-                    url: '/student/answers/' + myExam.get('currentToken'),
-                    data: JSON.stringify(answers),
-                    contentType: 'application/json',
-                    dataType: 'json'
+            var sendAnswers = $.ajax({
+                type: 'POST',
+                url: '/student/answers/' + myExam.get('currentToken'),
+                data: JSON.stringify(answers),
+                contentType: 'application/json',
+                dataType: 'json'
+            });
+
+            $.whenDone(sendAnswers, function() {
+                socketData = { token: myToken, examId: myExam.id };
+
+                App.socketConnection();
+                App.Socket.emit('exam finished', socketData, function (done) {
+                    if (done.error)
+                        console.log('Something went wrong on the server');
+
+                    if (done.ok) {
+                        App.Socket.removeAllListeners();
+                        App.Socket.disconnect();
+                    }
                 });
+            });
+
+
    //         }
 /*
             if (imagesAnswers.length != 0) {

@@ -72,6 +72,7 @@ CACHE:
 /javascripts/views/exam/view.js
 /javascripts/views/exam/menu.js
 /javascripts/views/exam/edit.js
+/javascripts/views/exam/execute.js
 /javascripts/views/exam/grade_item.js
 /javascripts/views/exam/grade_list.js
 /javascripts/views/exam/grade_input.js
@@ -122,6 +123,7 @@ CACHE:
 /javascripts/templates/exam_view.html
 /javascripts/templates/exam_menu.html
 /javascripts/templates/exam_edit.html
+/javascripts/templates/exam_execute.html
 /javascripts/templates/exam_grade_item.html
 /javascripts/templates/exam_grade_list.html
 /javascripts/templates/exam_grade_input.html

@@ -1,7 +1,14 @@
 var models = require('./../models');
+var User = models.User;
 var Exam = models.Exam;
 var Grade = models.Grade;
 var Question = models.Question;
+
+exports.test = function (req, res) {
+    User.findAndCountAll().success(function(result) {
+        res.json(result.count);
+    });
+};
 
 exports.list = function (req, res) {
     if (req.user.role == 'admin') {
@@ -124,10 +131,38 @@ exports.delete = function (req, res) {
         });
 }
 
+exports.execute = function (req, res) {
+    Exam.find({
+        where: {id: req.params.id},
+        include: [ models.Token ]})
+        .success(function (exam) {
+            res.json(exam);
+        })
+        .error(function (err) {
+            res.end(err);
+        });
+}
+
 exports.activate = function (req, res) {
     Exam.find(req.params.id)
         .success(function (exam) {
             exam.updateAttributes({status: 'activated'})
+                .success(function (updatedExam) {
+                    res.json(updatedExam);
+                })
+                .error(function () {
+                    res.status(500);
+                });
+        })
+        .error(function () {
+            res.status(500);
+        });
+}
+
+exports.deactivate = function (req, res) {
+    Exam.find(req.params.id)
+        .success(function (exam) {
+            exam.updateAttributes({status: 'ready'})
                 .success(function (updatedExam) {
                     res.json(updatedExam);
                 })

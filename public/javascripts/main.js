@@ -7,6 +7,7 @@
         Layouts: {},
         Views: {},
         Router: {},
+        Socket: {},
         Templates: {
             names: [
                 "login",
@@ -90,6 +91,15 @@
 
             get: function(name) {
                 return this.templates[name];
+            }
+        },
+
+        socketConnection: function() {
+            if (Object.keys(this.Socket).length === 0) {
+                this.Socket = io.connect();
+            }
+            else {
+                this.Socket.socket.connect();
             }
         },
 
