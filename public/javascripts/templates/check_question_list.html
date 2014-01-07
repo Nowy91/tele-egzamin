@@ -23,13 +23,10 @@
             $('tbody').each(function(idx){
                 $(this).children().children().first().html(idx + 1);
             });
-
-            setTimeout(function() {sum();}, 200);
-
             $('input').keyup(function() {sum();});
-
-
         });
+
+
 
         function sum()
         {
@@ -39,5 +36,9 @@
             })
             $('.sum').html("Suma punktów: " + sum);
         }
+
+        $(window).load(
+            sum()
+        );
 </script>
 </script>
