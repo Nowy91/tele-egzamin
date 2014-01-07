@@ -7,14 +7,19 @@ App.Views.Header = Marionette.ItemView.extend({
     serializeData: function () {
         var viewData = {};
         viewData.username = Teleegzam.Session.passport.username === undefined
-            ? true
+            ? false
             : Teleegzam.Session.passport.username;
+
+        viewData.token = Teleegzam.Session.passport.token === undefined
+            ? false
+            : Teleegzam.Session.passport.token;
 
         return viewData;
     },
 
     initialize: function () {
         this.template = App.Templates.get('header');
+
     },
 
     logout: function () {

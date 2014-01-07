@@ -75,10 +75,10 @@ exports.delete = function(req, res){
         Exam.destroy({examinerId: examiner.userId});
         examiner.getUser().success(function(user){
             user.destroy().success(function(){
+                examiner.destroy();
                 res.end();
             });
         });
-        examiner.destroy();
     });
 };
 

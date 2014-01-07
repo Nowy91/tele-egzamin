@@ -123,7 +123,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
         },
 
-        activate: function (examId, socket) {
+        activate: function (examId, callback) {
             var activatingExam = $.ajax({
                 type: 'POST',
                 url: '/exam/activate/' + examId,
@@ -132,11 +132,61 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
             $.whenDone(activatingExam, function (exam) {
                 if (exam.status === 'activated') {
-                    socket.emit('exam activation', examId);
+                    App.socketConnection();
+                    App.Socket.emit('exam activation', examId, function (data) {
+                        if (data.error)
+                            console.log('Something went wrong on the server');
+
+                        if (data.ok) {
+                            App.Socket.removeAllListeners();
+                            App.Socket.disconnect();
+                        }
+                    });
+                    callback(true);
                 }
                 else {
-                    return false;
+                    callback(false);
                 }
+            });
+        },
+
+        deactivate: function(examId, callback) {
+            var deactivatingExam = $.ajax({
+                type: 'POST',
+                url: '/exam/deactivate/' + examId,
+                contentType: 'json'
+            });
+
+            $.whenDone(deactivatingExam, function (exam) {
+                if (exam.status === 'ready') {
+                    App.socketConnection();
+                    App.Socket.emit('exam deactivation', examId, function (data) {
+                        if (data.error)
+                            console.log('Something went wrong on the server');
+
+                        if (data.ok) {
+                            App.Socket.removeAllListeners();
+                            App.Socket.disconnect();
+                        }
+                    });
+
+                    callback(true);
+                }
+                else {
+                    callback(false);
+                }
+            });
+        },
+
+        execute: function (examId) {
+            var request = $.ajax({
+                type: 'GET',
+                url: '/exam/execute/' + examId,
+                contentType: 'json'
+            });
+
+            $.whenDone(request, function(exam) {
+                layout.content.show(new App.Views.ExamExecute({model: exam}));
             });
         },
 
