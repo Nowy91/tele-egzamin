@@ -37,16 +37,21 @@ canvas,.draw{cursor: crosshair;position: absolute;left:50%; max-width: 500px;}
 #margin {margin-bottom: 30px;}
 .draw {opacity: 0}
 .logout {color: #00b7ff}
+.navbar-text {margin-top: 23px;}
+.navbar-right {margin-right: 0px;}
 
 .paginator .btn-group {margin: 20px 0; float: left}
 .space {clear: both; margin-top: 20px;}
 .required {margin-right: -9px;}
 .hide {display: none}
+.logo {background: url('/images/logo_min.png') no-repeat top center; height: 53px; width: 150px;
+    display: block; margin: 5px;}
 
 .red {color: #d9534f;}
 
 .red_bg {background-color: #d9534f;}
 .green_bg {background-color: #5cb85c;}
+.yellow_bg {background-color: #f0ad4e;}
 
 #progress-bar {display: block; top: 35%; margin: auto; width: 600px; height: 300px; position: absolute;
     left: 0; right: 0; background: url('/images/logo.png') no-repeat 50% 15%; }

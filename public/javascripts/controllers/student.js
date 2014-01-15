@@ -1,6 +1,7 @@
 Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Marionette, $, _) {
 
     var layout;
+    var myToken;
     var myExam;
     var myQuestions;
     var myAnswers;
@@ -18,6 +19,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
             $.whenDone(checkToken, function (exam) {
                 if (exam != null) {
+                    myToken = token;
                     layout = new App.Layouts.Student;
                     myExam = new App.Models.Exam(exam);
                     myExam.set('currentToken', token);
@@ -25,7 +27,8 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
 
                     Teleegzam.mainRegion.show(layout);
 
-                    layout.exam.show(startView)
+                    layout.header.show(new App.Views.Header);
+                    layout.exam.show(startView);
                 }
                 else {
                     alert("ZŁY TOKEN!");
@@ -41,6 +44,21 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             });
 
             $.whenDone(getQuestions, function (data) {
+
+                if (data != null) {
+                    socketData = { token: myToken, examId: myExam.id };
+
+                    App.socketConnection();
+                    App.Socket.emit('entrance of student', socketData, function (done) {
+                        if (done.error)
+                            console.log('Something went wrong on the server');
+
+                        if (done.ok) {
+                            App.Socket.removeAllListeners();
+                            App.Socket.disconnect();
+                        }
+                    });
+                }
 
                 myQuestions = new App.Collections.Questions(data.questions);
                 myAnswers = new App.Collections.QuestionAnswers(data.answers);
@@ -115,13 +133,30 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             }
 
             //if (answers.length != 0) {
-                var sendAnswers = $.ajax({
-                    type: 'POST',
-                    url: '/student/answers/' + myExam.get('currentToken'),
-                    data: JSON.stringify(answers),
-                    contentType: 'application/json',
-                    dataType: 'json'
+            var sendAnswers = $.ajax({
+                type: 'POST',
+                url: '/student/answers/' + myExam.get('currentToken'),
+                data: JSON.stringify(answers),
+                contentType: 'application/json',
+                dataType: 'json'
+            });
+
+            $.whenDone(sendAnswers, function() {
+                socketData = { token: myToken, examId: myExam.id };
+
+                App.socketConnection();
+                App.Socket.emit('exam finished', socketData, function (done) {
+                    if (done.error)
+                        console.log('Something went wrong on the server');
+
+                    if (done.ok) {
+                        App.Socket.removeAllListeners();
+                        App.Socket.disconnect();
+                    }
                 });
+            });
+
+
    //         }
 /*
             if (imagesAnswers.length != 0) {

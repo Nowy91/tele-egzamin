@@ -12,13 +12,18 @@ App.Views.StudentStart = Marionette.ItemView.extend({
         this.checkButtonStart();
         var that = this;
 
-        socket = io.connect();
-        socket.on('activated exam', function (examId) {
+        App.socketConnection();
+        App.Socket.on('activated exam', function (examId) {
             if (that.model.get('id') === examId) {
                 that.model.set('status', 'activated');
                 that.checkButtonStart();
             }
         });
+    },
+
+    onClose: function () {
+        App.Socket.removeAllListeners();
+        App.Socket.disconnect();
     },
 
     startExam: function () {
