@@ -37,7 +37,11 @@ module.exports = function (sequelize, DataTypes) {
             type: Sequelize.STRING
         },
         imageName: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
+        },
+        videoUrl: {
+            type: Sequelize.TEXT
         }
+
     });
 }; 

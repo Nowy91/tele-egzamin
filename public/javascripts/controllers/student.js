@@ -64,7 +64,7 @@ Teleegzam.module('Controllers', function (Controller, Teleegzam, Backbone, Mario
             var questionView = new App.Views.StudentQuestion({model: myQuestions.at(number)});
             layout.question.show(questionView);
 
-            if (currentQuestion.get('type') == "open") {
+            if (currentQuestion.get('type') == "open" || currentQuestion.get('type') == "video") {
                 currentAnswer.set({answer: JSON.parse(localStorage.getItem('answer' + currentQuestion.id))});
                 var answerView = new App.Views.StudentOpenAnswer({model: currentAnswer});
                 layout.answer.show(answerView);

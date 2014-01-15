@@ -47,6 +47,11 @@ App.Views.QuestionAdd = Marionette.ItemView.extend({
             }
         }
 
+        if($(e.currentTarget).find('input[type=url]').val() !== ""){
+            newQuestion.set({videoUrl: $(e.currentTarget).find('input[type=url]').val()});
+            newQuestion.set({type: 'video'});
+        }
+
         Teleegzam.Controllers.Question.add(newQuestion, answers);
     }
 

@@ -51,3 +51,5 @@ canvas,.draw{cursor: crosshair;position: absolute;left:50%; max-width: 500px;}
 #progress-bar {display: block; top: 35%; margin: auto; width: 600px; height: 300px; position: absolute;
     left: 0; right: 0; background: url('/images/logo.png') no-repeat 50% 15%; }
 #progress-bar .progress {position: relative; margin-top: 200px}
+
+.mejs-container {margin:auto;}

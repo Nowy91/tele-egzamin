@@ -6,4 +6,13 @@
   <%if(type!="image"){%> <img style="max-width:500px" src=<%=imageName%>>
      <%}%>
 
+    <%if(type=="video"){%>
+    <video width="640" height="360" id="player1" preload="none">
+        <source type="video/youtube" src="<%=videoUrl%>" />
+    </video>
+
+    <%}%>
+    <script>
+        $('video,audio').mediaelementplayer(/* Options */);
+    </script>
 </script>

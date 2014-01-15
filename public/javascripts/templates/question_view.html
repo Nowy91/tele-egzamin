@@ -7,29 +7,32 @@
     </div>
 
     <div class="mBottom70">
-    <ul class="list-group panel-info">
-        <li class="list-group-item active">
-            Dane podstawowe:
-        </li>
-        <li class="list-group-item"
-        <%= imageName %><%= type %>>
-        Treść pytania: <%= content %>
-        </li>
-        <%if(imageName != ""){%>
-        <li class="list-group-item"><p>Obrazek (tryb rysowania
+        <ul class="list-group panel-info">
+            <li class="list-group-item active">
+                Dane podstawowe:
+            </li>
+            <li class="list-group-item"
+            <%= imageName %><%= type %>>
+            Treść pytania: <%= content %>
+            </li>
+            <%if(imageName != ""){%>
+            <li class="list-group-item"><p>Obrazek (tryb rysowania
                 <%if(type=="image"){%>włączony<%}else{%>wyłączony<%}%>):</p><img style="max-width:300px"
                                                                                  src="<%= imageName %>"/></li>
             <%}%>
+            <%if(videoUrl != ""){%>
+            <li class="list-group-item">Adres url filmu: <%= videoUrl %></li>
+            <%}%>
 
-        <li class="list-group-item">
-            Ilość punktów: <%= formattedMaxPoints %>
-        </li>
+            <li class="list-group-item">
+                Ilość punktów: <%= formattedMaxPoints %>
+            </li>
 
-    </ul>
+        </ul>
 
 
-    <a class="btn btn-danger pull-right mLeft10">Usuń pytanie</a>
-    <a class="btn btn-warning pull-right editQuestion">Edytuj pytanie</a>
+        <a class="btn btn-danger pull-right mLeft10">Usuń pytanie</a>
+        <a class="btn btn-warning pull-right editQuestion">Edytuj pytanie</a>
     </div>
 
     <div class="mBottom70" id="answers">
