@@ -24,13 +24,13 @@
                 $(this).children().children().first().html(idx + 1);
             });
 
-            setTimeout(function() {sum();}, 200);
+
 
             $('input').keyup(function() {sum();});
 
 
         });
-
+        $(window).load(function(){sum();})
         function sum()
         {
             var sum=0;
